@@ -1,0 +1,9 @@
+.modal-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba($color: #030303, $alpha: 0.6);
+  z-index: 5;
+}

@@ -1,0 +1,35 @@
+:root {
+  --primary-black: #121212;
+  --primary-white: #ffffff;
+  --primary-gray-d: #575757;
+  --primary-gray-l: #dedede;
+
+  --accent-gold: #ab8956;
+  --accent-red: #9b4b4b;
+  --accent-error: #ae2917;
+
+  --secondary-white: #fcfcfc;
+  --secondary-gray: #9c9c9c;
+  --secondary-black: #1a1818;
+}
+
+:root {
+  --primary-text-dafault: var(--primary-gray-d);
+  --primary-text-hover: var(--primary-black);
+  --disabled-text: var(--primary-gray-l);
+  --accent: var(--accent-red);
+  --error: var(--accent-error);
+  --background: var(--primary-white);
+  --background-secondary: var(--secondary-white);
+  --background-button: var(--primary-black);
+}
+
+[theme='dark'] {
+  --primary-text-dafault: var(--primary-gray-l);
+  --primary-text-hover: var(--primary-white);
+  --accent: var(--accent-gold);
+  --background: var(--primary-black);
+  --disabled-text: var(--secondary-gray);
+  --background-secondary: var(--secondary-black);
+  --background-button: var(--accent-gold);
+}
