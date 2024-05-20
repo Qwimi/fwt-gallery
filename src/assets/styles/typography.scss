@@ -1,0 +1,113 @@
+@import '../fonts/cormorantSC/stylesheet.css';
+@import '../fonts/inter/stylesheet.css';
+
+.cormorant {
+  font-family: 'Cormorant SC', serif;
+}
+
+.inter {
+  font-family: 'Inter', sans-serif;
+}
+
+@mixin headingH1 {
+  @extend .cormorant;
+  font-weight: 500;
+  font-size: 3.75rem;
+}
+
+@mixin headingH2 {
+  @extend .cormorant;
+  font-weight: 500;
+  font-size: 3rem;
+}
+
+@mixin headingH3 {
+  @extend .cormorant;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+@mixin headingH4 {
+  @extend .cormorant;
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+@mixin headingH5 {
+  @extend .cormorant;
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+@mixin headingH6 {
+  @extend .cormorant;
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+@mixin paragraphBaseLight {
+  @extend .inter;
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+@mixin paragraphBaseMadium {
+  @extend .inter;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+@mixin paragraphSmallLight {
+  @extend .inter;
+  font-weight: 300;
+  font-size: 0.75rem;
+}
+
+@mixin paragraphSmallMadium {
+  @extend .inter;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+@mixin paragraphTiny {
+  @extend .inter;
+  font-weight: 500;
+  font-size: 0.5rem;
+}
+
+@mixin buttonText {
+  @extend .inter;
+  font-weight: bold;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+@mixin inputText {
+  @extend .inter;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+@mixin captionMedium16 {
+  @extend .cormorant;
+  font-weight: 500;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+@mixin captionMedium12 {
+  @extend .cormorant;
+  font-weight: 500;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+@mixin captionBold {
+  @extend .inter;
+  font-weight: bold;
+  font-size: 0.5rem;
+  text-transform: uppercase;
+}

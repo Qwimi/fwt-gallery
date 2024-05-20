@@ -1,18 +1,27 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
-</template>
+<script lang="ts" setup>
+import { useAppStore } from '@/stores/artStore'
+import { onMounted, ref, watch, type Ref } from 'vue'
+import CardList from '@/components/cardList/CardList.vue'
+import type { CardInterface } from '@/stores/types'
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+const store = useAppStore()
+const artists: Ref<Array<CardInterface>> = ref(store.artistCards)
 
-export default defineComponent({
-  name: 'HomeView',
-  components: {
-    HelloWorld,
-  },
-});
+onMounted(() => {
+  store.getArtists()
+})
+
+watch(
+  () => store.artists,
+  () => {
+    artists.value = store.artistCards
+  }
+)
 </script>
+<template>
+  <main>
+    <div class="wrapper">
+      <card-list :cards="artists" :is-artists="true" />
+    </div>
+  </main>
+</template>
