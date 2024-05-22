@@ -1,7 +1,11 @@
+<script lang="ts" setup>
+import IconArrow from '../icons/IconArrow.vue'
+</script>
+
 <template>
   <button class="button button-round">
     <span class="button_icon icon">
-      <slot name="icon"></slot>
+      <icon-arrow />
     </span>
   </button>
 </template>
@@ -16,6 +20,15 @@
   color: var(--primary-text-dafault);
   &:hover {
     background-color: var(--background);
+  }
+  .icon {
+    rotate: 270deg;
+  }
+}
+
+[theme='dark'] {
+  .button-round {
+    border: none;
   }
 }
 </style>

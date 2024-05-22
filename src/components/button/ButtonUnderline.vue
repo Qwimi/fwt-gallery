@@ -12,6 +12,10 @@
 <style lang="scss" scoped>
 .button-underline {
   color: var(--primary-text-dafault);
+  .button_icon {
+    height: 0.75rem;
+    width: 0.75rem;
+  }
   .button_text {
     position: relative;
     &::after {

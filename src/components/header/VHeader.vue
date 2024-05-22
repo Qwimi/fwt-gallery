@@ -18,9 +18,7 @@ const toggleMenu = () => {
     <div class="wrapper">
       <div class="header_content">
         <router-link to="/">
-          <div class="icon-logo">
-            <icon-logo class="icon" />
-          </div>
+          <icon-logo class="icon icon-logo" />
         </router-link>
         <div class="icon-burger">
           <icon-burger @click="toggleMenu" class="icon" />
@@ -62,6 +60,7 @@ const toggleMenu = () => {
 
   .icon-logo {
     height: 1rem;
+    width: fit-content;
     @media screen and (min-width: $breakpoint-lg) {
       height: 1.25rem;
     }

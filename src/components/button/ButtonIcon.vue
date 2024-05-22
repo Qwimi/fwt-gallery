@@ -1,5 +1,11 @@
+<script lang="ts" setup>
+defineProps({
+  isDisabled: Boolean
+})
+</script>
+
 <template>
-  <button class="button button-theme">
+  <button class="button button-icon" :disabled="isDisabled">
     <span class="button_icon icon">
       <slot></slot>
     </span>

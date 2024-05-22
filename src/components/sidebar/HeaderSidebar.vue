@@ -16,10 +16,7 @@ watch(
 
 <template>
   <div class="header_sidebar">
-    <button-theme>
-      <template #text v-if="isThemeLight"> Dark mode</template>
-      <template #text v-else> Light mode</template>
-    </button-theme>
+    <button-theme :show-text="true" />
     <nav class="menu">
       <li class="menu_item">Log In</li>
       <li class="menu_item">Sign up</li>

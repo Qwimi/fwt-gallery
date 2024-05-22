@@ -1,4 +1,7 @@
-import type { Preview } from '@storybook/vue3'
+import '@/assets/styles/global.scss'
+import { setup, type Preview } from '@storybook/vue3'
+import { createPinia } from 'pinia'
+import { App } from 'vue'
 
 const preview: Preview = {
   parameters: {
@@ -10,5 +13,10 @@ const preview: Preview = {
     }
   }
 }
+
+const pinia = createPinia()
+setup((app: App) => {
+  app.use(pinia)
+})
 
 export default preview

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { CardInterface } from '@/stores/types'
-import { type PropType, defineProps } from 'vue'
+import type { PropType } from 'vue'
 import CardItem from '@/components/card/CardItem.vue'
 
-const props = defineProps({
+defineProps({
   cards: Array as PropType<CardInterface[]>,
   isArtists: Boolean
 })
@@ -11,7 +11,7 @@ const props = defineProps({
 
 <template>
   <section class="card-list">
-    <card-item v-for="card in props.cards" :key="card.id" :is-artist="isArtists" :card="card" />
+    <card-item v-for="card in cards" :key="card.id" :is-artist="isArtists" :card="card" />
   </section>
 </template>
 

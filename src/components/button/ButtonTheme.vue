@@ -1,13 +1,19 @@
 <script lang="ts" setup>
 import { useThemeStore } from '@/stores/themeStore'
-import { ref, watch, type Ref } from 'vue'
+import { ref, watch, type Ref, defineProps, onMounted } from 'vue'
 import IconDark from '@/components/icons/IconDark.vue'
 import IconLight from '@/components/icons/IconLight.vue'
 
 const themeStore = useThemeStore()
 const isThemeLight: Ref<boolean> = ref(themeStore.isThemeLight)
 
+defineProps({
+  showText: Boolean
+})
+
 const toggleTheme = () => themeStore.toggleTheme()
+
+onMounted(() => themeStore.getTheme())
 
 watch(
   () => themeStore.isThemeLight,
@@ -19,12 +25,13 @@ watch(
 
 <template>
   <button class="button button-theme" @click="toggleTheme">
-    <span class="button_icon icon">
-      <icon-dark v-if="isThemeLight" />
-      <icon-light v-else />
+    <span class="button_icon">
+      <icon-dark class="icon" v-if="isThemeLight" />
+      <icon-light class="icon" v-else />
     </span>
-    <span class="button_text" v-if="$slots.text">
-      <slot name="text"></slot>
+    <span class="button_text" v-if="showText">
+      <template v-if="isThemeLight"> Dark mode</template>
+      <template v-else> Light mode</template>
     </span>
   </button>
 </template>

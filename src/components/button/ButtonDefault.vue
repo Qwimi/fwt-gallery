@@ -1,8 +1,5 @@
 <template>
   <button class="button button-default">
-    <span class="button_icon icon" v-if="$slots.icon">
-      <slot name="icon"></slot>
-    </span>
     <span class="button_text">
       <slot></slot>
     </span>

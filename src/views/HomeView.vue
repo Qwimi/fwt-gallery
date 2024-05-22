@@ -7,9 +7,7 @@ import type { CardInterface } from '@/stores/types'
 const store = useAppStore()
 const artists: Ref<Array<CardInterface>> = ref(store.artistCards)
 
-onMounted(() => {
-  store.getArtists()
-})
+onMounted(() => store.getArtists())
 
 watch(
   () => store.artists,

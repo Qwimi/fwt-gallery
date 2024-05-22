@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { type PropType, defineProps } from 'vue'
+import type { PropType } from 'vue'
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
 import IconPhoto from '@/components/icons/IconPhoto.vue'
 import type { CardInterface } from '@/stores/types'
@@ -16,14 +16,14 @@ const artistUrl = `/artist/${props.card?.id}`
   <article class="card">
     <router-link :to="artistUrl" v-if="isArtist" class="card_link" />
     <img :src="imgUrl" alt="Can't load the picture" v-if="card?.image" class="card_img" />
-    <div class="no-image">
+    <div class="no-image" v-else>
       <icon-photo class="no-image_icon" />
       <p class="no-image_title">No Image uploaded</p>
     </div>
     <div class="card_info">
       <div class="card_about">
-        <div class="card_about_title">{{ card?.name }}</div>
-        <div class="card_about_date">{{ card?.date }}</div>
+        <p class="card_about_title">{{ card?.name }}</p>
+        <p class="card_about_date">{{ card?.date }}</p>
       </div>
       <div class="card_info-decoration">
         <icon-arrow-decoration class="arrow-icon icon" />
