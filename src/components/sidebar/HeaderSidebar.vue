@@ -1,17 +1,5 @@
 <script lang="ts" setup>
-import { useThemeStore } from '@/stores/themeStore'
-import { ref, watch, type Ref } from 'vue'
 import ButtonTheme from '@/components/button/ButtonTheme.vue'
-
-const themeStore = useThemeStore()
-const isThemeLight: Ref<boolean> = ref(themeStore.isThemeLight)
-
-watch(
-  () => themeStore.isThemeLight,
-  () => {
-    isThemeLight.value = themeStore.isThemeLight
-  }
-)
 </script>
 
 <template>

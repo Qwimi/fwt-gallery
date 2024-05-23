@@ -12,7 +12,7 @@ const meta: Meta<typeof ButtonIcon> = {
       return { args }
     },
     template: `
-      <button-icon :disabled="args.isDisabled">
+      <button-icon>
         <icon-delete />
       </button-icon>
     `

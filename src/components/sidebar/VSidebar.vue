@@ -21,8 +21,7 @@ defineEmits(['toggleMenu'])
 
 <style lang="scss" scoped>
 .sidebar {
-  position: absolute;
-  position: absolute;
+  position: fixed;
   background-color: var(--background);
   right: 0;
   z-index: 5;

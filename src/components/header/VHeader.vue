@@ -17,7 +17,7 @@ const toggleMenu = () => {
   <header class="header">
     <div class="wrapper">
       <div class="header_content">
-        <router-link to="/">
+        <router-link to="/" class="link-icon">
           <icon-logo class="icon icon-logo" />
         </router-link>
         <div class="icon-burger">
