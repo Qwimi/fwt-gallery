@@ -8,14 +8,13 @@ const props = defineProps({
   card: Object as PropType<CardInterface>,
   isArtist: Boolean
 })
-const imgUrl = `${import.meta.env.VITE_BASE_URL}${props.card?.image}`
 const artistUrl = `/artist/${props.card?.id}`
 </script>
 
 <template>
   <article class="card">
     <router-link :to="artistUrl" v-if="isArtist" class="card_link" />
-    <img :src="imgUrl" alt="Can't load the picture" v-if="card?.image" class="card_img" />
+    <img :src="card?.image" alt="Can't load the picture" v-if="card?.image" class="card_img" />
     <div class="no-image" v-else>
       <icon-photo class="no-image_icon" />
       <p class="no-image_title">No Image uploaded</p>

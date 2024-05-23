@@ -3,8 +3,8 @@
 
 * {
   transition:
-    color 0.3s,
-    background-color 0.3s;
+    color 0.25s,
+    background-color 0.25s;
 }
 
 body {
@@ -28,7 +28,10 @@ body {
 }
 
 main {
-  padding: 6.25rem 0;
+  padding: 5rem 0;
+  @media screen and (min-width: $breakpoint-md) {
+    padding: 6.25rem 0;
+  }
 }
 
 .button {

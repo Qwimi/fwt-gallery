@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useThemeStore } from '@/stores/themeStore'
-import { ref, watch, type Ref, defineProps, onMounted } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 import IconDark from '@/components/icons/IconDark.vue'
 import IconLight from '@/components/icons/IconLight.vue'
 
@@ -12,8 +12,6 @@ defineProps({
 })
 
 const toggleTheme = () => themeStore.toggleTheme()
-
-onMounted(() => themeStore.getTheme())
 
 watch(
   () => themeStore.isThemeLight,
