@@ -1,23 +1,18 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/stores/artStore'
-import { ref, watch, type Ref } from 'vue'
 import CardList from '@/components/cardList/CardList.vue'
-import type { CardInterface } from '@/stores/types'
+import { onMounted } from 'vue'
 
 const store = useAppStore()
-const artists: Ref<Array<CardInterface>> = ref(store.artistCards)
 
-watch(
-  () => store.artistCards,
-  () => {
-    artists.value = store.artistCards
-  }
-)
+onMounted(() => {
+  store.getArtists()
+})
 </script>
 <template>
   <main>
     <div class="wrapper">
-      <card-list :cards="artists" :is-artists="true" />
+      <card-list :cards="store.artistCards" :is-artists="true" />
     </div>
   </main>
 </template>

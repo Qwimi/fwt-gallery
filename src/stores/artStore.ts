@@ -7,7 +7,7 @@ export const useAppStore = defineStore('app', () => {
   const artists: Ref<Array<Artist>> = ref([])
   const artistCards: Ref<Array<CardInterface>> = ref([])
 
-  async function getArtists() {
+  const getArtists = async () => {
     try {
       await getArtistsStatic().then((data) => {
         artists.value = data
@@ -18,7 +18,7 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
-  function setAuthorCards() {
+  const setAuthorCards = () => {
     artistCards.value = artists.value.map((artist: Artist) => {
       let url = null
       if (artist.mainPainting) {

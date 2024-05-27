@@ -10,11 +10,10 @@ import IconVk from '@/components/icons/IconVk.vue'
       <div class="footer_content">
         <div class="footer_info">
           <p class="footer_info_about">
-            Проект реализован в рамках стажировки<br />
-            для Frontend-разработчиков от компании
+            Проект реализован в рамках стажировки для Frontend-разработчиков от компании
             <router-link to="/" class="link-underline">Framework Team</router-link>
           </p>
-          <p class="footer_info_name">Иванов Иван, 2021</p>
+          <p class="footer_info_name">Нагаева Анастасия, 2024</p>
         </div>
         <div class="footer_contacts">
           <router-link to="/">
