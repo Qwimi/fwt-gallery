@@ -10,9 +10,7 @@ onMounted(() => {
 })
 </script>
 <template>
-  <main>
-    <div class="wrapper">
-      <card-list :cards="store.artistCards" :is-artists="true" />
-    </div>
-  </main>
+  <div class="wrapper">
+    <card-list :cards="store.artistCards" :is-artists="true" />
+  </div>
 </template>

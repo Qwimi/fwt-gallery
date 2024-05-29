@@ -6,6 +6,8 @@ import VFooter from '@/components/footer/VFooter.vue'
 
 <template>
   <v-header />
-  <router-view />
+  <main>
+    <router-view />
+  </main>
   <v-footer />
 </template>

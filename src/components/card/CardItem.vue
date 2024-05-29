@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue'
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
-import IconPhoto from '@/components/icons/IconPhoto.vue'
 import type { CardInterface } from '@/stores/types'
+import NoImage from '@/components/noImg/NoImage.vue'
 
 const props = defineProps({
   card: Object as PropType<CardInterface>,
@@ -15,10 +15,7 @@ const artistUrl = `/artist/${props.card?.id}`
   <article class="card">
     <router-link :to="artistUrl" v-if="isArtist" class="card_link" />
     <img :src="card?.image" alt="Can't load the picture" v-if="card?.image" class="card_img" />
-    <div class="no-image" v-else>
-      <icon-photo class="no-image_icon" />
-      <p class="no-image_title">No Image uploaded</p>
-    </div>
+    <no-image v-else />
     <div class="card_info">
       <div class="card_about">
         <p class="card_about_title">{{ card?.name }}</p>
@@ -125,25 +122,6 @@ const artistUrl = `/artist/${props.card?.id}`
     @media screen and (min-width: $breakpoint-md) {
       @include buttonText;
     }
-  }
-}
-
-.no-image {
-  display: flex;
-  gap: 0.75rem;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--background-secondary);
-  height: 100%;
-  &_icon {
-    height: fit-content;
-    opacity: 0.2;
-  }
-  &_title {
-    @include inputText;
-    opacity: 0.5;
-    color: var(--secondary-gray);
   }
 }
 </style>

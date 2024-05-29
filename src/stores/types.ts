@@ -30,6 +30,7 @@ export interface Painting {
   name: string
   yearOfCreation: string
   image: Image
+  artist: string
 }
 
 export interface CardInterface {
@@ -37,4 +38,21 @@ export interface CardInterface {
   name: string
   date: string
   image: string | null
+}
+
+export interface ArtistPage {
+  paintings: Painting[]
+  genres: Genre[]
+  _id: string
+  name: string
+  description: string
+  yearsOfLife: string
+  avatar: Image
+  __v: number
+  mainPainting: Painting
+}
+
+export interface Genre {
+  _id: string
+  name: string
 }

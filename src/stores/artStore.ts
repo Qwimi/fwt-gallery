@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
-import type { Artist, CardInterface } from './types'
+import type { Artist, ArtistPage, CardInterface, Painting } from './types'
 import { ref, type Ref } from 'vue'
-import { getArtistsStatic } from '@/api/api_requests'
+import { getArtistsStatic, getCurrentArtistStatic } from '@/api/api_requests'
 
 export const useAppStore = defineStore('app', () => {
   const artists: Ref<Array<Artist>> = ref([])
   const artistCards: Ref<Array<CardInterface>> = ref([])
+  const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage)
+  const currentArtistCards: Ref<Array<CardInterface>> = ref([])
 
   const getArtists = async () => {
     try {
@@ -33,5 +35,40 @@ export const useAppStore = defineStore('app', () => {
     })
   }
 
-  return { getArtists, artistCards }
+  const getCurrentArtist = async (id: String) => {
+    try {
+      await getCurrentArtistStatic(id).then((data) => {
+        currentArtist.value = data
+        currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src}`
+      })
+      setCurrentArtistCards()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const unmountCurrentArtist = () => {
+    currentArtist.value = {} as ArtistPage
+    currentArtistCards.value = []
+  }
+
+  const setCurrentArtistCards = () => {
+    currentArtistCards.value = currentArtist.value.paintings.map((painting: Painting) => {
+      return {
+        id: painting._id,
+        name: painting.name,
+        date: painting.yearOfCreation,
+        image: painting.image.src ? `${import.meta.env.VITE_BASE_URL}${painting.image.src}` : null
+      }
+    })
+  }
+
+  return {
+    artistCards,
+    currentArtist,
+    currentArtistCards,
+    unmountCurrentArtist,
+    getCurrentArtist,
+    getArtists
+  }
 })

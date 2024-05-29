@@ -1,6 +1,6 @@
 <template>
   <button class="button button-underline">
-    <span class="button_icon icon" v-if="$slots.icon">
+    <span class="button_icon" v-if="$slots.icon">
       <slot name="icon"></slot>
     </span>
     <span class="button_text">
@@ -17,23 +17,14 @@
     width: 0.75rem;
   }
   .button_text {
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      height: 1px;
-      width: 100%;
-      background-color: var(--primary-text-dafault);
-    }
+    border-bottom: 1px solid var(--primary-text-dafault);
   }
 
   &:hover,
   &:focus {
     color: var(--primary-text-hover);
-    &::after {
-      color: var(--primary-text-hover);
+    .button_text {
+      border-color: var(--primary-text-hover);
     }
   }
 
