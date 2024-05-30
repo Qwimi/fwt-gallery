@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useThemeStore } from '@/stores/themeStore'
-import { onMounted } from 'vue'
 import IconDark from '@/components/icons/IconDark.vue'
 import IconLight from '@/components/icons/IconLight.vue'
 
@@ -9,17 +8,15 @@ const themeStore = useThemeStore()
 defineProps({
   showText: Boolean
 })
-
-onMounted(() => themeStore.getTheme())
 </script>
 
 <template>
-  <button class="button button-theme" @click="themeStore.toggleTheme">
-    <span class="button_icon">
+  <button class="button button--theme" @click="themeStore.toggleTheme">
+    <span class="button__icon">
       <icon-dark class="icon" v-if="themeStore.isThemeLight" />
       <icon-light class="icon" v-else />
     </span>
-    <span class="button_text" v-if="showText">
+    <span class="button__text" v-if="showText">
       <template v-if="themeStore.isThemeLight"> Dark mode</template>
       <template v-else> Light mode</template>
     </span>
@@ -27,16 +24,15 @@ onMounted(() => themeStore.getTheme())
 </template>
 
 <style lang="scss" scoped>
-.button-theme {
-  color: var(--primary-text-dafault);
-  .button_icon {
+.button--theme {
+  .button__icon {
     padding: 0.5rem;
     border-radius: 100%;
     background-color: var(--background-secondary);
     aspect-ratio: 1/1;
   }
 
-  .button_text {
+  .button__text {
     position: relative;
     &::after {
       content: '';
@@ -51,7 +47,7 @@ onMounted(() => themeStore.getTheme())
   &:hover,
   &:focus {
     color: var(--primary-text-hover);
-    .button_text::after {
+    .button__text::after {
       color: var(--primary-text-hover);
     }
   }

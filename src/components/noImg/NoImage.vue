@@ -7,8 +7,8 @@ const elementClass = props.isBig ? 'no-image-big' : ''
 </script>
 <template>
   <div class="no-image" :class="elementClass">
-    <icon-photo class="no-image_icon" />
-    <p class="no-image_title">No Image uploaded</p>
+    <icon-photo class="no-image__icon" />
+    <p class="no-image__title">No Image uploaded</p>
   </div>
 </template>
 
@@ -21,12 +21,12 @@ const elementClass = props.isBig ? 'no-image-big' : ''
   justify-content: center;
   background-color: var(--background-secondary);
   height: 100%;
-  &_icon {
+  &__icon {
     height: 3.75rem;
     width: fit-content;
     opacity: 0.2;
   }
-  &_title {
+  &__title {
     @include inputText;
     opacity: 0.5;
     color: var(--secondary-gray);
@@ -34,7 +34,7 @@ const elementClass = props.isBig ? 'no-image-big' : ''
 }
 
 .no-image-big {
-  .no-image_icon {
+  .no-image__icon {
     height: 14.25rem;
   }
   .no-image_title {
@@ -44,7 +44,7 @@ const elementClass = props.isBig ? 'no-image-big' : ''
 }
 
 [theme='dark'] {
-  .no-image_icon {
+  .no-image__icon {
     opacity: 0.1;
   }
 }

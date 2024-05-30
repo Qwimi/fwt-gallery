@@ -11,12 +11,12 @@ defineProps({
 </script>
 
 <template>
-  <section class="artist-section">
+  <section class="artist--section">
     <router-link to="/" class="link link-icon">
       <icon-arrow-decoration class="icon" />
-      <span class="link_text">back</span>
+      <span class="link__text">back</span>
     </router-link>
-    <div class="artist-section_avatar">
+    <div class="artist--section__avatar">
       <img :src="artist?.avatar?.src" alt="" v-if="artist?.avatar?.src" />
       <no-image v-else />
     </div>
@@ -30,7 +30,7 @@ defineProps({
 </template>
 
 <style lang="scss" scoped>
-.artist-section {
+.artist--section {
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -41,7 +41,7 @@ defineProps({
     flex-direction: row;
   }
 
-  &_avatar {
+  &__avatar {
     width: 100%;
     max-height: 28.5rem;
     overflow: hidden;
@@ -65,7 +65,7 @@ defineProps({
   @media screen and (min-width: $breakpoint-lg) {
     left: calc((100vw - 1240px) / 2);
   }
-  &_text {
+  &__text {
     @include buttonText;
     display: none;
     @media screen and (min-width: $breakpoint-md) {

@@ -10,13 +10,13 @@
 }
 
 @mixin headingH1 {
+  // @extend .cormorant;
   font-weight: 500;
   font-size: 3.75rem;
-  // @extend .cormorant;
 }
 
 @mixin headingH2 {
-  @extend .cormorant;
+  // @extend .cormorant;
   font-weight: 500;
   font-size: 3rem;
 }

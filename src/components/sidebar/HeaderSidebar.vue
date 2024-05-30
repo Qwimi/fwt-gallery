@@ -1,28 +1,31 @@
 <script lang="ts" setup>
 import ButtonTheme from '@/components/button/ButtonTheme.vue'
+import { useModalStore } from '@/stores/modalStore'
+const modalStore = useModalStore()
 </script>
 
 <template>
-  <div class="header_sidebar">
+  <div class="sidebar__content">
     <button-theme :show-text="true" />
     <nav class="menu">
-      <li class="menu_item">Log In</li>
-      <li class="menu_item">Sign up</li>
+      <li class="menu__item" @click="modalStore.openModal('logIn')">Log In</li>
+      <li class="menu__item" @click="modalStore.openModal('signUp')">Sign up</li>
     </nav>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.header_sidebar {
+.sidebar__content {
   padding: 9rem 3rem;
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+  color: var(--primary-text-dafault);
 
   .menu {
     flex-direction: column;
     gap: 2rem;
-    &_item {
+    &__item {
       @include headingH3;
     }
   }
@@ -32,7 +35,7 @@ import ButtonTheme from '@/components/button/ButtonTheme.vue'
     gap: 3.25rem;
     .menu {
       gap: 2.5rem;
-      &_item {
+      &__item {
         @include headingH1;
       }
     }

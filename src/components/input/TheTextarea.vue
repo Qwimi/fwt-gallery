@@ -2,7 +2,6 @@
 import IconError from '@/components/icons/IconError.vue'
 defineProps<{
   label: string
-  type: string
   name: string
   placeholder?: string
   error?: string
@@ -15,13 +14,12 @@ defineEmits(['update:modelValue'])
   <div class="form__element" :class="{ error: error }">
     <label class="form__element__label">{{ label }}</label>
     <div class="form__element_input--wrapper">
-      <input
+      <textarea
         class="form__element__input"
-        :type="type"
         :name="name"
         :placeholder="placeholder"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-      />
+      ></textarea>
     </div>
     <div class="form__element__error" v-if="error">
       <icon-error class="icon" />

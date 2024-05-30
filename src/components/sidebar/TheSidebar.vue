@@ -1,53 +1,71 @@
 <script lang="ts" setup>
-import { defineProps } from 'vue'
+import { useModalStore } from '@/stores/modalStore'
+import HeaderSidebar from '@/components/sidebar/HeaderSidebar.vue'
 import IconClose from '@/components/icons/IconClose.vue'
 
-defineProps({
-  isMenuShow: Boolean
-})
-defineEmits(['toggleMenu'])
+const modalStore = useModalStore()
+
+const currentSidebarContent = {
+  headerSidebar: HeaderSidebar
+}
 </script>
 
 <template>
-  <div class="modal-shadow" v-show="isMenuShow" @click="$emit('toggleMenu')">
-    <Transition name="slide-left">
-      <aside class="sidebar" v-show="isMenuShow" @click.stop>
-        <icon-close class="icon icon-close" @click="$emit('toggleMenu')" />
-        <slot></slot>
-      </aside>
+  <Teleport to="body">
+    <Transition name="fade">
+      <div class="modal--shadow" v-show="modalStore.isSidebarOpen" @click="modalStore.closeSidebar">
+        <Transition name="slide">
+          <div class="modal modal--sidebar" v-if="modalStore.isSidebarOpen" @click.stop>
+            <icon-close class="icon modal_icon-close" @click="modalStore.closeSidebar" />
+            <component
+              :is="
+                currentSidebarContent[
+                  modalStore.currentSidebar as keyof typeof currentSidebarContent
+                ]
+              "
+              v-if="modalStore.currentSidebar"
+            />
+          </div>
+        </Transition>
+      </div>
     </Transition>
-  </div>
+  </Teleport>
 </template>
 
 <style lang="scss" scoped>
-.sidebar {
-  position: fixed;
-  background-color: var(--background);
+.modal--sidebar {
+  top: 0;
   right: 0;
-  z-index: 5;
+  height: 100%;
   height: 100vh;
   width: 80%;
+  z-index: 3;
   @media screen and (min-width: $breakpoint-md) {
     width: 60%;
   }
-  @media screen and (min-width: $breakpoint-lg) {
-    display: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  &.modal--shadow {
+    transition: opacity 0.5s ease-in-out;
   }
 }
 
-.slide-left-leave-active,
-.slide-left-enter-active {
-  transition: 0.3s;
+.fade-enter-from,
+.fade-leave-to {
+  &.modal--shadow {
+    opacity: 0;
+  }
 }
 
-.slide-left-enter-from,
-.slide-left-leave-to {
-  transform: translate(100%, 0);
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s ease-in-out;
 }
 
-.icon-close {
-  position: absolute;
-  top: 1.25rem;
-  right: 1.25rem;
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(100%);
 }
 </style>

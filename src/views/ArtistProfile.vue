@@ -15,13 +15,13 @@ onUnmounted(() => store.unmountCurrentArtist())
 <template>
   <artist-section :artist="store.currentArtist" />
   <section class="wrapper">
-    <h3 class="section_title">Artworks</h3>
+    <h3 class="section__title">Artworks</h3>
     <card-list :cards="store.currentArtistCards" :is-artists="false" />
   </section>
 </template>
 
 <style lang="scss" scoped>
-.section_title {
+.section__title {
   @include headingH3;
   color: var(--accent);
   margin-bottom: 3.75rem;

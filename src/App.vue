@@ -1,13 +1,25 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import VHeader from '@/components/header/VHeader.vue'
-import VFooter from '@/components/footer/VFooter.vue'
+import TheHeader from '@/components/header/TheHeader.vue'
+import TheFooter from '@/components/footer/TheFooter.vue'
+import { useThemeStore } from './stores/themeStore'
+import { onMounted } from 'vue'
+import { useModalStore } from './stores/modalStore'
+import TheModal from '@/components/modal/TheModal.vue'
+import TheSidebar from '@/components/sidebar/TheSidebar.vue'
+
+onMounted(() => {
+  useThemeStore().getTheme()
+  useModalStore()
+})
 </script>
 
 <template>
-  <v-header />
+  <the-sidebar />
+  <the-modal />
+  <the-header />
   <main>
     <router-view />
   </main>
-  <v-footer />
+  <the-footer />
 </template>

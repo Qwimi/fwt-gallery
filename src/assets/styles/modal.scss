@@ -1,9 +1,83 @@
-.modal-shadow {
+.modal--shadow {
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   background-color: rgba($color: #030303, $alpha: 0.6);
-  z-index: 5;
+  z-index: 2;
+}
+
+.modal {
+  background-color: var(--background);
+  position: absolute;
+  overflow: hidden;
+  z-index: 4;
+  &_icon-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    color: var(--primary-text-dafault);
+    cursor: pointer;
+    @media screen and (min-width: $breakpoint-md) {
+      top: 2rem;
+    }
+    @media screen and (min-width: $breakpoint-lg) {
+      right: 2rem;
+    }
+  }
+}
+
+.modal__content {
+  display: flex;
+  justify-content: center;
+  &--auth {
+    padding: 0 1.75rem 2rem;
+    height: 100%;
+    width: 100%;
+    align-items: end;
+    &__img {
+      display: none;
+    }
+    @media screen and (min-width: $breakpoint-md) {
+      align-items: center;
+      padding: 0;
+    }
+
+    @media screen and (min-width: $breakpoint-lg) {
+      align-items: stretch;
+      &__img {
+        display: block;
+      }
+      &__form {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  @media screen and (min-width: $breakpoint-lg) {
+    &__form {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.modal-auth {
+  inset: 0;
+  z-index: 2;
+  @media screen and (min-width: $breakpoint-lg) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1028px;
+    height: 700px;
+  }
 }

@@ -1,6 +1,6 @@
 @import 'reset';
 @import 'modal';
-@import 'inputs';
+@import 'UiStyles';
 
 * {
   transition:
@@ -10,6 +10,49 @@
 
 body {
   background-color: var(--background);
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary-gray) color-mix(in srgb, var(--primary-black) 5%, transparent);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: color-mix(in srgb, var(--primary-black) 5%, transparent);
+  border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-gray);
+  border-radius: 0.25rem;
+  width: 0.25rem;
+}
+
+[theme='dark'] {
+  ::-webkit-scrollbar-track {
+    background-color: color-mix(in srgb, #cdcdcd 5%, transparent);
+    border-radius: 0.25rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary-gray-d);
+    border-radius: 0.25rem;
+    width: 0.25rem;
+  }
+  body {
+    scrollbar-color: var(--primary-gray-d) color-mix(in srgb, #cdcdcd 5%, transparent);
+  }
+}
+
+body,
+#app {
+  min-height: 100vh;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
 }
 
 .wrapper {
@@ -20,40 +63,11 @@ body {
   margin: 0 1.25rem;
 }
 
-.icon {
-  height: 1.5rem;
-  width: 1.5rem;
-  path {
-    fill: currentColor;
-  }
-}
-
 main {
+  flex: 1;
   padding: 5rem 0;
   @media screen and (min-width: $breakpoint-md) {
     padding: 6.25rem 0;
-  }
-}
-
-.button {
-  background-color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  transition: all 0.3s;
-  width: fit-content;
-  &_icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  &_text {
-    @include buttonText;
   }
 }
 
@@ -89,4 +103,9 @@ img {
   height: 100%;
   width: 100%;
   object-fit: cover;
+}
+
+textarea {
+  height: 150px;
+  resize: none;
 }

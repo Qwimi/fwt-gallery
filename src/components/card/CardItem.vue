@@ -13,15 +13,15 @@ const artistUrl = `/artist/${props.card?.id}`
 
 <template>
   <article class="card">
-    <router-link :to="artistUrl" v-if="isArtist" class="card_link" />
-    <img :src="card?.image" alt="Can't load the picture" v-if="card?.image" class="card_img" />
+    <router-link :to="artistUrl" v-if="isArtist" class="card__link" />
+    <img :src="card?.image" alt="Can't load the picture" v-if="card?.image" class="card__img" />
     <no-image v-else />
-    <div class="card_info">
-      <div class="card_about">
-        <p class="card_about_title">{{ card?.name }}</p>
-        <p class="card_about_date">{{ card?.date }}</p>
+    <div class="card__info">
+      <div class="card__about">
+        <p class="card__about__title">{{ card?.name }}</p>
+        <p class="card__about__date">{{ card?.date }}</p>
       </div>
-      <div class="card_info-decoration">
+      <div class="card__info--decoration">
         <icon-arrow-decoration class="arrow-icon icon" />
       </div>
     </div>
@@ -33,26 +33,26 @@ const artistUrl = `/artist/${props.card?.id}`
   aspect-ratio: 98/65;
   position: relative;
   overflow: hidden;
-  &_link {
+  &__link {
     height: 100%;
     width: 100%;
     position: absolute;
     z-index: 1;
   }
 
-  &_img {
+  &__img {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-out;
   }
   &:hover {
     img {
-      scale: 1.3;
+      scale: 1.03;
     }
   }
 
-  &_info {
+  &__info {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -64,7 +64,7 @@ const artistUrl = `/artist/${props.card?.id}`
     @media screen and (min-width: $breakpoint-md) {
       padding: 0.75rem 0;
     }
-    &-decoration {
+    &--decoration {
       content: '';
       height: 100%;
       width: 1.5rem;
@@ -92,7 +92,7 @@ const artistUrl = `/artist/${props.card?.id}`
   }
 }
 
-.card_about {
+.card__about {
   position: relative;
   padding: 0 0.75rem;
   @media screen and (min-width: $breakpoint-lg) {
@@ -108,7 +108,7 @@ const artistUrl = `/artist/${props.card?.id}`
       left: 0;
     }
   }
-  &_title {
+  &__title {
     color: var(--primary-text-hover);
     @include headingH6;
 
@@ -116,7 +116,7 @@ const artistUrl = `/artist/${props.card?.id}`
       @include headingH4;
     }
   }
-  &_date {
+  &__date {
     color: var(--accent);
     @include captionBold;
     @media screen and (min-width: $breakpoint-md) {

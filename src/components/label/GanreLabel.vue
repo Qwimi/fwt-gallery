@@ -16,7 +16,7 @@
 
 [theme='dark'] {
   .label {
-    border: 1px solid var(--primary-white);
+    outline: 1px solid var(--primary-white);
   }
 }
 </style>

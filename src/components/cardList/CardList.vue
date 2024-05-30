@@ -10,13 +10,13 @@ defineProps({
 </script>
 
 <template>
-  <section class="card-list">
+  <section class="card--list">
     <card-item v-for="card in cards" :key="card.id" :is-artist="isArtists" :card="card" />
   </section>
 </template>
 
 <style lang="scss" scoped>
-.card-list {
+.card--list {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
