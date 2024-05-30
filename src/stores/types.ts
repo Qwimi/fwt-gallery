@@ -37,4 +37,5 @@ export interface CardInterface {
   name: string
   date: string
   image: string | null
+  image2x: string | null
 }

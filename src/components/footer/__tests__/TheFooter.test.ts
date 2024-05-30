@@ -1,16 +1,16 @@
 import { shallowMount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import VFooter from '@/components/footer/VFooter.vue'
+import TheFooter from '@/components/footer/TheFooter.vue'
 import { RouterLink } from 'vue-router'
 
 describe('Footer tests', () => {
   it('Footer  render test', () => {
-    const wrapper = shallowMount(VFooter, {
+    const wrapper = shallowMount(TheFooter, {
       components: {
         RouterLink
       }
     })
-    const footerComponent = wrapper.findComponent(VFooter)
+    const footerComponent = wrapper.findComponent(TheFooter)
     expect(footerComponent.exists()).toBe(true)
   })
 })

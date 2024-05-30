@@ -11,22 +11,12 @@
 
 <style lang="scss" scoped>
 .button-underline {
-  color: var(--primary-text-dafault);
   .button_icon {
     height: 0.75rem;
     width: 0.75rem;
   }
   .button_text {
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      height: 1px;
-      width: 100%;
-      background-color: var(--primary-text-dafault);
-    }
+    border-bottom: 1px solid var(--primary-text-dafault);
   }
 
   &:hover,
@@ -38,9 +28,10 @@
   }
 
   &:disabled {
+    opacity: 1;
     color: var(--disabled-text);
-    &::after {
-      color: var(--disabled-text);
+    .button_text {
+      border-color: var(--disabled-text);
     }
   }
 }

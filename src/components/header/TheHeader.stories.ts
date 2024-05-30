@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import VHeader from '@/components/header/VHeader.vue'
+import TheHeader from '@/components/header/TheHeader.vue'
 
-const meta: Meta<typeof VHeader> = {
+const meta: Meta<typeof TheHeader> = {
   title: 'components/header/Header',
   tags: ['autodocs'],
-  component: VHeader
+  component: TheHeader
 }
 
 export default meta

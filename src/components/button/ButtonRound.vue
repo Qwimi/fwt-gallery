@@ -17,7 +17,6 @@ import IconArrow from '../icons/IconArrow.vue'
   border: 1px solid var(--secondary-gray);
   border-radius: 100%;
   background-color: var(--background-secondary);
-  color: var(--primary-text-dafault);
   &:hover {
     background-color: var(--background);
   }

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useThemeStore } from '@/stores/themeStore'
-import { onMounted } from 'vue'
 import IconDark from '@/components/icons/IconDark.vue'
 import IconLight from '@/components/icons/IconLight.vue'
 
@@ -9,8 +8,6 @@ const themeStore = useThemeStore()
 defineProps({
   showText: Boolean
 })
-
-onMounted(() => themeStore.getTheme())
 </script>
 
 <template>
@@ -28,7 +25,6 @@ onMounted(() => themeStore.getTheme())
 
 <style lang="scss" scoped>
 .button-theme {
-  color: var(--primary-text-dafault);
   .button_icon {
     padding: 0.5rem;
     border-radius: 100%;
