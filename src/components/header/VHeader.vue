@@ -3,7 +3,7 @@ import { ref, type Ref } from 'vue'
 import IconLogo from '@/components/icons/IconLogo.vue'
 import IconBurger from '@/components/icons/IconBurger.vue'
 import ButtonTheme from '@/components/button/ButtonTheme.vue'
-import VSidebar from '@/components/sidebar/VSidebar.vue'
+import VSidebar from '@/components/sidebar/TheSidebar.vue'
 import HeaderSidebar from '@/components/sidebar/HeaderSidebar.vue'
 
 const isMenuShow: Ref<boolean> = ref(false)

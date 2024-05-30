@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Genre } from '@/stores/types'
-import VLabel from '@/components/label/VLabel.vue'
+import TheLabel from '@/components/label/TheLabel.vue'
 import ButtonUnderline from '@/components/button/ButtonUnderline.vue'
 import IconExpand from '@/components/icons/IconExpand.vue'
 import { ref, type Ref } from 'vue'
@@ -55,7 +55,7 @@ const toggleExpand = () => {
           </button-underline>
         </div>
         <div class="biography_genres">
-          <v-label v-for="genre in genres" :key="genre._id">{{ genre.name }}</v-label>
+          <the-label v-for="genre in genres" :key="genre._id">{{ genre.name }}</the-label>
         </div>
       </div>
     </div>
@@ -184,10 +184,11 @@ const toggleExpand = () => {
         height: fit-content;
         width: fit-content;
         transition: transform 0.3s;
+        transform: rotate(-180deg);
       }
       &.text-short {
         .icon {
-          transform: rotate(-180deg);
+          transform: rotate(0);
         }
       }
     }
