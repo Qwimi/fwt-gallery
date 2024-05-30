@@ -1,16 +1,16 @@
 import { shallowMount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import VHeader from '@/components/header/VHeader.vue'
+import TheHeader from '@/components/header/TheHeader.vue'
 import { RouterLink } from 'vue-router'
 
 describe('Header tests', () => {
   it('Header render test', () => {
-    const wrapper = shallowMount(VHeader, {
+    const wrapper = shallowMount(TheHeader, {
       components: {
         RouterLink
       }
     })
-    const headerComponent = wrapper.findComponent(VHeader)
+    const headerComponent = wrapper.findComponent(TheHeader)
     expect(headerComponent.exists()).toBe(true)
   })
 })

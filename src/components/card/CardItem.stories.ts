@@ -15,7 +15,8 @@ export const ArtistCard: Story = {
       id: '64e5d1edaf5d7f5991789bd8',
       name: 'Ivan Aivazovsky',
       date: '29 July 1817 – 2 May 1900',
-      image: '/images/64e5d1f4af5d7f5991789c57/image.jpg'
+      image: '/images/64e5d1f4af5d7f5991789c57/image.jpg',
+      image2x: null
     }
   }
 }
@@ -26,7 +27,8 @@ export const ArtistCardWithNoImage: Story = {
       id: '64e5d1edaf5d7f5991789bd8',
       name: 'Ivan Aivazovsky',
       date: '29 July 1817 – 2 May 1900',
-      image: ''
+      image: null,
+      image2x: null
     }
   }
 }
@@ -37,7 +39,8 @@ export const ArtistCardWithLoadingError: Story = {
       id: '64e5d1edaf5d7f5991789bd8',
       name: 'Ivan Aivazovsky',
       date: '29 July 1817 – 2 May 1900',
-      image: '/images/64e5d1f4af5d7f5991789c57/image.jp'
+      image: '/images/64e5d1f4af5d7f5991789c57/image.jp',
+      image2x: null
     }
   }
 }

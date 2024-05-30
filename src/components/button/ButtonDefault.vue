@@ -17,8 +17,5 @@
   &:focus {
     box-shadow: 0 0.25rem 0.5rem rgba($color: #000000, $alpha: 0.25);
   }
-  &:disabled {
-    opacity: 0.5;
-  }
 }
 </style>

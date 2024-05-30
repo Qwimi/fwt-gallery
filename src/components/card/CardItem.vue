@@ -44,11 +44,11 @@ const artistUrl = `/artist/${props.card?.id}`
     height: 100%;
     width: 100%;
     object-fit: cover;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-out;
   }
   &:hover {
     img {
-      scale: 1.3;
+      scale: 1.03;
     }
   }
 

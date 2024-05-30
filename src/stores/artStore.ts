@@ -9,6 +9,38 @@ export const useAppStore = defineStore('app', () => {
   const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage)
   const currentArtistCards: Ref<Array<CardInterface>> = ref([])
 
+  const setAuthorCards = () => {
+    artistCards.value = artists.value.map((artist: Artist) => {
+      return {
+        id: artist._id,
+        name: artist.name,
+        date: artist.yearsOfLife,
+        image:
+          artist.mainPainting && `${import.meta.env.VITE_BASE_URL}${artist.mainPainting.image.src}`,
+        image2x:
+          artist.mainPainting &&
+          `${import.meta.env.VITE_BASE_URL}${artist.mainPainting.image.src2x}`
+      }
+    })
+  }
+
+  const setCurrentArtistCards = () => {
+    currentArtistCards.value = currentArtist.value.paintings.map((painting: Painting) => {
+      return {
+        id: painting._id,
+        name: painting.name,
+        date: painting.yearOfCreation,
+        image: painting.image && `${import.meta.env.VITE_BASE_URL}${painting.image.src}`,
+        image2x: painting.image && `${import.meta.env.VITE_BASE_URL}${painting.image.src2x}`
+      }
+    })
+  }
+
+  const unmountCurrentArtist = () => {
+    currentArtist.value = {} as ArtistPage
+    currentArtistCards.value = []
+  }
+
   const getArtists = async () => {
     try {
       await getArtistsStatic().then((data) => {
@@ -20,47 +52,16 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
-  const setAuthorCards = () => {
-    artistCards.value = artists.value.map((artist: Artist) => {
-      let url = null
-      if (artist.mainPainting) {
-        url = artist.mainPainting.image.src
-      }
-      return {
-        id: artist._id,
-        name: artist.name,
-        date: artist.yearsOfLife,
-        image: url ? `${import.meta.env.VITE_BASE_URL}${url}` : null
-      }
-    })
-  }
-
   const getCurrentArtist = async (id: String) => {
     try {
       await getCurrentArtistStatic(id).then((data) => {
         currentArtist.value = data
-        currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src}`
+        currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`
       })
       setCurrentArtistCards()
     } catch (error) {
       console.error(error)
     }
-  }
-
-  const unmountCurrentArtist = () => {
-    currentArtist.value = {} as ArtistPage
-    currentArtistCards.value = []
-  }
-
-  const setCurrentArtistCards = () => {
-    currentArtistCards.value = currentArtist.value.paintings.map((painting: Painting) => {
-      return {
-        id: painting._id,
-        name: painting.name,
-        date: painting.yearOfCreation,
-        image: painting.image.src ? `${import.meta.env.VITE_BASE_URL}${painting.image.src}` : null
-      }
-    })
   }
 
   return {

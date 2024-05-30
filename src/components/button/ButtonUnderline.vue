@@ -11,7 +11,6 @@
 
 <style lang="scss" scoped>
 .button-underline {
-  color: var(--primary-text-dafault);
   .button_icon {
     height: 0.75rem;
     width: 0.75rem;
@@ -29,9 +28,10 @@
   }
 
   &:disabled {
+    opacity: 1;
     color: var(--disabled-text);
-    &::after {
-      color: var(--disabled-text);
+    .button_text {
+      border-color: var(--disabled-text);
     }
   }
 }
