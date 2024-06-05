@@ -37,4 +37,9 @@ export interface CardInterface {
   name: string
   date: string
   image: string | null
+  image2x: string | null
+}
+
+export interface ButtonProps {
+  variant: 'default' | 'round' | 'underline' | 'icon'
 }

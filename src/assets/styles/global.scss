@@ -1,10 +1,10 @@
 @import 'reset';
-@import 'modal';
+@import 'UiStyles';
 
 * {
   transition:
-    color 0.3s,
-    background-color 0.3s;
+    color 0.25s,
+    background-color 0.25s;
 }
 
 body {
@@ -19,35 +19,10 @@ body {
   margin: 0 1.25rem;
 }
 
-.icon {
-  path {
-    fill: currentColor;
-  }
-}
-
 main {
-  padding: 6.25rem 0;
-}
-
-.button {
-  background-color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  transition: all 0.3s;
-  width: fit-content;
-  &_icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  &_text {
-    @include buttonText;
+  padding: 5rem 0;
+  @media screen and (min-width: $breakpoint-md) {
+    padding: 6.25rem 0;
   }
 }
 
@@ -72,4 +47,9 @@ a {
   &:hover {
     color: var(--primary-text-hover);
   }
+}
+
+.link-icon {
+  display: flex;
+  align-items: center;
 }

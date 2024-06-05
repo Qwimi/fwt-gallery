@@ -1,25 +1,10 @@
 <script lang="ts" setup>
-import { useThemeStore } from '@/stores/themeStore'
-import { ref, watch, type Ref } from 'vue'
-import ButtonTheme from '@/components/button/ButtonTheme.vue'
-
-const themeStore = useThemeStore()
-const isThemeLight: Ref<boolean> = ref(themeStore.isThemeLight)
-
-watch(
-  () => themeStore.isThemeLight,
-  () => {
-    isThemeLight.value = themeStore.isThemeLight
-  }
-)
+import ThemeToggler from '@/components/header/ThemeToggler.vue'
 </script>
 
 <template>
   <div class="header_sidebar">
-    <button-theme>
-      <template #text v-if="isThemeLight"> Dark mode</template>
-      <template #text v-else> Light mode</template>
-    </button-theme>
+    <theme-toggler :show-text="true" />
     <nav class="menu">
       <li class="menu_item">Log In</li>
       <li class="menu_item">Sign up</li>
