@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import GenreLabel from './GanreLabel.vue'
+import GenreLabel from './GenreLabel.vue'
 
 const meta: Meta<typeof GenreLabel> = {
   title: 'components/label/Genre Label',

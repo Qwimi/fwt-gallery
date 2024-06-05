@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Genre } from '@/stores/types'
-import GenreLabel from '@/components/label/GanreLabel.vue'
+import GenreLabel from '@/shared/label/GanreLabel.vue'
 import ButtonBase from '@/shared/ui/button/ButtonBase.vue'
 import IconExpand from '@/components/icons/IconExpand.vue'
 import { ref, type Ref } from 'vue'
