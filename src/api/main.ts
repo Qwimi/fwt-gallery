@@ -1,4 +1,4 @@
-import { axiosInstance } from './api_instaces'
+import { axiosInstance } from '.'
 
 export const getArtistsStatic = async () => {
   const response = await axiosInstance.get('/artists/static')

@@ -10,6 +10,8 @@ onMounted(() => useThemeStore().getTheme())
 
 <template>
   <the-header />
-  <router-view />
+  <main>
+    <router-view />
+  </main>
   <the-footer />
 </template>

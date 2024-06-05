@@ -5,29 +5,3 @@
     fill: currentColor;
   }
 }
-
-.button {
-  background-color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  transition: all 0.3s;
-  width: fit-content;
-  color: var(--primary-text-dafault);
-  &_icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  &_text {
-    @include buttonText;
-  }
-  &:disabled {
-    opacity: 0.5;
-  }
-}

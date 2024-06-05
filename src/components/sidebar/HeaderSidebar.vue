@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import ButtonTheme from '@/components/button/ButtonTheme.vue'
+import ThemeToggler from '@/components/header/ThemeToggler.vue'
 </script>
 
 <template>
   <div class="header_sidebar">
-    <button-theme :show-text="true" />
+    <theme-toggler :show-text="true" />
     <nav class="menu">
       <li class="menu_item">Log In</li>
       <li class="menu_item">Sign up</li>
