@@ -1,17 +1,13 @@
 import { defineStore } from 'pinia'
 import type { Artist, ArtistPage, CardInterface, Painting } from './types'
 import { ref, type Ref } from 'vue'
-import { getArtistsStatic, getCurrentArtistStatic } from '@/api/api_requests'
+import { getArtistsStatic, getCurrentArtistStatic } from '@/api/main'
 
 export const useAppStore = defineStore('app', () => {
   const artists: Ref<Array<Artist>> = ref([])
   const artistCards: Ref<Array<CardInterface>> = ref([])
   const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage)
   const currentArtistCards: Ref<Array<CardInterface>> = ref([])
-
-  const userRegistration = (email: String, password: String) => {
-    console.log(`${email} - ${password}`)
-  }
 
   const setAuthorCards = () => {
     artistCards.value = artists.value.map((artist: Artist) => {
@@ -74,7 +70,6 @@ export const useAppStore = defineStore('app', () => {
     currentArtistCards,
     unmountCurrentArtist,
     getCurrentArtist,
-    getArtists,
-    userRegistration
+    getArtists
   }
 })

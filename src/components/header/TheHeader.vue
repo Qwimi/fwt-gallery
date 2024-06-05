@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import IconLogo from '@/components/icons/IconLogo.vue'
 import IconBurger from '@/components/icons/IconBurger.vue'
-import ButtonTheme from '@/components/button/ButtonTheme.vue'
+import ThemeToggler from '@/components/header/ThemeToggler.vue'
 import { useModalStore } from '@/stores/modalStore'
+defineProps<{ theme: string }>()
 const modalStore = useModalStore()
 </script>
 
 <template>
-  <header class="header">
+  <header class="header" :class="`header--${theme}`">
     <div class="wrapper">
       <div class="header__content">
         <router-link to="/" class="link-icon">
@@ -17,11 +18,11 @@ const modalStore = useModalStore()
           <icon-burger @click="modalStore.openSidebar('headerSidebar')" class="icon" />
         </div>
         <div class="header__menu">
-          <nav class="menu">
-            <li class="menu__item" @click="modalStore.openModal('logIn')" @click.stop>Log In</li>
-            <li class="menu__item" @click="modalStore.openModal('signUp')" @click.stop>Sign up</li>
+          <nav class="menu" :class="`menu--${theme}`">
+            <li class="menu__item" @click="modalStore.openModal('logIn')">Log In</li>
+            <li class="menu__item" @click="modalStore.openModal('signUp')">Sign up</li>
           </nav>
-          <button-theme />
+          <theme-toggler :show-text="false" />
         </div>
       </div>
     </div>
@@ -30,7 +31,7 @@ const modalStore = useModalStore()
 
 <style lang="scss" scoped>
 .header {
-  color: var(--primary-text-dafault);
+  color: var(--primary-gray-dark);
   &__content {
     display: flex;
     flex-direction: row;
@@ -39,7 +40,6 @@ const modalStore = useModalStore()
     padding: 1.25rem 0;
   }
   &__menu {
-    display: flex;
     align-items: center;
   }
   .icon-burger {
@@ -54,6 +54,9 @@ const modalStore = useModalStore()
     @media screen and (min-width: $breakpoint-lg) {
       height: 1.25rem;
     }
+  }
+  &--dark {
+    color: var(--primary-gray-light);
   }
 }
 

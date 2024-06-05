@@ -6,29 +6,22 @@
   }
 }
 
-.button {
-  background-color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  transition: all 0.3s;
-  width: fit-content;
-  color: var(--primary-text-dafault);
-  &__icon {
+.form {
+  display: flex;
+  flex-direction: column;
+  color: var(--primary-black);
+  &__inputs {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    margin-bottom: 2.5rem;
+    @media screen and (min-width: $breakpoint-md) {
+      margin-bottom: 3.75rem;
+    }
   }
-  &__text {
-    @include buttonText;
-  }
-  &:disabled {
-    opacity: 0.5;
+  &--dark {
+    color: var(--primary-white);
   }
 }
 
@@ -49,20 +42,19 @@
   &__input {
     @include paragraphBaseLight;
     padding: 0.75rem 1rem;
-    background-color: transparent;
-    color: var(--primary-text-dafault);
-    border: none;
-    outline: 1px solid var(--primary-gray-l);
     border-radius: 0.25rem;
     width: 100%;
+    background-color: var(--primary-white);
+    color: var(--primary-gray-dark);
+    border: 1px solid var(--primary-gray-light);
     &::placeholder {
       color: var(--secondary-gray);
     }
     &:hover {
-      outline-color: var(--secondary-gray);
+      border-color: var(--secondary-gray);
     }
     &:focus {
-      outline-color: var(--primary-gray-d);
+      border-color: var(--primary-gray-dark);
     }
     &--wrapper {
       position: relative;
@@ -70,43 +62,21 @@
   }
   &.error {
     .form__element__input {
-      outline-color: var(--accent-error);
       margin-bottom: 0.25rem;
+      border-color: var(--accent-error);
     }
   }
-}
-
-[theme='dark'] {
-  .form__element__input {
-    outline-color: transparent;
-    background-color: var(--secondary-black);
-    &:hover {
-      outline-color: var(--primary-gray-d);
-    }
-    &:focus {
-      outline-color: var(--primary-gray-l);
-    }
-  }
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  color: var(--primary-text-hover);
-  &__inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-    margin-bottom: 2.5rem;
-    @media screen and (min-width: $breakpoint-md) {
-      margin-bottom: 3.75rem;
-    }
-  }
-  .button {
-    margin-bottom: 3.75rem;
-    @media screen and (min-width: $breakpoint-md) {
-      margin: 0;
+  &--dark {
+    .form__element__input {
+      color: var(--primary-gray-light);
+      background-color: var(--secondary-black);
+      border-color: transparent;
+      &:hover {
+        border-color: var(--primary-gray-dark);
+      }
+      &:focus {
+        border-color: var(--primary-gray-light);
+      }
     }
   }
 }
@@ -120,14 +90,19 @@
   }
   &__description {
     @include paragraphSmallLight;
-    color: var(--primary-text-dafault);
     order: 1;
     white-space: nowrap;
   }
   &__switch {
     @include paragraphSmallMadium;
-    border-bottom: 1px solid var(--primary-text-dafault);
+    border-bottom: 1px solid var(--primary-black);
     cursor: pointer;
+  }
+  .button {
+    margin-bottom: 3.75rem;
+    @media screen and (min-width: $breakpoint-md) {
+      margin: 0;
+    }
   }
   @media screen and (min-width: $breakpoint-md) {
     max-width: 340px;
@@ -143,9 +118,58 @@
     }
   }
   @media screen and (min-width: $breakpoint-lg) {
-    color: var(--primary-text-dafault);
-    &__title--singup {
-      @include headingH2;
+    color: var(--primary-gray-dark);
+    &__description__switch {
+      border-color: var(--primary-gray-dark);
     }
+  }
+  &.form--dark {
+    color: var(--primary-white);
+    .form--auth__switch {
+      border-color: var(--primary-white);
+    }
+  }
+}
+
+.modal__content {
+  display: flex;
+  justify-content: center;
+  &--auth {
+    padding: 0 1.75rem 2rem;
+    height: 100%;
+    width: 100%;
+    align-items: end;
+    &__img {
+      display: none;
+    }
+    @media screen and (min-width: $breakpoint-md) {
+      align-items: center;
+      padding: 0;
+    }
+
+    @media screen and (min-width: $breakpoint-lg) {
+      &__img {
+        display: block;
+      }
+    }
+  }
+
+  @media screen and (min-width: $breakpoint-lg) {
+    &__form {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.modal--auth {
+  height: 100vh;
+  width: 100vw;
+  @media screen and (min-width: $breakpoint-lg) {
+    width: 1028px;
+    height: 700px;
   }
 }

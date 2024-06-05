@@ -1,13 +1,16 @@
 <script lang="ts" setup>
-import ButtonTheme from '@/components/button/ButtonTheme.vue'
+import ThemeToggler from '@/components/header/ThemeToggler.vue'
 import { useModalStore } from '@/stores/modalStore'
+
+defineProps<{ theme: string }>()
+
 const modalStore = useModalStore()
 </script>
 
 <template>
   <div class="sidebar__content">
-    <button-theme :show-text="true" />
-    <nav class="menu">
+    <theme-toggler :show-text="true" />
+    <nav class="menu" :class="`menu--${theme}`">
       <li class="menu__item" @click="modalStore.openModal('logIn')">Log In</li>
       <li class="menu__item" @click="modalStore.openModal('signUp')">Sign up</li>
     </nav>
@@ -20,7 +23,6 @@ const modalStore = useModalStore()
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
-  color: var(--primary-text-dafault);
 
   .menu {
     flex-direction: column;

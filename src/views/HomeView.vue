@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/stores/artStore'
-import CardList from '@/components/cardList/CardList.vue'
+import CardList from '@/shared/ui/cardList/CardList.vue'
 import { onMounted } from 'vue'
+import { useThemeStore } from '@/stores/themeStore'
+
+defineProps<{ theme?: string }>()
 
 const store = useAppStore()
+const themeStore = useThemeStore()
 
 onMounted(() => {
   store.getArtists()
@@ -11,6 +15,6 @@ onMounted(() => {
 </script>
 <template>
   <div class="wrapper">
-    <card-list :cards="store.artistCards" :is-artists="true" />
+    <card-list :cards="store.artistCards" :is-artists="true" :theme="themeStore.theme" />
   </div>
 </template>

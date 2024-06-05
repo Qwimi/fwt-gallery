@@ -2,20 +2,21 @@
 import IconFacebook from '@/components/icons/IconFacebook.vue'
 import IconInstagram from '@/components/icons/IconInstagram.vue'
 import IconVk from '@/components/icons/IconVk.vue'
+defineProps<{ theme: string }>()
 </script>
 
 <template>
-  <footer class="footer">
+  <footer class="footer" :class="`footer--${theme}`">
     <div class="wrapper">
-      <div class="footer_content">
-        <div class="footer_info">
-          <p class="footer_info_about">
+      <div class="footer__content">
+        <div class="footer__info">
+          <p class="footer__info__about">
             Проект реализован в рамках стажировки для Frontend-разработчиков от компании
             <router-link to="/" class="link-underline">Framework Team</router-link>
           </p>
-          <p class="footer_info_name">Нагаева Анастасия, 2024</p>
+          <p class="footer__info__name">Нагаева Анастасия, 2024</p>
         </div>
-        <div class="footer_contacts">
+        <div class="footer__contacts">
           <router-link to="/">
             <icon-facebook class="icon" />
           </router-link>
@@ -33,7 +34,7 @@ import IconVk from '@/components/icons/IconVk.vue'
 
 <style lang="scss" scoped>
 .footer {
-  color: var(--primary-text-dafault);
+  color: var(--primary-gray-dark);
   padding: 2rem 0;
   border-top: 1px solid var(--secondary-gray);
   @include paragraphSmallLight;
@@ -48,7 +49,7 @@ import IconVk from '@/components/icons/IconVk.vue'
     }
   }
 
-  &_info {
+  &__info {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -59,12 +60,12 @@ import IconVk from '@/components/icons/IconVk.vue'
     @media screen and (min-width: $breakpoint-lg) {
       gap: 1.25rem;
     }
-    &_name {
+    &__name {
       color: var(--secondary-gray);
     }
   }
 
-  &_content {
+  &__content {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
@@ -74,9 +75,13 @@ import IconVk from '@/components/icons/IconVk.vue'
     }
   }
 
-  &_contacts {
+  &__contacts {
     display: flex;
     gap: 1.25rem;
+  }
+
+  &--dark {
+    color: var(--primary-gray-light);
   }
 }
 </style>

@@ -1,6 +1,5 @@
 @import 'reset';
-@import 'modal';
-@import 'UiStyles';
+@import 'uiStyles';
 
 * {
   transition:
@@ -9,9 +8,13 @@
 }
 
 body {
-  background-color: var(--background);
+  background-color: var(--primary-white);
   scrollbar-width: thin;
   scrollbar-color: var(--secondary-gray) color-mix(in srgb, var(--primary-black) 5%, transparent);
+}
+body[theme='dark'] {
+  background-color: var(--primary-black);
+  scrollbar-color: var(--primary-gray-d) color-mix(in srgb, #cdcdcd 5%, transparent);
 }
 
 ::-webkit-scrollbar {
@@ -40,8 +43,11 @@ body {
     border-radius: 0.25rem;
     width: 0.25rem;
   }
-  body {
-    scrollbar-color: var(--primary-gray-d) color-mix(in srgb, #cdcdcd 5%, transparent);
+  a {
+    color: var(--primary-gray-light);
+    &:hover {
+      color: var(--secondary-white);
+    }
   }
 }
 
@@ -55,20 +61,27 @@ body,
   flex-direction: column;
 }
 
-.wrapper {
-  @media screen and (min-width: $breakpoint-lg) {
-    max-width: 1240px;
-    margin: 0 auto;
-  }
-  margin: 0 1.25rem;
-}
-
 main {
   flex: 1;
   padding: 5rem 0;
   @media screen and (min-width: $breakpoint-md) {
     padding: 6.25rem 0;
   }
+}
+
+a {
+  color: var(--primary-gray-dark);
+  &:hover {
+    color: var(--primary-black);
+  }
+}
+
+.wrapper {
+  @media screen and (min-width: $breakpoint-lg) {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  margin: 0 1.25rem;
 }
 
 li {
@@ -79,18 +92,21 @@ li {
   display: flex;
   gap: 1.25rem;
   list-style: none;
-  &_item {
-    color: var(--primary-text-dafault);
+  &__item {
+    color: var(--primary-gray-dark);
+    cursor: pointer;
     &:hover {
-      color: var(--primary-text-hover);
+      color: var(--primary-black);
     }
   }
-}
-
-a {
-  color: var(--primary-text-dafault);
-  &:hover {
-    color: var(--primary-text-hover);
+  &--dark {
+    .menu__item {
+      color: var(--primary-gray-light);
+      cursor: pointer;
+      &:hover {
+        color: var(--primary-white);
+      }
+    }
   }
 }
 

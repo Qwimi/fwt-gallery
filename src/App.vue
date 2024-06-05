@@ -8,18 +8,20 @@ import { useModalStore } from './stores/modalStore'
 import TheModal from '@/components/modal/TheModal.vue'
 import TheSidebar from '@/components/sidebar/TheSidebar.vue'
 
+const themeStore = useThemeStore()
+
 onMounted(() => {
-  useThemeStore().getTheme()
+  themeStore.getTheme()
   useModalStore()
 })
 </script>
 
 <template>
-  <the-sidebar />
-  <the-modal />
-  <the-header />
+  <the-sidebar :theme="themeStore.theme" />
+  <the-modal :theme="themeStore.theme" />
+  <the-header :theme="themeStore.theme" />
   <main>
-    <router-view />
+    <router-view :theme="themeStore.theme" />
   </main>
-  <the-footer />
+  <the-footer :theme="themeStore.theme" />
 </template>

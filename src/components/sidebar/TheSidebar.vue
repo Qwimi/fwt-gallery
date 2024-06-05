@@ -2,6 +2,7 @@
 import { useModalStore } from '@/stores/modalStore'
 import HeaderSidebar from '@/components/sidebar/HeaderSidebar.vue'
 import IconClose from '@/components/icons/IconClose.vue'
+defineProps<{ theme: string }>()
 
 const modalStore = useModalStore()
 
@@ -13,18 +14,29 @@ const currentSidebarContent = {
 <template>
   <Teleport to="body">
     <Transition name="fade">
-      <div class="modal--shadow" v-show="modalStore.isSidebarOpen" @click="modalStore.closeSidebar">
+      <div
+        class="sidebar--shadow"
+        v-show="modalStore.isSidebarOpen"
+        @click="modalStore.closeSidebar"
+      >
         <Transition name="slide">
-          <div class="modal modal--sidebar" v-if="modalStore.isSidebarOpen" @click.stop>
-            <icon-close class="icon modal_icon-close" @click="modalStore.closeSidebar" />
-            <component
-              :is="
-                currentSidebarContent[
-                  modalStore.currentSidebar as keyof typeof currentSidebarContent
-                ]
-              "
-              v-if="modalStore.currentSidebar"
-            />
+          <div
+            class="sidebar"
+            :class="`sidebar--${theme}`"
+            v-if="modalStore.isSidebarOpen"
+            @click.stop
+          >
+            <icon-close class="icon sidebar__icon-close" @click="modalStore.closeSidebar" />
+            <KeepAlive>
+              <component
+                :is="
+                  currentSidebarContent[
+                    modalStore.currentSidebar as keyof typeof currentSidebarContent
+                  ]
+                "
+                :theme="theme"
+              />
+            </KeepAlive>
           </div>
         </Transition>
       </div>
@@ -33,13 +45,13 @@ const currentSidebarContent = {
 </template>
 
 <style lang="scss" scoped>
-.modal--sidebar {
-  top: 0;
+.sidebar {
+  @include modalMixin;
   right: 0;
-  height: 100%;
+  background-color: var(--background);
   height: 100vh;
   width: 80%;
-  z-index: 3;
+  color: var(--primary-text-dafault);
   @media screen and (min-width: $breakpoint-md) {
     width: 60%;
   }
@@ -47,14 +59,14 @@ const currentSidebarContent = {
 
 .fade-enter-active,
 .fade-leave-active {
-  &.modal--shadow {
+  &.sidebar--shadow {
     transition: opacity 0.5s ease-in-out;
   }
 }
 
 .fade-enter-from,
 .fade-leave-to {
-  &.modal--shadow {
+  &.sidebar--shadow {
     opacity: 0;
   }
 }

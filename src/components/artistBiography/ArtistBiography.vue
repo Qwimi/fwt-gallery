@@ -1,21 +1,21 @@
 <script lang="ts" setup>
 import type { Genre } from '@/stores/types'
-import GenreLabel from '@/components/label/GanreLabel.vue'
-import ButtonUnderline from '@/components/button/ButtonUnderline.vue'
+import GenreLabel from '@/shared/ui/label/GenreLabel.vue'
+import ButtonBase from '@/shared/ui/button/ButtonBase.vue'
 import IconExpand from '@/components/icons/IconExpand.vue'
 import { ref, type Ref } from 'vue'
 
-const props = defineProps({
-  name: String,
-  yearsOfLife: String,
-  biography: String,
+const props = defineProps<{
+  name: String
+  yearsOfLife: String
+  biography: String
   genres: Array<Genre>
-})
+  theme?: string
+}>()
 
 const maxStrLenght = 265
-const isExpandable: Ref<Boolean> = ref(true)
-const isExpanded: Ref<Boolean> = ref(!isExpandable.value)
-const biographyClass: Ref<String> = ref(isExpanded.value ? '' : 'text-short')
+const isExpanded: Ref<Boolean> = ref(false)
+const biographyClass: Ref<String> = ref('text-short')
 
 const biographyText = () => {
   return isExpanded.value ? props.biography : `${props.biography?.slice(0, maxStrLenght)}...`
@@ -28,34 +28,40 @@ const toggleExpand = () => {
 </script>
 
 <template>
-  <div class="biography">
-    <div class="biography_wrapper">
-      <div class="biography_header">
-        <p class="biography_header_date">
+  <div class="biography" :class="`biography--${theme}`">
+    <div class="biography__wrapper">
+      <div class="biography__header">
+        <p class="biography__header__date">
           {{ yearsOfLife }}
         </p>
-        <p class="biography_header_name">
+        <p class="biography__header__name">
           {{ name }}
         </p>
       </div>
-      <div class="biography_content">
-        <div class="biography_content_main">
-          <p class="biography_content_main_text" :class="biographyClass">
+      <div class="biography__content">
+        <div class="biography__content__main">
+          <p class="biography__content__text" :class="biographyClass">
             {{ biographyText() }}
           </p>
-          <button-underline
-            class="biography_content_main_btn"
-            :class="biographyClass"
-            v-if="isExpandable"
+          <button-base
+            :variant="'underline'"
+            :theme="theme"
+            class="biography__content__toggler"
             @click="toggleExpand"
           >
             <template v-if="isExpanded">read less</template>
             <template v-else>read more</template>
             <template #icon><icon-expand class="icon" /></template>
-          </button-underline>
+          </button-base>
         </div>
-        <div class="biography_genres">
-          <genre-label v-for="genre in genres" :key="genre._id">{{ genre.name }}</genre-label>
+        <div class="biography__genres">
+          <genre-label
+            v-for="genre in genres"
+            :key="genre._id"
+            :theme="theme"
+            :genre="genre"
+            :deletable="false"
+          />
         </div>
       </div>
     </div>
@@ -65,50 +71,49 @@ const toggleExpand = () => {
 <style lang="scss" scoped>
 .biography {
   position: relative;
-
   @media screen and (min-width: $breakpoint-lg) {
     position: absolute;
     inset: 0;
     max-width: 1240px;
     margin: 0 auto;
 
-    &_wrapper {
+    &__wrapper {
       max-width: 604px;
-      background-color: var(--background);
+      background-color: var(--primary-white);
       padding: 3.25rem 5rem;
       margin-top: 3.25rem;
     }
-    &_content,
-    &_header {
+    &__content,
+    &__header {
       padding: 0;
     }
   }
 }
 
-.biography_header {
-  background-color: var(--background);
+.biography__header {
   position: absolute;
   top: 0;
   transform: translateY(-100%);
   width: calc(100% - 1.25rem);
   max-width: 560px;
-  color: var(--primary-gray-d);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   padding: 1.25rem;
+  background-color: var(--primary-white);
 
-  &_date {
+  &__date {
+    color: var(--primary-gray-dark);
     @include captionMedium12;
     @media screen and (min-width: $breakpoint-md) {
       @include captionMedium16;
     }
   }
 
-  &_name {
+  &__name {
     @include headingH3;
-    color: var(--accent);
     position: relative;
+    color: var(--accent-red);
     @media screen and (min-width: $breakpoint-md) {
       @include headingH2;
       &::before {
@@ -118,7 +123,7 @@ const toggleExpand = () => {
         position: absolute;
         top: 0;
         left: -1.25rem;
-        background: var(--accent);
+        background: var(--accent-red);
       }
     }
     @media screen and (min-width: $breakpoint-lg) {
@@ -144,7 +149,7 @@ const toggleExpand = () => {
   }
 }
 
-.biography_content {
+.biography__content {
   padding: 1.25rem 1.25rem 0;
   position: relative;
   @media screen and (min-width: $breakpoint-lg) {
@@ -156,52 +161,70 @@ const toggleExpand = () => {
       left: 0;
       height: 2px;
       width: 2rem;
-      background-color: var(--primary-text-dafault);
+      background-color: var(--primary-gray-dark);
     }
   }
-  &_main {
+  &__main {
     margin-bottom: 2rem;
-    &_text {
-      max-width: 265ch;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      word-wrap: break-word;
-      color: var(--primary-text-dafault);
-      @include paragraphBaseLight;
-
-      &.text-short {
-        @include textGradient(var(--primary-text-dafault));
-        .button_icon {
-          transform: rotate(180deg);
+  }
+  &__text {
+    @include paragraphBaseLight;
+    color: var(--primary-gray-dark);
+    &.text-short {
+      @include textGradient(var(--primary-gray-dark));
+      + .biography__content__toggler {
+        .icon {
+          rotate: 0deg;
         }
       }
     }
-    &_btn {
-      flex-direction: row-reverse;
-      margin-top: 1.25rem;
-
-      .icon {
-        height: fit-content;
-        width: fit-content;
-        transition: transform 0.3s;
-        transform: rotate(-180deg);
-      }
-      &.text-short {
-        .icon {
-          transform: rotate(0);
-        }
-      }
+  }
+  &__toggler {
+    flex-direction: row-reverse;
+    margin-top: 1.25rem;
+    .icon {
+      rotate: -180deg;
+      height: fit-content;
+      width: fit-content;
+      transition: rotate 0.3s;
     }
   }
 }
 
-.biography_genres {
+.biography__genres {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 
   @media screen and (min-width: $breakpoint-md) {
     gap: 1.25rem;
+  }
+}
+
+.biography--dark {
+  .biography__wrapper,
+  .biography__header {
+    background-color: var(--primary-black);
+    &__date {
+      color: var(--secondary-gray);
+    }
+    &__name {
+      color: var(--accent-gold);
+      &::before {
+        background-color: var(--accent-gold);
+      }
+    }
+  }
+  .biography__content {
+    &::before {
+      background-color: var(--primary-gray-light);
+    }
+    &__text {
+      color: var(--primary-gray-light);
+      &.text-short {
+        @include textGradient(var(--primary-gray-light));
+      }
+    }
   }
 }
 </style>

@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import type { PropType } from 'vue'
 import ArtistBiography from '@/components/artistBiography/ArtistBiography.vue'
 import type { ArtistPage } from '@/stores/types'
 import NoImage from '@/components/noImg/NoImage.vue'
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
 
-defineProps({
-  artist: {} as PropType<ArtistPage>
-})
+defineProps<{
+  artist: ArtistPage
+  theme?: string
+}>()
 </script>
 
 <template>
@@ -25,6 +25,7 @@ defineProps({
       :years-of-life="artist?.yearsOfLife"
       :biography="artist?.description"
       :genres="artist?.genres"
+      :theme="theme"
     />
   </section>
 </template>
