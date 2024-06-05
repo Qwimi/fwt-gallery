@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { CardInterface } from '@/stores/types'
 import type { PropType } from 'vue'
-import CardItem from '@/components/card/CardItem.vue'
+import CardItem from '@/shared/ui/card/CardItem.vue'
 
 defineProps({
   cards: Array as PropType<CardInterface[]>,

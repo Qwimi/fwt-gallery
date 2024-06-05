@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { Artist, ArtistPage, CardInterface, Painting } from './types'
 import { ref, type Ref } from 'vue'
-import { getArtistsStatic, getCurrentArtistStatic } from '@/api/api_requests'
+import { getArtistsStatic, getCurrentArtistStatic } from '@/api/main'
 
 export const useAppStore = defineStore('app', () => {
   const artists: Ref<Array<Artist>> = ref([])

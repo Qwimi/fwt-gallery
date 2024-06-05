@@ -2,7 +2,7 @@
 import router from '@/router'
 import { useAppStore } from '@/stores/artStore'
 import { onMounted, onUnmounted } from 'vue'
-import CardList from '@/components/cardList/CardList.vue'
+import CardList from '@/shared/ui/cardList/CardList.vue'
 import ArtistSection from '@/components/artistSection/ArtistSection.vue'
 
 const store = useAppStore()

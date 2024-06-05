@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Genre } from '@/stores/types'
 import GenreLabel from '@/components/label/GanreLabel.vue'
-import ButtonUnderline from '@/components/button/ButtonUnderline.vue'
+import ButtonBase from '@/shared/ui/button/ButtonBase.vue'
 import IconExpand from '@/components/icons/IconExpand.vue'
 import { ref, type Ref } from 'vue'
 
@@ -13,9 +13,8 @@ const props = defineProps({
 })
 
 const maxStrLenght = 265
-const isExpandable: Ref<Boolean> = ref(true)
-const isExpanded: Ref<Boolean> = ref(!isExpandable.value)
-const biographyClass: Ref<String> = ref(isExpanded.value ? '' : 'text-short')
+const isExpanded: Ref<Boolean> = ref(false)
+const biographyClass: Ref<String> = ref('text-short')
 
 const biographyText = () => {
   return isExpanded.value ? props.biography : `${props.biography?.slice(0, maxStrLenght)}...`
@@ -39,20 +38,19 @@ const toggleExpand = () => {
         </p>
       </div>
       <div class="biography_content">
-        <div class="biography_content_main">
-          <p class="biography_content_main_text" :class="biographyClass">
+        <div class="biography_content_main" :class="biographyClass">
+          <p class="biography_content_main_text">
             {{ biographyText() }}
           </p>
-          <button-underline
-            class="biography_content_main_btn"
-            :class="biographyClass"
-            v-if="isExpandable"
+          <button-base
+            :variant="'underline'"
+            class="biography_content_main_toggler"
             @click="toggleExpand"
           >
             <template v-if="isExpanded">read less</template>
             <template v-else>read more</template>
             <template #icon><icon-expand class="icon" /></template>
-          </button-underline>
+          </button-base>
         </div>
         <div class="biography_genres">
           <genre-label v-for="genre in genres" :key="genre._id">{{ genre.name }}</genre-label>
@@ -161,6 +159,12 @@ const toggleExpand = () => {
   }
   &_main {
     margin-bottom: 2rem;
+    &.text-short {
+      @include textGradient(var(--primary-text-dafault));
+      .icon {
+        rotate: 0deg;
+      }
+    }
     &_text {
       max-width: 265ch;
       overflow: hidden;
@@ -168,27 +172,16 @@ const toggleExpand = () => {
       word-wrap: break-word;
       color: var(--primary-text-dafault);
       @include paragraphBaseLight;
-
-      &.text-short {
-        @include textGradient(var(--primary-text-dafault));
-        .button_icon {
-          transform: rotate(180deg);
-        }
-      }
     }
-    &_btn {
+    &_toggler {
       flex-direction: row-reverse;
       margin-top: 1.25rem;
 
       .icon {
+        rotate: -180deg;
         height: fit-content;
         width: fit-content;
-        transition: transform 0.3s;
-      }
-      &.text-short {
-        .icon {
-          transform: rotate(-180deg);
-        }
+        transition: rotate 0.3s;
       }
     }
   }

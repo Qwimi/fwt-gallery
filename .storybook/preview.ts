@@ -15,8 +15,7 @@ const preview: Preview = {
 }
 
 const pinia = createPinia()
-setup((app: App) => {
-  app.use(pinia)
-})
+
+setup((app: App) => app.use(pinia))
 
 export default preview

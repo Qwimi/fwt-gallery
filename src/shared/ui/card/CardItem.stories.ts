@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import CardItem from '@/components/card/CardItem.vue'
+import CardItem from './CardItem.vue'
 
 const meta: Meta<typeof CardItem> = {
   title: 'components/card/Card item',
@@ -16,7 +16,7 @@ export const ArtistCard: Story = {
       name: 'Ivan Aivazovsky',
       date: '29 July 1817 – 2 May 1900',
       image: '/images/64e5d1f4af5d7f5991789c57/image.jpg',
-      image2x: null
+      image2x: '/images/64e5d1f4af5d7f5991789c57/image.jpg'
     }
   }
 }
@@ -40,7 +40,7 @@ export const ArtistCardWithLoadingError: Story = {
       name: 'Ivan Aivazovsky',
       date: '29 July 1817 – 2 May 1900',
       image: '/images/64e5d1f4af5d7f5991789c57/image.jp',
-      image2x: null
+      image2x: '/images/64e5d1f4af5d7f5991789c57/image.jp'
     }
   }
 }

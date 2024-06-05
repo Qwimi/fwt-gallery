@@ -2,9 +2,9 @@
 import { ref, type Ref } from 'vue'
 import IconLogo from '@/components/icons/IconLogo.vue'
 import IconBurger from '@/components/icons/IconBurger.vue'
-import ButtonTheme from '@/components/button/ButtonTheme.vue'
 import TheSidebar from '@/components/sidebar/TheSidebar.vue'
 import HeaderSidebar from '@/components/sidebar/HeaderSidebar.vue'
+import ThemeToggler from '@/components/header/ThemeToggler.vue'
 
 const isMenuShow: Ref<boolean> = ref(false)
 
@@ -28,7 +28,7 @@ const toggleMenu = () => {
             <li class="menu_item">Log In</li>
             <li class="menu_item">Sign up</li>
           </nav>
-          <button-theme />
+          <theme-toggler />
         </div>
       </div>
     </div>

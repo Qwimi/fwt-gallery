@@ -4,23 +4,24 @@ import { ref, type Ref } from 'vue'
 export const useThemeStore = defineStore('theme', () => {
   const isThemeLight: Ref<boolean> = ref(true)
 
-  const saveTheme = (theme: Boolean) => {
-    localStorage.setItem('theme', theme ? 'light' : 'dark')
+  const saveTheme = (theme: string) => {
+    localStorage.setItem('theme', theme)
   }
 
-  const setTheme = (theme: boolean) => {
-    theme ? document.body.removeAttribute('theme') : document.body.setAttribute('theme', 'dark')
+  const setTheme = () => {
+    const theme = isThemeLight.value ? 'light' : 'dark'
+    document.body.setAttribute('theme', theme)
+    saveTheme(theme)
   }
 
   const getTheme = () => {
     isThemeLight.value = localStorage.getItem('theme') == 'light'
-    setTheme(isThemeLight.value)
+    setTheme()
   }
 
   const toggleTheme = () => {
     isThemeLight.value = !isThemeLight.value
-    setTheme(isThemeLight.value)
-    saveTheme(isThemeLight.value)
+    setTheme()
   }
 
   return { isThemeLight, toggleTheme, getTheme }
