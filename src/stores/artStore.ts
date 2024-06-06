@@ -41,6 +41,21 @@ export const useAppStore = defineStore('app', () => {
     currentArtistCards.value = []
   }
 
+  const setAuthorCards = () => {
+    artistCards.value = artists.value.map((artist: Artist) => {
+      return {
+        id: artist._id,
+        name: artist.name,
+        date: artist.yearsOfLife,
+        image:
+          artist.mainPainting && `${import.meta.env.VITE_BASE_URL}${artist.mainPainting.image.src}`,
+        image2x:
+          artist.mainPainting &&
+          `${import.meta.env.VITE_BASE_URL}${artist.mainPainting.image.src2x}`
+      }
+    })
+  }
+
   const getArtists = async () => {
     try {
       await getArtistsStatic().then((data) => {
