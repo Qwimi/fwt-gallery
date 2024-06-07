@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Genre } from '@/stores/types'
-import GenreLabel from '@/shared/label/GanreLabel.vue'
+import GenreLabel from '@/shared/ui/label/GenreLabel.vue'
 import ButtonBase from '@/shared/ui/button/ButtonBase.vue'
 import IconExpand from '@/components/icons/IconExpand.vue'
 import { ref, type Ref } from 'vue'
@@ -38,8 +38,8 @@ const toggleExpand = () => {
         </p>
       </div>
       <div class="biography_content">
-        <div class="biography_content_main" :class="biographyClass">
-          <p class="biography_content_main_text">
+        <div class="biography_content_main">
+          <p class="biography_content_main_text" :class="biographyClass">
             {{ biographyText() }}
           </p>
           <button-base
@@ -84,17 +84,17 @@ const toggleExpand = () => {
 }
 
 .biography_header {
-  background-color: var(--background);
   position: absolute;
   top: 0;
   transform: translateY(-100%);
   width: calc(100% - 1.25rem);
   max-width: 560px;
-  color: var(--primary-gray-d);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   padding: 1.25rem;
+  color: var(--primary-gray-d);
+  background-color: var(--background);
 
   &_date {
     @include captionMedium12;
@@ -159,12 +159,6 @@ const toggleExpand = () => {
   }
   &_main {
     margin-bottom: 2rem;
-    &.text-short {
-      @include textGradient(var(--primary-text-dafault));
-      .icon {
-        rotate: 0deg;
-      }
-    }
     &_text {
       max-width: 265ch;
       overflow: hidden;
@@ -172,6 +166,14 @@ const toggleExpand = () => {
       word-wrap: break-word;
       color: var(--primary-text-dafault);
       @include paragraphBaseLight;
+      &.text-short {
+        @include textGradient(var(--primary-text-dafault));
+        + .biography_content_main_toggler {
+          .icon {
+            rotate: 0deg;
+          }
+        }
+      }
     }
     &_toggler {
       flex-direction: row-reverse;

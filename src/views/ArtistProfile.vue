@@ -6,7 +6,7 @@ import CardList from '@/shared/ui/cardList/CardList.vue'
 import ArtistSection from '@/components/artistSection/ArtistSection.vue'
 
 const store = useAppStore()
-const artistId: String = router.currentRoute.value.params.id as String
+const artistId = router.currentRoute.value.params.id as String
 
 onMounted(() => store.getCurrentArtist(artistId))
 onUnmounted(() => store.unmountCurrentArtist())

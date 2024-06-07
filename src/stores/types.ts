@@ -39,6 +39,7 @@ export interface CardInterface {
   date: string
   image: string | null
   image2x: string | null
+  artist: string
 }
 
 export interface ArtistPage {

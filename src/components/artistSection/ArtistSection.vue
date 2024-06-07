@@ -12,12 +12,12 @@ defineProps({
 
 <template>
   <section class="artist-section">
-    <router-link to="/" class="link link-icon">
+    <router-link :to="{ name: 'home' }" class="link link-icon">
       <icon-arrow-decoration class="icon" />
       <span class="link_text">back</span>
     </router-link>
     <div class="artist-section_avatar">
-      <img :src="artist?.avatar?.src" alt="" v-if="artist?.avatar?.src" />
+      <img :src="artist?.avatar?.src" alt="can't load the picture" v-if="artist?.avatar?.src" />
       <no-image v-else />
     </div>
     <artist-biography

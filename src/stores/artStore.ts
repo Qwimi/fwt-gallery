@@ -9,21 +9,6 @@ export const useAppStore = defineStore('app', () => {
   const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage)
   const currentArtistCards: Ref<Array<CardInterface>> = ref([])
 
-  const setAuthorCards = () => {
-    artistCards.value = artists.value.map((artist: Artist) => {
-      return {
-        id: artist._id,
-        name: artist.name,
-        date: artist.yearsOfLife,
-        image:
-          artist.mainPainting && `${import.meta.env.VITE_BASE_URL}${artist.mainPainting.image.src}`,
-        image2x:
-          artist.mainPainting &&
-          `${import.meta.env.VITE_BASE_URL}${artist.mainPainting.image.src2x}`
-      }
-    })
-  }
-
   const setCurrentArtistCards = () => {
     currentArtistCards.value = currentArtist.value.paintings.map((painting: Painting) => {
       return {
@@ -58,9 +43,7 @@ export const useAppStore = defineStore('app', () => {
 
   const getArtists = async () => {
     try {
-      await getArtistsStatic().then((data) => {
-        artists.value = data
-      })
+      artists.value = await getArtistsStatic()
       setAuthorCards()
     } catch (error) {
       console.error(error)
@@ -69,10 +52,8 @@ export const useAppStore = defineStore('app', () => {
 
   const getCurrentArtist = async (id: String) => {
     try {
-      await getCurrentArtistStatic(id).then((data) => {
-        currentArtist.value = data
-        currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`
-      })
+      currentArtist.value = await getCurrentArtistStatic(id)
+      currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`
       setCurrentArtistCards()
     } catch (error) {
       console.error(error)
