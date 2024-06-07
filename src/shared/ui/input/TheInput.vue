@@ -32,6 +32,9 @@ defineEmits(['update:modelValue'])
 </template>
 
 <style lang="scss" scoped>
+.form__element {
+  @include inputMixin;
+}
 .eye-icon {
   position: absolute;
   right: 1rem;

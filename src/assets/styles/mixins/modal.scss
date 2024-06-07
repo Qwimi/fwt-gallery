@@ -1,0 +1,39 @@
+@mixin modalMixin {
+  position: fixed;
+  overflow: hidden;
+  z-index: 3;
+  color: var(--primary-gray-dark);
+  background-color: var(--primary-white);
+  &__icon-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    cursor: pointer;
+    @media screen and (min-width: $breakpoint-md) {
+      top: 2rem;
+    }
+    @media screen and (min-width: $breakpoint-lg) {
+      right: 2rem;
+    }
+  }
+  &--light {
+    color: var(--primary-gray-dark);
+    background-color: var(--primary-white);
+  }
+  &--dark {
+    color: var(--primary-gray-light);
+    background-color: var(--primary-black);
+  }
+  &--shadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba($color: #030303, $alpha: 0.6);
+    z-index: 2;
+  }
+  &__content {
+    display: flex;
+  }
+}

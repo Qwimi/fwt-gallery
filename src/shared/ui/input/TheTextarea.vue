@@ -25,3 +25,13 @@ defineEmits(['update:modelValue'])
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.form__element {
+  @include inputMixin;
+}
+.form__element__input {
+  height: 150px;
+  resize: none;
+}
+</style>

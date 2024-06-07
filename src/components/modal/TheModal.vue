@@ -46,10 +46,6 @@ const currentModalContent = {
   }
 }
 
-// .modal--shadow {
-//   @include modalShadowMixin;
-// }
-
 .fade-enter-active,
 .fade-leave-active,
 .component-fade-enter-active,

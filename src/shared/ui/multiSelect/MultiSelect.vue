@@ -66,6 +66,9 @@ const updateSelected = (event: { value: boolean; id: string }) => {
 
 <style lang="scss" scoped>
 .form__element {
+  @include inputMixin;
+}
+.form__element {
   &__input {
     display: flex;
     align-items: center;

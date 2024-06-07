@@ -48,10 +48,8 @@ const currentSidebarContent = {
 .sidebar {
   @include modalMixin;
   right: 0;
-  background-color: var(--background);
   height: 100vh;
   width: 80%;
-  color: var(--primary-text-dafault);
   @media screen and (min-width: $breakpoint-md) {
     width: 60%;
   }

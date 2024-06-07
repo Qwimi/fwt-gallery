@@ -8,7 +8,7 @@ import ArtistSection from '@/components/artistSection/ArtistSection.vue'
 defineProps<{ theme?: string }>()
 
 const store = useAppStore()
-const artistId: String = router.currentRoute.value.params.id as String
+const artistId = router.currentRoute.value.params.id as String
 
 onMounted(() => store.getCurrentArtist(artistId))
 onUnmounted(() => store.unmountCurrentArtist())

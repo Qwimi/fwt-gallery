@@ -12,43 +12,43 @@ const passwordVal: Ref<string> = ref('')
 </script>
 
 <template>
-  <div class="modal--auth">
-    <div class="modal__content modal__content--auth">
-      <div class="modal__content--auth__img">
-        <img src="@/assets/signup.png" alt="" />
-      </div>
-      <div class="modal__content__form">
-        <form class="form form--auth" :class="`form--${theme}`">
-          <legend class="form--auth__title">Create your profile</legend>
-          <p class="form--auth__description">
-            If you already have an account, please
-            <span class="form--auth__switch" @click="modalStore.openModal('logIn')">log in</span>
-          </p>
-          <div class="form__inputs">
-            <the-input
-              v-model="emailVal"
-              :type="'email'"
-              :name="'email'"
-              :label="'email'"
-              :theme="theme"
-            />
-            <the-input
-              v-model="passwordVal"
-              :type="'password'"
-              :name="'password'"
-              :label="'password'"
-              :theme="theme"
-            />
-          </div>
-          <button-base :variant="'default'" :theme="theme">sign in</button-base>
-        </form>
-      </div>
+  <div class="modal__content modal--auth__content">
+    <div class="modal--auth__content__img">
+      <img src="@/assets/signup.png" alt="" />
+    </div>
+    <div class="modal--auth__content__form">
+      <form class="form--auth" :class="`form--${theme}`">
+        <legend class="form--auth__title">Create your profile</legend>
+        <p class="form--auth__description">
+          If you already have an account, please
+          <span class="form--auth__switch" @click="modalStore.openModal('logIn')">log in</span>
+        </p>
+        <div class="form--auth__inputs">
+          <the-input
+            v-model="emailVal"
+            :type="'email'"
+            :name="'email'"
+            :label="'email'"
+            :theme="theme"
+          />
+          <the-input
+            v-model="passwordVal"
+            :type="'password'"
+            :name="'password'"
+            :label="'password'"
+            :theme="theme"
+          />
+        </div>
+        <button-base :variant="'default'" :theme="theme">sign in</button-base>
+      </form>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .form--auth__title {
-  @include headingH2;
+  @media screen and (min-width: $breakpoint-lg) {
+    @include headingH2;
+  }
 }
 </style>

@@ -17,7 +17,7 @@ defineProps<{
       <span class="link__text">back</span>
     </router-link>
     <div class="artist--section__avatar">
-      <img :src="artist?.avatar?.src" alt="" v-if="artist?.avatar?.src" />
+      <img :src="artist?.avatar?.src" alt="can't load the picture" v-if="artist?.avatar?.src" />
       <no-image v-else />
     </div>
     <artist-biography

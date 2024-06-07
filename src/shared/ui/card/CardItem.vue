@@ -3,17 +3,20 @@ import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
 import type { CardInterface } from '@/stores/types'
 import NoImage from '@/components/noImg/NoImage.vue'
 
-const props = defineProps<{
+defineProps<{
   card: CardInterface
   isArtist: Boolean
   theme?: string
 }>()
-const artistUrl = `/artist/${props.card?.id}`
 </script>
 
 <template>
   <article class="card" :class="`card--${theme}`">
-    <router-link :to="artistUrl" v-if="isArtist" class="card__link" />
+    <router-link
+      :to="{ name: 'artist', params: { id: card.id } }"
+      v-if="isArtist"
+      class="card__link"
+    />
     <img :src="card?.image" alt="Can't load the picture" v-if="card?.image" class="card__img" />
     <no-image v-else />
     <div class="card__info">

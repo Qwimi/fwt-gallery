@@ -1,0 +1,41 @@
+@mixin buttonMixin {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.3s;
+  width: fit-content;
+  color: var(--primary-gray-dark);
+  border-color: var(--primary-gray-dark);
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__text {
+    @include buttonText;
+  }
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  &:hover,
+  &:focus {
+    color: var(--primary-black);
+    border-color: var(--primary-black);
+  }
+  &--dark {
+    color: var(--primary-gray-light);
+    border-color: var(--primary-gray-light);
+    &:hover,
+    &:focus {
+      color: var(--primary-white);
+      border-color: var(--primary-white);
+    }
+  }
+}

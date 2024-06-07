@@ -22,37 +22,35 @@ const submitForm = async () => {
 </script>
 
 <template>
-  <div class="modal--auth">
-    <div class="modal__content modal__content--auth">
-      <div class="modal__content--auth__img">
-        <img src="@/assets/login.png" alt="" />
-      </div>
-      <div class="modal__content__form">
-        <form class="form form--auth" :class="`form--${theme}`" @submit.prevent="submitForm">
-          <legend class="form--auth__title">Welcome back</legend>
-          <p class="form--auth__description">
-            If you don't have an account yet, please
-            <span class="form--auth__switch" @click="modalStore.openModal('signUp')">sign up</span>
-          </p>
-          <div class="form__inputs">
-            <the-input
-              v-model="emailValue"
-              :type="'email'"
-              :name="'email'"
-              :label="'email'"
-              :theme="theme"
-            />
-            <the-input
-              v-model="password"
-              :type="'password'"
-              :name="'password'"
-              :label="'password'"
-              :theme="theme"
-            />
-          </div>
-          <button-base :variant="'default'" :theme="theme">log in</button-base>
-        </form>
-      </div>
+  <div class="modal__content modal--auth__content">
+    <div class="modal--auth__content__img">
+      <img src="@/assets/login.png" alt="" />
+    </div>
+    <div class="modal--auth__content__form">
+      <form class="form--auth" :class="`form--${theme}`" @submit.prevent="submitForm">
+        <legend class="form--auth__title">Welcome back</legend>
+        <p class="form--auth__description">
+          If you don't have an account yet, please
+          <span class="form--auth__switch" @click="modalStore.openModal('signUp')">sign up</span>
+        </p>
+        <div class="form--auth__inputs">
+          <the-input
+            v-model="emailValue"
+            :type="'email'"
+            :name="'email'"
+            :label="'email'"
+            :theme="theme"
+          />
+          <the-input
+            v-model="password"
+            :type="'password'"
+            :name="'password'"
+            :label="'password'"
+            :theme="theme"
+          />
+        </div>
+        <button-base :variant="'default'" :theme="theme">log in</button-base>
+      </form>
     </div>
   </div>
 </template>
