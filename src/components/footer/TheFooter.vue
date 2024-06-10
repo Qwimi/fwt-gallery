@@ -12,18 +12,18 @@ defineProps<{ theme: string }>()
         <div class="footer__info">
           <p class="footer__info__about">
             Проект реализован в рамках стажировки для Frontend-разработчиков от компании
-            <router-link to="/" class="link-underline">Framework Team</router-link>
+            <router-link :to="{ name: 'home' }" class="link-underline">Framework Team</router-link>
           </p>
           <p class="footer__info__name">Нагаева Анастасия, 2024</p>
         </div>
         <div class="footer__contacts">
-          <router-link to="/">
+          <router-link :to="{ name: 'home' }">
             <icon-facebook class="icon" />
           </router-link>
-          <router-link to="/">
+          <router-link :to="{ name: 'home' }">
             <icon-vk class="icon" />
           </router-link>
-          <router-link to="/">
+          <router-link :to="{ name: 'home' }">
             <icon-instagram class="icon" />
           </router-link>
         </div>

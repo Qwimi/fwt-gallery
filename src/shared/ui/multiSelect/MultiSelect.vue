@@ -138,5 +138,6 @@ const updateSelected = (event: { value: boolean; id: string }) => {
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
+  transform: translateY(1rem);
 }
 </style>

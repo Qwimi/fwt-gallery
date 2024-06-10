@@ -11,7 +11,7 @@ const modalStore = useModalStore()
   <header class="header" :class="`header--${theme}`">
     <div class="wrapper">
       <div class="header__content">
-        <router-link to="/" class="link-icon">
+        <router-link :to="{ name: 'home' }" class="link-icon">
           <icon-logo class="icon icon-logo" />
         </router-link>
         <div class="icon-burger">

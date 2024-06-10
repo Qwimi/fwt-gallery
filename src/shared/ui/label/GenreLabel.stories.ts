@@ -4,6 +4,15 @@ import GenreLabel from './GenreLabel.vue'
 const meta: Meta<typeof GenreLabel> = {
   title: 'components/label/Genre Label',
   tags: ['autodocs'],
+  argTypes: {
+    theme: {
+      control: 'select',
+      options: ['light', 'dark']
+    },
+    deletable: {
+      control: 'boolean'
+    }
+  },
   component: GenreLabel
 }
 
@@ -12,6 +21,9 @@ type Story = StoryObj<typeof meta>
 
 export const Label: Story = {
   args: {
-    default: 'genre label'
+    genre: {
+      _id: '1',
+      name: 'genre'
+    }
   }
 }

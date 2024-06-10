@@ -6,10 +6,10 @@ import IconExpand from '@/components/icons/IconExpand.vue'
 import { ref, type Ref } from 'vue'
 
 const props = defineProps<{
-  name: String
-  yearsOfLife: String
-  biography: String
-  genres: Array<Genre>
+  name?: String
+  yearsOfLife?: String
+  biography?: String
+  genres?: Genre[]
   theme?: string
 }>()
 
