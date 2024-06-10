@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import IconPhoto from '@/components/icons/IconPhoto.vue'
-const props = defineProps({
-  isBig: Boolean
-})
-const elementClass = props.isBig ? 'no-image-big' : ''
+defineProps<{
+  isBig?: Boolean
+  theme?: string
+}>()
 </script>
 <template>
-  <div class="no-image" :class="elementClass">
+  <div class="no-image" :class="[{ 'no-image--big': isBig }, `no-image--${theme}`]">
     <icon-photo class="no-image__icon" />
     <p class="no-image__title">No Image uploaded</p>
   </div>
@@ -19,7 +19,7 @@ const elementClass = props.isBig ? 'no-image-big' : ''
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--background-secondary);
+  background-color: var(--secondary-white);
   height: 100%;
   &__icon {
     height: 3.75rem;
@@ -33,17 +33,18 @@ const elementClass = props.isBig ? 'no-image-big' : ''
   }
 }
 
-.no-image-big {
+.no-image--big {
   .no-image__icon {
     height: 14.25rem;
   }
-  .no-image_title {
+  .no-image__title {
     @include captionBold;
     font-size: 1.25rem;
   }
 }
 
-[theme='dark'] {
+.no-image--dark {
+  background-color: var(--secondary-black);
   .no-image__icon {
     opacity: 0.1;
   }

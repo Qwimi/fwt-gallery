@@ -1,23 +1,32 @@
 <script lang="ts" setup>
 import TheInput from '@/shared/ui/input/TheInput.vue'
 import ButtonBase from '@/shared/ui/button/ButtonBase.vue'
-import { computed, ref, unref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import { useModalStore } from '@/stores/modalStore'
 import useVuelidate from '@vuelidate/core'
-import { required, email } from '@vuelidate/validators'
+import { rules, useValidationErrors } from './validation'
+import type { authForm } from '@/stores/types'
 
 defineProps<{ theme: string }>()
 
 const modalStore = useModalStore()
-const emailValue: Ref<string> = ref('')
-const password: Ref<string> = ref('')
 
-const rules = computed(() => ({ emailValue: { required, email }, password: { required } }))
-const v$ = useVuelidate(rules, { emailValue, password })
+const form: Ref<authForm> = ref({
+  emailValue: '',
+  passwordValue: ''
+})
 
-const submitForm = async () => {
-  const isFormCorrect = await unref(v$).$validate()
-  console.log(isFormCorrect)
+const errors = computed(() => useValidationErrors<authForm>($v.value.$errors))
+
+const $v = useVuelidate(rules, form)
+
+const submitForm = () => {
+  const result = $v.value.$validate()
+  result.then((res) => {
+    if (res) {
+      console.log('Form submitted.')
+    }
+  })
 }
 </script>
 
@@ -35,18 +44,20 @@ const submitForm = async () => {
         </p>
         <div class="form--auth__inputs">
           <the-input
-            v-model="emailValue"
+            v-model="form.emailValue"
             :type="'email'"
             :name="'email'"
             :label="'email'"
             :theme="theme"
+            :error="errors.emailValue"
           />
           <the-input
-            v-model="password"
+            v-model="form.passwordValue"
             :type="'password'"
             :name="'password'"
             :label="'password'"
             :theme="theme"
+            :error="errors.passwordValue"
           />
         </div>
         <button-base :variant="'default'" :theme="theme">log in</button-base>

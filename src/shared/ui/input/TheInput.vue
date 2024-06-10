@@ -13,7 +13,7 @@ defineEmits(['update:modelValue'])
 </script>
 
 <template>
-  <div class="form__element" :class="`form__element--${theme}`">
+  <div class="form__element" :class="[`form__element--${theme}`, { error: error }]">
     <label class="form__element__label">{{ label }}</label>
     <div class="form__element_input--wrapper">
       <input
@@ -24,10 +24,14 @@ defineEmits(['update:modelValue'])
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       />
     </div>
-    <div class="form__element__error" v-if="error">
-      <icon-error class="icon" />
-      {{ error }}
-    </div>
+    <transition name="">
+      <div class="form__element__error" v-if="error">
+        <icon-error class="icon" />
+        <p>
+          {{ error }}
+        </p>
+      </div>
+    </transition>
   </div>
 </template>
 

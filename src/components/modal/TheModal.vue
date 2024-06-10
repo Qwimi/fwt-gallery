@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useModalStore } from '@/stores/modalStore'
 import IconClose from '@/components/icons/IconClose.vue'
-import LogInModal from '@/components/modal/LogInModal.vue'
-import SignUpModal from '@/components/modal/SignUpModal.vue'
+import LogInModal from '@/components/auth/LogInModal.vue'
+import SignUpModal from '@/components/auth/SignUpModal.vue'
 
 defineProps<{ theme: string }>()
 

@@ -3,7 +3,6 @@ defineProps<{
   label: string
   name: string
   placeholder?: string
-  error?: string
   theme?: string
 }>()
 
@@ -11,7 +10,7 @@ defineEmits(['update:modelValue'])
 </script>
 
 <template>
-  <div class="form__element" :class="[{ error: error }, `form__element--${theme}`]">
+  <div class="form__element" :class="`form__element--${theme}`">
     <label class="form__element__label">{{ label }}</label>
     <textarea
       class="form__element__input"
@@ -19,19 +18,15 @@ defineEmits(['update:modelValue'])
       :placeholder="placeholder"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     ></textarea>
-    <div class="form__element__error" v-if="error">
-      <icon-error class="icon" />
-      {{ error }}
-    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .form__element {
   @include inputMixin;
-}
-.form__element__input {
-  height: 150px;
-  resize: none;
+  &__input {
+    height: 150px;
+    resize: none;
+  }
 }
 </style>

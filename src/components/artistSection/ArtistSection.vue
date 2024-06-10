@@ -18,7 +18,7 @@ defineProps<{
     </router-link>
     <div class="artist--section__avatar">
       <img :src="artist?.avatar?.src" alt="can't load the picture" v-if="artist?.avatar?.src" />
-      <no-image v-else />
+      <no-image :is-big="true" :theme="theme" v-else />
     </div>
     <artist-biography
       :name="artist?.name"

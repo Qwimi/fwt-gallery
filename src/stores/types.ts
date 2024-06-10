@@ -1,3 +1,8 @@
+export interface authForm {
+  emailValue: string
+  passwordValue: string
+}
+
 export interface Image {
   _id: string
   src: string

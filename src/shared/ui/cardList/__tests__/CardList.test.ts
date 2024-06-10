@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import { useAppStore } from '@/stores/artStore'
+import { useAppStore } from '@/stores/baseStore'
 import { createPinia } from 'pinia'
 import CardList from '@/components/cardList/CardList.vue'
 

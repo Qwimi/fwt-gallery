@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useAppStore } from '@/stores/artStore'
+import { useAppStore } from '@/stores/baseStore'
 import CardList from '@/shared/ui/cardList/CardList.vue'
 import { onMounted } from 'vue'
 import { useThemeStore } from '@/stores/themeStore'

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, type Ref } from 'vue'
 import type { Genre } from '@/stores/types'
-import TheCheckbox from '@/shared/ui/input/TheCheckbox.vue'
+import TheCheckbox from '@/shared/ui/checkbox/TheCheckbox.vue'
 import GenreLabel from '@/shared/ui/label/GenreLabel.vue'
 import IconExpand from '@/components/icons/IconExpand.vue'
 
@@ -67,8 +67,6 @@ const updateSelected = (event: { value: boolean; id: string }) => {
 <style lang="scss" scoped>
 .form__element {
   @include inputMixin;
-}
-.form__element {
   &__input {
     display: flex;
     align-items: center;

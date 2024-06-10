@@ -28,12 +28,18 @@ defineProps<{ variant: 'default' | 'round' | 'underline' | 'icon'; theme?: strin
       color: var(--primary-white);
       box-shadow: 0 0.25rem 0.5rem rgba($color: #000000, $alpha: 0.25);
     }
+    &:focus {
+      background-color: #232323;
+    }
     &.button--dark {
       background-color: var(--accent-gold);
       &:hover,
       &:focus {
         color: var(--primary-white);
         box-shadow: 0 0.25rem 0.5rem color-mix(in srgb, var(--accent-gold) 40%, transparent);
+      }
+      &:focus {
+        background-color: #ba9052;
       }
     }
   }

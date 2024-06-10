@@ -3,7 +3,7 @@ import type { Genre } from '@/stores/types'
 import GenreLabel from '@/shared/ui/label/GenreLabel.vue'
 import ButtonBase from '@/shared/ui/button/ButtonBase.vue'
 import IconExpand from '@/components/icons/IconExpand.vue'
-import { ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 
 const props = defineProps<{
   name?: String
@@ -15,15 +15,14 @@ const props = defineProps<{
 
 const maxStrLenght = 265
 const isExpanded: Ref<Boolean> = ref(false)
-const biographyClass: Ref<String> = ref('text-short')
+const biographyClass = computed(() => (isExpanded.value ? '' : 'text-short'))
 
-const biographyText = () => {
-  return isExpanded.value ? props.biography : `${props.biography?.slice(0, maxStrLenght)}...`
-}
+const biographyText = computed(() =>
+  isExpanded.value ? props.biography : `${props.biography?.slice(0, maxStrLenght)}...`
+)
 
 const toggleExpand = () => {
   isExpanded.value = !isExpanded.value
-  biographyClass.value = isExpanded.value ? '' : 'text-short'
 }
 </script>
 
@@ -41,7 +40,7 @@ const toggleExpand = () => {
       <div class="biography__content">
         <div class="biography__content__main">
           <p class="biography__content__text" :class="biographyClass">
-            {{ biographyText() }}
+            {{ biographyText }}
           </p>
           <button-base
             :variant="'underline'"

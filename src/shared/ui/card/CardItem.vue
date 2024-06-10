@@ -18,7 +18,7 @@ defineProps<{
       class="card__link"
     />
     <img :src="card?.image" alt="Can't load the picture" v-if="card?.image" class="card__img" />
-    <no-image v-else />
+    <no-image :theme="theme" v-else />
     <div class="card__info">
       <div class="card__about">
         <p class="card__about__title">{{ card?.name }}</p>

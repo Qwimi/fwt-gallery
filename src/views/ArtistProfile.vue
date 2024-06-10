@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import router from '@/router'
-import { useAppStore } from '@/stores/artStore'
+import { useAppStore } from '@/stores/baseStore'
 import { onMounted, onUnmounted } from 'vue'
 import CardList from '@/shared/ui/cardList/CardList.vue'
 import ArtistSection from '@/components/artistSection/ArtistSection.vue'
