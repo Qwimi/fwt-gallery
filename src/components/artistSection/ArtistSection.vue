@@ -12,7 +12,7 @@ defineProps({
 
 <template>
   <section class="artist-section">
-    <router-link :to="{ name: 'home' }" class="link link-icon">
+    <router-link :to="{ name: 'home' }" class="link">
       <icon-arrow-decoration class="icon" />
       <span class="link_text">back</span>
     </router-link>
@@ -62,6 +62,8 @@ defineProps({
   top: -0.75rem;
   transform: translateY(-100%);
   left: 1.25rem;
+  display: flex;
+  align-items: center;
   @media screen and (min-width: $breakpoint-lg) {
     left: calc((100vw - 1240px) / 2);
   }
