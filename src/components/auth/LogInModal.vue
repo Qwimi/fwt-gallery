@@ -5,28 +5,28 @@ import { computed, ref, type Ref } from 'vue'
 import { useModalStore } from '@/stores/modalStore'
 import useVuelidate from '@vuelidate/core'
 import { rules, useValidationErrors } from './validation'
-import type { authForm } from '@/stores/types'
+import type { AuthForm } from '@/stores/types'
+import { useAuthStore } from '@/stores/authStore'
 
 defineProps<{ theme: string }>()
 
 const modalStore = useModalStore()
+const authStore = useAuthStore()
 
-const form: Ref<authForm> = ref({
+const form: Ref<AuthForm> = ref({
   emailValue: '',
   passwordValue: ''
 })
 
-const errors = computed(() => useValidationErrors<authForm>($v.value.$errors))
+const errors = computed(() => useValidationErrors<AuthForm>($v.value.$errors))
 
 const $v = useVuelidate(rules, form)
 
-const submitForm = () => {
-  const result = $v.value.$validate()
-  result.then((res) => {
-    if (res) {
-      console.log('Form submitted.')
-    }
-  })
+const submitForm = async () => {
+  const isValid = await $v.value.$validate()
+  if (isValid) {
+    authStore.sentLoginRequest(form.value)
+  }
 }
 </script>
 
@@ -46,7 +46,6 @@ const submitForm = () => {
           <the-input
             v-model="form.emailValue"
             :type="'email'"
-            :name="'email'"
             :label="'email'"
             :theme="theme"
             :error="errors.emailValue"
@@ -54,8 +53,8 @@ const submitForm = () => {
           <the-input
             v-model="form.passwordValue"
             :type="'password'"
-            :name="'password'"
             :label="'password'"
+            :value="form.passwordValue"
             :theme="theme"
             :error="errors.passwordValue"
           />
@@ -65,5 +64,3 @@ const submitForm = () => {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped></style>

@@ -3,8 +3,12 @@ import IconLogo from '@/components/icons/IconLogo.vue'
 import IconBurger from '@/components/icons/IconBurger.vue'
 import ThemeToggler from '@/components/header/ThemeToggler.vue'
 import { useModalStore } from '@/stores/modalStore'
-defineProps<{ theme: string }>()
+import { useAuthStore } from '@/stores/authStore'
+
+defineProps<{ theme?: string }>()
+
 const modalStore = useModalStore()
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -19,8 +23,13 @@ const modalStore = useModalStore()
         </div>
         <div class="header__menu">
           <nav class="menu" :class="`menu--${theme}`">
-            <li class="menu__item" @click="modalStore.openModal('logIn')">Log In</li>
-            <li class="menu__item" @click="modalStore.openModal('signUp')">Sign up</li>
+            <template v-if="authStore.isUserAuth">
+              <li class="menu__item" @click="authStore.logout">Log Out</li>
+            </template>
+            <template v-else>
+              <li class="menu__item" @click="modalStore.openModal('logIn')">Log In</li>
+              <li class="menu__item" @click="modalStore.openModal('signUp')">Sign up</li>
+            </template>
           </nav>
           <theme-toggler :show-text="false" />
         </div>
@@ -32,6 +41,11 @@ const modalStore = useModalStore()
 <style lang="scss" scoped>
 .header {
   color: var(--primary-gray-dark);
+  background-color: var(--primary-white);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1;
   &__content {
     display: flex;
     flex-direction: row;
@@ -47,7 +61,6 @@ const modalStore = useModalStore()
       display: none;
     }
   }
-
   .icon-logo {
     height: 1rem;
     width: fit-content;
@@ -57,6 +70,7 @@ const modalStore = useModalStore()
   }
   &--dark {
     color: var(--primary-gray-light);
+    background-color: var(--primary-black);
   }
 }
 

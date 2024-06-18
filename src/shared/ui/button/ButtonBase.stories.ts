@@ -22,10 +22,26 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const ButtonWithoutIcon: Story = {
+export const ButtonDefault: Story = {
   args: {
     default: 'button',
     variant: 'default',
+    theme: 'light'
+  }
+}
+
+export const ButtonUnderline: Story = {
+  args: {
+    default: 'button',
+    variant: 'underline',
+    theme: 'light'
+  }
+}
+
+export const ButtonRound: Story = {
+  args: {
+    default: 'button',
+    variant: 'round',
     theme: 'light'
   }
 }

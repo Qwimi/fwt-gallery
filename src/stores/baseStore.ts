@@ -9,20 +9,6 @@ export const useAppStore = defineStore('app', () => {
   const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage)
   const currentArtistCards: Ref<Array<CardInterface>> = ref([])
 
-  const submitForm = () => {
-    // const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4').then((FingerprintJS) =>
-    //   FingerprintJS.load()
-    // )
-    // // Get the visitor identifier when you need it.
-    // fpPromise
-    //   .then((fp) => fp.get())
-    //   .then((result) => {
-    //     // This is the visitor identifier:
-    //     const visitorId = result.visitorId
-    //     console.log(visitorId)
-    //   })
-  }
-
   const setCurrentArtistCards = () => {
     currentArtistCards.value = currentArtist.value.paintings.map((painting: Painting) => {
       return {

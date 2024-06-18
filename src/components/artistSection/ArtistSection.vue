@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import ArtistBiography from '@/components/artistBiography/ArtistBiography.vue'
 import type { ArtistPage } from '@/stores/types'
-import NoImage from '@/components/noImg/NoImage.vue'
+import NoImage from '@/shared/ui/noImg/NoImage.vue'
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
 
 defineProps<{

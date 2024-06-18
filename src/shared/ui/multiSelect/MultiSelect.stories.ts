@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import MultiSelect from './MultiSelect.vue'
 
 const meta: Meta<typeof MultiSelect> = {
-  title: 'components/inputs/Multi Select',
+  title: 'components/inputs/MultiSelect',
   argTypes: {
     theme: {
       control: 'select',

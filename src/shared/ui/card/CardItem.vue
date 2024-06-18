@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
 import type { CardInterface } from '@/stores/types'
-import NoImage from '@/components/noImg/NoImage.vue'
+import NoImage from '@/shared/ui/noImg/NoImage.vue'
 
 defineProps<{
   card: CardInterface

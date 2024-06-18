@@ -13,30 +13,39 @@
     color: var(--accent-error);
     @include paragraphBaseLight;
   }
-  &__input {
-    @include paragraphBaseLight;
-    padding: 0.75rem 1rem;
+  &--wrapper {
     border-radius: 0.25rem;
-    width: 100%;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
     background-color: var(--primary-white);
-    color: var(--primary-gray-dark);
     border: 1px solid var(--primary-gray-light);
-    outline: none;
-    &::placeholder {
-      color: var(--secondary-gray);
-    }
+    color: var(--primary-gray-dark);
+    position: relative;
     &:hover {
       border-color: var(--secondary-gray);
     }
-    &:focus {
+    &:has(.form__element__input:focus) {
       border-color: var(--primary-gray-dark);
     }
-    &--wrapper {
-      position: relative;
+  }
+  &__input {
+    color: var(--primary-gray-dark);
+    @include paragraphBaseLight;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    &::placeholder {
+      color: var(--secondary-gray);
+    }
+    &:focus + .form__element--wrapper {
+      border-color: var(--primary-gray-dark);
     }
   }
   &.error {
-    .form__element__input {
+    .form__element--wrapper {
       margin-bottom: 0.25rem;
       border-color: var(--accent-error);
     }
@@ -45,16 +54,20 @@
     .form__element__label {
       color: var(--primary-white);
     }
-    .form__element__input {
+    .form__element--wrapper {
       color: var(--primary-gray-light);
       background-color: var(--secondary-black);
       border-color: transparent;
       &:hover {
         border-color: var(--primary-gray-dark);
       }
-      &:focus {
+
+      &:has(.form__element__input:focus) {
         border-color: var(--primary-gray-light);
       }
+    }
+    .form__element__input {
+      color: var(--primary-gray-light);
     }
   }
 }

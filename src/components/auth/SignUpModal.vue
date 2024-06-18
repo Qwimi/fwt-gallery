@@ -5,30 +5,28 @@ import { computed, ref, type Ref } from 'vue'
 import { useModalStore } from '@/stores/modalStore'
 import useVuelidate from '@vuelidate/core'
 import { rules, useValidationErrors } from './validation'
-import type { authForm } from '@/stores/types'
+import type { AuthForm } from '@/stores/types'
+import { useAuthStore } from '@/stores/authStore'
 
-defineProps<{ theme: string }>()
+defineProps<{ theme?: string }>()
 
 const modalStore = useModalStore()
+const authStore = useAuthStore()
 
-const form: Ref<authForm> = ref({
+const form: Ref<AuthForm> = ref({
   emailValue: '',
   passwordValue: ''
 })
 
-const errors = computed(() => useValidationErrors<authForm>($v.value.$errors))
+const errors = computed(() => useValidationErrors<AuthForm>($v.value.$errors))
 
 const $v = useVuelidate(rules, form)
 
-const submitForm = () => {
-  const result = $v.value.$validate()
-  result.then((res) => {
-    if (res) {
-      console.log('Form submitted.')
-    } else {
-      $v.value.$errors.forEach((err) => console.log(err))
-    }
-  })
+const submitForm = async () => {
+  const isValid = await $v.value.$validate()
+  if (isValid) {
+    authStore.sentRegisterRequest(form.value)
+  }
 }
 </script>
 
@@ -45,24 +43,22 @@ const submitForm = () => {
           <span class="form--auth__switch" @click="modalStore.openModal('logIn')">log in</span>
         </p>
         <div class="form--auth__inputs">
-          <the-input
+          <TheInput
             v-model="form.emailValue"
             :type="'email'"
-            :name="'email'"
             :label="'email'"
             :theme="theme"
             :error="errors.emailValue"
           />
-          <the-input
+          <TheInput
             v-model="form.passwordValue"
             :type="'password'"
-            :name="'password'"
             :label="'password'"
             :theme="theme"
             :error="errors.passwordValue"
           />
         </div>
-        <button-base :variant="'default'" :theme="theme">sign in</button-base>
+        <ButtonBase variant="default" :theme="theme">Sign In</ButtonBase>
       </form>
     </div>
   </div>

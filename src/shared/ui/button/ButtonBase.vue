@@ -59,6 +59,7 @@ defineProps<{ variant: 'default' | 'round' | 'underline' | 'icon'; theme?: strin
     border-radius: 100%;
     border: 1px solid var(--secondary-gray);
     background-color: var(---secondary-white);
+    color: var(--primary-gray-light);
     &:hover {
       background-color: var(--primary-white);
       border-color: var(--secondary-gray);
@@ -70,6 +71,7 @@ defineProps<{ variant: 'default' | 'round' | 'underline' | 'icon'; theme?: strin
     &.button--dark {
       background-color: var(--secondary-black);
       border-color: transparent;
+      color: var(--primary-gray-light);
       &:hover {
         background-color: #242222;
       }

@@ -4,7 +4,7 @@ import type { Genre } from '@/stores/types'
 
 defineProps<{
   genre: Genre
-  deletable: boolean
+  deletable?: boolean
   theme?: string
 }>()
 </script>

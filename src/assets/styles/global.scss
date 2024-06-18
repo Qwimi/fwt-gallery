@@ -32,16 +32,18 @@ body[theme='dark'] {
   width: 0.25rem;
 }
 
+::-moz-scrollbar-button,
+::-webkit-scrollbar-button {
+  display: none;
+}
+
 [theme='dark'] {
   ::-webkit-scrollbar-track {
     background-color: color-mix(in srgb, #cdcdcd 5%, transparent);
-    border-radius: 0.25rem;
   }
 
   ::-webkit-scrollbar-thumb {
     background: var(--primary-gray-d);
-    border-radius: 0.25rem;
-    width: 0.25rem;
   }
   a {
     color: var(--primary-gray-light);

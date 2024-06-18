@@ -1,4 +1,20 @@
-export interface authForm {
+export interface AuthRequest {
+  username: string
+  password: string
+  fingerprint: string
+}
+
+export interface AuthResponse {
+  accessToken: string
+  refreshToken: string
+}
+
+export interface RefreshRequest {
+  fingerprint: string
+  refreshToken: string
+}
+
+export interface AuthForm {
   emailValue: string
   passwordValue: string
 }

@@ -34,6 +34,7 @@ defineProps<{
 }
 
 .no-image--big {
+  gap: 2rem;
   .no-image__icon {
     height: 14.25rem;
   }

@@ -32,7 +32,7 @@ const updateSelected = (event: { value: boolean; id: string }) => {
   <div class="form__element multiple" :class="[`form__element--${theme}`, `multiple--${theme}`]">
     <label class="form__element__label">{{ label }}</label>
     <div
-      class="form__element__input"
+      class="form__element--wrapper"
       @click="isSelectOpen = !isSelectOpen"
       :class="{ 'multiple--opened': isSelectOpen }"
     >
@@ -67,12 +67,7 @@ const updateSelected = (event: { value: boolean; id: string }) => {
 <style lang="scss" scoped>
 .form__element {
   @include inputMixin;
-  &__input {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 0;
-    padding-bottom: 0;
+  &--wrapper {
     height: 3rem;
     position: relative;
     z-index: 2;
@@ -84,6 +79,8 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    flex: 1;
+    margin-left: 1rem;
     .label {
       margin-right: 0.75rem;
     }
@@ -102,6 +99,7 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     color: var(--secondary-gray);
     width: 0.75rem;
     transition: transform 0.3s;
+    margin-right: 1rem;
   }
   &__option {
     padding: 0.5rem 1rem;

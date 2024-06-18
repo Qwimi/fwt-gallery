@@ -1,18 +1,25 @@
 <script lang="ts" setup>
 import ThemeToggler from '@/components/header/ThemeToggler.vue'
+import { useAuthStore } from '@/stores/authStore'
 import { useModalStore } from '@/stores/modalStore'
 
 defineProps<{ theme: string }>()
 
 const modalStore = useModalStore()
+const authStore = useAuthStore()
 </script>
 
 <template>
   <div class="sidebar__content">
     <theme-toggler :show-text="true" />
     <nav class="menu" :class="`menu--${theme}`">
-      <li class="menu__item" @click="modalStore.openModal('logIn')">Log In</li>
-      <li class="menu__item" @click="modalStore.openModal('signUp')">Sign up</li>
+      <template v-if="authStore.isUserAuth">
+        <li class="menu__item" @click="authStore.logout">Log Out</li>
+      </template>
+      <template v-else>
+        <li class="menu__item" @click="modalStore.openModal('logIn')">Log In</li>
+        <li class="menu__item" @click="modalStore.openModal('signUp')">Sign up</li>
+      </template>
     </nav>
   </div>
 </template>
