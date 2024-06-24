@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import TheHeader from '@/components/header/TheHeader.vue'
-import TheFooter from '@/components/footer/TheFooter.vue'
-import { useThemeStore } from './stores/themeStore'
 import { onMounted } from 'vue'
+import { RouterView } from 'vue-router'
+import { useThemeStore } from './stores/themeStore'
+import TheHeader from './components/theHeader'
+import TheFooter from '@/components/theFooter'
 
 onMounted(() => useThemeStore().getTheme())
 </script>

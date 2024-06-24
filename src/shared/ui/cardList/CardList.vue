@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import type { CardInterface } from '@/stores/types'
-import type { PropType } from 'vue'
-import CardItem from '@/shared/ui/card/CardItem.vue'
+import CardItem from '@/shared/ui/card'
 
-defineProps({
-  cards: Array as PropType<CardInterface[]>,
+defineProps<{
+  cards: CardInterface[]
   isArtists: Boolean
-})
+}>()
 </script>
 
 <template>

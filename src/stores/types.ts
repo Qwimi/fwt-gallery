@@ -39,19 +39,15 @@ export interface CardInterface {
   date: string
   image: string | null
   image2x: string | null
-  artist: string
 }
 
 export interface ArtistPage {
   paintings: Painting[]
   genres: Genre[]
-  _id: string
   name: string
   description: string
   yearsOfLife: string
   avatar: Image
-  __v: number
-  mainPainting: Painting
 }
 
 export interface Genre {

@@ -7,22 +7,22 @@ import IconVk from '@/components/icons/IconVk.vue'
 <template>
   <footer class="footer">
     <div class="wrapper">
-      <div class="footer_content">
-        <div class="footer_info">
-          <p class="footer_info_about">
+      <div class="footer__content">
+        <div class="footer__info">
+          <p class="footer__about">
             Проект реализован в рамках стажировки для Frontend-разработчиков от компании
             <router-link to="/" class="link-underline">Framework Team</router-link>
           </p>
-          <p class="footer_info_name">Нагаева Анастасия, 2024</p>
+          <p class="footer__name">Нагаева Анастасия, 2024</p>
         </div>
-        <div class="footer_contacts">
-          <router-link to="/">
+        <div class="footer__contacts">
+          <router-link to="/" class="footer__link">
             <icon-facebook class="icon" />
           </router-link>
-          <router-link to="/">
+          <router-link to="/" class="footer__link">
             <icon-vk class="icon" />
           </router-link>
-          <router-link to="/">
+          <router-link to="/" class="footer__link">
             <icon-instagram class="icon" />
           </router-link>
         </div>
@@ -37,7 +37,9 @@ import IconVk from '@/components/icons/IconVk.vue'
   padding: 2rem 0;
   border-top: 1px solid var(--secondary-gray);
   @include paragraphSmallLight;
+
   .link-underline {
+    display: inline;
     @include paragraphSmallMadium;
   }
 
@@ -48,7 +50,7 @@ import IconVk from '@/components/icons/IconVk.vue'
     }
   }
 
-  &_info {
+  &__info {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -59,12 +61,13 @@ import IconVk from '@/components/icons/IconVk.vue'
     @media screen and (min-width: $breakpoint-lg) {
       gap: 1.25rem;
     }
-    &_name {
-      color: var(--secondary-gray);
-    }
   }
 
-  &_content {
+  &__name {
+    color: var(--secondary-gray);
+  }
+
+  &__content {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
@@ -74,9 +77,13 @@ import IconVk from '@/components/icons/IconVk.vue'
     }
   }
 
-  &_contacts {
+  &__contacts {
     display: flex;
     gap: 1.25rem;
+  }
+
+  &__link {
+    align-items: flex-start;
   }
 }
 </style>

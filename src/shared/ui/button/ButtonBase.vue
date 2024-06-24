@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { ButtonProps } from '@/stores/types'
+
 defineProps<ButtonProps>()
 </script>
 
@@ -43,7 +44,7 @@ defineProps<ButtonProps>()
   }
 
   &--round {
-    aspect-ratio: 1/1;
+    aspect-ratio: 1;
     padding: 1.125rem;
     border: 1px solid var(--secondary-gray);
     border-radius: 100%;

@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import TheHeader from '@/components/header/TheHeader.vue'
+import TheHeader from '@/components/theHeader'
 import { RouterLink } from 'vue-router'
 
 describe('Header tests', () => {

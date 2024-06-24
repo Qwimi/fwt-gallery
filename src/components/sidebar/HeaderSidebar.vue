@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ThemeToggler from '@/components/header/ThemeToggler.vue'
+import ThemeToggler from '@/components/themeToggler'
 </script>
 
 <template>
