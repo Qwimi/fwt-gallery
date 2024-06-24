@@ -1,30 +1,29 @@
 <script lang="ts" setup>
-import type { PropType } from 'vue'
-import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
-import IconPhoto from '@/components/icons/IconPhoto.vue'
 import type { CardInterface } from '@/stores/types'
+import NoImage from '@/components/noImage'
+import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
 
-const props = defineProps({
-  card: Object as PropType<CardInterface>,
+defineProps<{
+  card: CardInterface
   isArtist: Boolean
-})
-const artistUrl = `/artist/${props.card?.id}`
+}>()
 </script>
 
 <template>
   <article class="card">
-    <router-link :to="artistUrl" v-if="isArtist" class="card_link" />
-    <img :src="card?.image" alt="Can't load the picture" v-if="card?.image" class="card_img" />
-    <div class="no-image" v-else>
-      <icon-photo class="no-image_icon" />
-      <p class="no-image_title">No Image uploaded</p>
-    </div>
-    <div class="card_info">
-      <div class="card_about">
-        <p class="card_about_title">{{ card?.name }}</p>
-        <p class="card_about_date">{{ card?.date }}</p>
+    <router-link
+      :to="{ name: 'artist', params: { id: card.id } }"
+      v-if="isArtist"
+      class="card__link"
+    />
+    <img :src="card?.image" alt="Can't load the picture" v-if="card?.image" class="card__img" />
+    <no-image v-else />
+    <div class="card__info">
+      <div class="card__text">
+        <p class="card__title">{{ card?.name }}</p>
+        <p class="card__date">{{ card?.date }}</p>
       </div>
-      <div class="card_info-decoration">
+      <div class="card--decoration">
         <icon-arrow-decoration class="arrow-icon icon" />
       </div>
     </div>
@@ -36,26 +35,28 @@ const artistUrl = `/artist/${props.card?.id}`
   aspect-ratio: 98/65;
   position: relative;
   overflow: hidden;
-  &_link {
+
+  &__link {
     height: 100%;
     width: 100%;
     position: absolute;
     z-index: 1;
   }
 
-  &_img {
+  &__img {
     height: 100%;
     width: 100%;
     object-fit: cover;
     transition: all 0.5s ease-out;
   }
+
   &:hover {
     img {
       scale: 1.03;
     }
   }
 
-  &_info {
+  &__info {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -67,51 +68,53 @@ const artistUrl = `/artist/${props.card?.id}`
     @media screen and (min-width: $breakpoint-md) {
       padding: 0.75rem 0;
     }
-    &-decoration {
-      content: '';
-      height: 100%;
-      width: 1.5rem;
-      background: var(--accent);
-      position: absolute;
-      top: 0;
-      right: 0;
-      transform: translateX(100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--primary-gray-l);
-
-      .icon-arrow {
-        width: 100%;
-      }
-    }
 
     @media screen and (min-width: $breakpoint-lg) {
       padding: 1.25rem 0;
-      &-decoration {
-        display: none;
+    }
+  }
+
+  &--decoration {
+    height: 100%;
+    width: 1.5rem;
+    background: var(--accent);
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-gray-l);
+
+    .icon-arrow {
+      width: 100%;
+    }
+  }
+
+  &__text {
+    position: relative;
+    padding: 0 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $breakpoint-lg) {
+      padding: 0 1.25rem;
+
+      &::before {
+        content: '';
+        height: 100%;
+        width: 2px;
+        background-color: var(--accent);
+        position: absolute;
+        top: 0;
+        left: 0;
       }
     }
   }
-}
 
-.card_about {
-  position: relative;
-  padding: 0 0.75rem;
-  @media screen and (min-width: $breakpoint-lg) {
-    padding: 0 1.25rem;
-
-    &::before {
-      content: '';
-      height: 100%;
-      width: 2px;
-      background-color: var(--accent);
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-  }
-  &_title {
+  &__title {
     color: var(--primary-text-hover);
     @include headingH6;
 
@@ -119,31 +122,20 @@ const artistUrl = `/artist/${props.card?.id}`
       @include headingH4;
     }
   }
-  &_date {
+
+  &__date {
     color: var(--accent);
     @include captionBold;
+
     @media screen and (min-width: $breakpoint-md) {
       @include buttonText;
     }
   }
-}
 
-.no-image {
-  display: flex;
-  gap: 0.75rem;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--background-secondary);
-  height: 100%;
-  &_icon {
-    height: fit-content;
-    opacity: 0.2;
-  }
-  &_title {
-    @include inputText;
-    opacity: 0.5;
-    color: var(--secondary-gray);
+  @media screen and (min-width: $breakpoint-lg) {
+    &--decoration {
+      display: none;
+    }
   }
 }
 </style>

@@ -1,37 +1,4 @@
-@import 'typography.scss';
-
-@mixin buttonMixin {
-  background-color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  transition: all 0.3s;
-  width: fit-content;
-  color: var(--primary-text-dafault);
-  &_icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  &_text {
-    @include buttonText;
-  }
-  &:disabled {
-    opacity: 0.5;
-  }
-}
-
-@mixin modalMixin {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba($color: #030303, $alpha: 0.6);
-  z-index: 5;
-}
+@import 'mixins/button';
+@import 'mixins/modal';
+@import 'mixins/shortText';
+@import 'mixins/typography';

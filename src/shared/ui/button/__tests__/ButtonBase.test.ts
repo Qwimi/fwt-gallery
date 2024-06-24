@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import ButtonBase from '../ButtonBase.vue'
+import ButtonBase from '@/shared/ui/button'
 
 describe('ButtonBase  tests', () => {
   it('ButtonBase render test', () => {

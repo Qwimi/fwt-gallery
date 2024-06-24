@@ -10,9 +10,9 @@
 }
 
 @mixin headingH1 {
-  @extend .cormorant;
   font-weight: 500;
   font-size: 3.75rem;
+  // @extend .cormorant;
 }
 
 @mixin headingH2 {
@@ -101,7 +101,7 @@
 @mixin captionMedium12 {
   @extend .cormorant;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
 }
 

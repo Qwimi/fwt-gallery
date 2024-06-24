@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useAppStore } from '@/stores/artStore'
-import CardList from '@/shared/ui/cardList/CardList.vue'
 import { onMounted } from 'vue'
+import { useAppStore } from '@/stores/artStore'
+import CardList from '@/shared/ui/cardList'
 
 const store = useAppStore()
 

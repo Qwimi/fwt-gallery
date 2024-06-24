@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import TheFooter from '@/components/footer/TheFooter.vue'
+import TheFooter from '@/components/theFooter'
 import { RouterLink } from 'vue-router'
 
 describe('Footer tests', () => {

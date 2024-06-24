@@ -1,5 +1,5 @@
 @import 'reset';
-@import 'UiStyles';
+@import 'uiStyles';
 
 * {
   transition:
@@ -43,13 +43,16 @@ li {
 }
 
 a {
+  display: flex;
+  align-items: center;
   color: var(--primary-text-dafault);
   &:hover {
     color: var(--primary-text-hover);
   }
 }
 
-.link-icon {
-  display: flex;
-  align-items: center;
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }

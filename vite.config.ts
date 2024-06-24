@@ -9,9 +9,10 @@ export default defineConfig({
   plugins: [vue(), vueJsx(), VueDevTools()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      components: path.resolve(__dirname, './src/components')
-    }
+      '~': path.resolve(__dirname, '/'),
+      '@': path.resolve(__dirname, './src')
+    },
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
   },
   css: {
     preprocessorOptions: {
