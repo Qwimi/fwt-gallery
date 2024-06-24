@@ -1,4 +1,5 @@
 import { type StoryObj, type Meta } from '@storybook/vue3'
+
 import CardList from './CardList.vue'
 
 const meta: Meta<typeof CardList> = {

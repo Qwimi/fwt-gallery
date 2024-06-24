@@ -1,5 +1,7 @@
 @import 'reset';
 @import 'uiStyles';
+@import 'mixins';
+@import 'variables';
 
 * {
   transition:
@@ -8,26 +10,25 @@
 }
 
 body {
-  background-color: var(--primary-white);
+  background-color: var(--background-primary);
+
+  // firefox scrollbar
   scrollbar-width: thin;
-  scrollbar-color: var(--secondary-gray) color-mix(in srgb, var(--primary-black) 5%, transparent);
-}
-body[theme='dark'] {
-  background-color: var(--primary-black);
-  scrollbar-color: var(--primary-gray-d) color-mix(in srgb, #cdcdcd 5%, transparent);
+  scrollbar-color: var(--background-semi-transparent);
 }
 
+// scrollbar
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: color-mix(in srgb, var(--primary-black) 5%, transparent);
+  background-color: var(--background-semi-transparent);
   border-radius: 0.25rem;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--secondary-gray);
+  background: light-dark(var(--gray_de), var(--gray_9c));
   border-radius: 0.25rem;
   width: 0.25rem;
 }
@@ -35,22 +36,6 @@ body[theme='dark'] {
 ::-moz-scrollbar-button,
 ::-webkit-scrollbar-button {
   display: none;
-}
-
-[theme='dark'] {
-  ::-webkit-scrollbar-track {
-    background-color: color-mix(in srgb, #cdcdcd 5%, transparent);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: var(--primary-gray-d);
-  }
-  a {
-    color: var(--primary-gray-light);
-    &:hover {
-      color: var(--secondary-white);
-    }
-  }
 }
 
 body,
@@ -72,9 +57,11 @@ main {
 }
 
 a {
-  color: var(--primary-gray-dark);
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-secondary);
   &:hover {
-    color: var(--primary-black);
+    color: var(--text-primary);
   }
 }
 
@@ -95,19 +82,10 @@ li {
   gap: 1.25rem;
   list-style: none;
   &__item {
-    color: var(--primary-gray-dark);
+    color: var(--text-secondary);
     cursor: pointer;
     &:hover {
-      color: var(--primary-black);
-    }
-  }
-  &--dark {
-    .menu__item {
-      color: var(--primary-gray-light);
-      cursor: pointer;
-      &:hover {
-        color: var(--primary-white);
-      }
+      color: var(--text-primary);
     }
   }
 }

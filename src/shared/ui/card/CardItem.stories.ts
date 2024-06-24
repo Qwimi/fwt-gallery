@@ -1,14 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+
 import CardItem from './CardItem.vue'
 
 const meta: Meta<typeof CardItem> = {
   title: 'components/card/Card item',
-  argTypes: {
-    theme: {
-      control: 'select',
-      options: ['light', 'dark']
-    }
-  },
   tags: ['autodocs'],
   component: CardItem
 }
@@ -23,8 +18,7 @@ export const ArtistCard: Story = {
       date: '29 July 1817 – 2 May 1900',
       image: 'https://internship-front.framework.team/images/64e5d1f4af5d7f5991789c57/image.jpg',
       image2x: 'https://internship-front.framework.team/images/64e5d1f4af5d7f5991789c57/image.jpg'
-    },
-    theme: 'light'
+    }
   }
 }
 
@@ -36,8 +30,7 @@ export const ArtistCardWithNoImage: Story = {
       date: '29 July 1817 – 2 May 1900',
       image: null,
       image2x: null
-    },
-    theme: 'light'
+    }
   }
 }
 
@@ -49,7 +42,6 @@ export const ArtistCardWithLoadingError: Story = {
       date: '29 July 1817 – 2 May 1900',
       image: '/images/64e5d1f4af5d7f5991789c57/image.jp',
       image2x: '/images/64e5d1f4af5d7f5991789c57/image.jp'
-    },
-    theme: 'light'
+    }
   }
 }

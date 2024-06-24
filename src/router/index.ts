@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import HomeView from '../views/HomeView.vue'
+
 import ArtistProfile from '@/views/ArtistProfile.vue'
 
 const router = createRouter({

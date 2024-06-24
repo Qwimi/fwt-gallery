@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-defineProps<{ variant: 'default' | 'round' | 'underline' | 'icon'; theme?: string }>()
+defineProps<{ variant: 'default' | 'round' | 'underline' | 'icon' }>()
 </script>
 
 <template>
-  <button class="button" :class="[`button--${variant}`, `button--${theme}`]">
+  <button class="button" :class="`button--${variant}`">
     <span class="button__icon icon" v-if="$slots.icon">
       <slot name="icon"></slot>
     </span>
@@ -20,61 +20,39 @@ defineProps<{ variant: 'default' | 'round' | 'underline' | 'icon'; theme?: strin
   &--default {
     padding: 1rem 1.25rem;
     border-radius: 2rem;
-    background-color: var(--primary-black);
-    color: var(--primary-white);
+    background-color: light-dark(var(--black_12), var(--accent));
+    color: var(--white_ff);
     min-width: 12.5rem;
+
     &:hover,
     &:focus {
-      color: var(--primary-white);
-      box-shadow: 0 0.25rem 0.5rem rgba($color: #000000, $alpha: 0.25);
+      color: var(--white_ff);
+      box-shadow: 0 0.25rem 0.5rem light-dark(#00000040, #ab895640);
     }
+
     &:focus {
-      background-color: #232323;
-    }
-    &.button--dark {
-      background-color: var(--accent-gold);
-      &:hover,
-      &:focus {
-        color: var(--primary-white);
-        box-shadow: 0 0.25rem 0.5rem color-mix(in srgb, var(--accent-gold) 40%, transparent);
-      }
-      &:focus {
-        background-color: #ba9052;
-      }
+      background-color: light-dark(#232323, #ba9052);
     }
   }
 
   &--icon {
-    background-color: var(--secondary-white);
+    background-color: var(--secondary-background);
     padding: 0.125rem;
     border-radius: 0.25rem;
-    &.button--dark {
-      background-color: var(--secondary-black);
-    }
   }
 
   &--round {
-    aspect-ratio: 1/1;
+    aspect-ratio: 1;
     padding: 1.125rem;
     border-radius: 100%;
-    border: 1px solid var(--secondary-gray);
-    background-color: var(---secondary-white);
-    color: var(--primary-gray-light);
+    border: 1px solid light-dark(var(--gray_9c), transparent);
+    background-color: var(--background-secondary);
+    color: var(--text-secondary);
+
     &:hover {
-      background-color: var(--primary-white);
-      border-color: var(--secondary-gray);
-      color: var(--primary-gray-dark);
-    }
-    .icon {
-      rotate: 270deg;
-    }
-    &.button--dark {
-      background-color: var(--secondary-black);
-      border-color: transparent;
-      color: var(--primary-gray-light);
-      &:hover {
-        background-color: #242222;
-      }
+      color: var(--text-secondary);
+      background-color: light-dark(var(--white_ff), #242222);
+      border-color: light-dark(var(--gray_9c), transparent);
     }
   }
 
@@ -82,11 +60,12 @@ defineProps<{ variant: 'default' | 'round' | 'underline' | 'icon'; theme?: strin
     .button__text {
       border-bottom: 1px solid;
     }
+
     &:disabled {
       opacity: 1;
-      color: var(--secondary-gray);
+      color: var(--gray_9c);
       .button__text {
-        border-color: var(--secondary-gray);
+        border-color: var(--gray_9c);
       }
     }
   }

@@ -2,28 +2,24 @@
   position: fixed;
   overflow: hidden;
   z-index: 3;
-  color: var(--primary-gray-dark);
-  background-color: var(--primary-white);
+  color: var(--text-primary);
+  background-color: var(--background-primary);
+
   &__icon-close {
     position: absolute;
     top: 1.25rem;
     right: 1.25rem;
     cursor: pointer;
+
     @media screen and (min-width: $breakpoint-md) {
       top: 2rem;
     }
+
     @media screen and (min-width: $breakpoint-lg) {
       right: 2rem;
     }
   }
-  &--light {
-    color: var(--primary-gray-dark);
-    background-color: var(--primary-white);
-  }
-  &--dark {
-    color: var(--primary-gray-light);
-    background-color: var(--primary-black);
-  }
+
   &--shadow {
     position: fixed;
     top: 0;
@@ -33,6 +29,7 @@
     background-color: rgba($color: #030303, $alpha: 0.6);
     z-index: 2;
   }
+
   &__content {
     display: flex;
   }

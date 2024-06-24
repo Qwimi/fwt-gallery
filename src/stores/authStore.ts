@@ -1,18 +1,18 @@
+import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { defineStore } from 'pinia'
 import { computed, ref, type Ref } from 'vue'
-import type { AuthForm, AuthRequest, AuthResponse, RefreshRequest } from './types'
-import { sentLoginData, sentRegisterData } from '@/api/main'
-import FingerprintJS from '@fingerprintjs/fingerprintjs'
-import { getNewTokens } from '../api/main'
+
 import { useModalStore } from './modalStore'
+import type { AuthForm, AuthRequest, AuthResponse, RefreshRequest } from './types'
+import { getNewTokens } from '../api/main'
+
+import { sentLoginData, sentRegisterData } from '@/api/main'
 
 export const useAuthStore = defineStore('auth', () => {
   const fingerprint: Ref<string> = ref('')
   const accessToken: Ref<string> = ref('')
   const refreshToken: Ref<string> = ref('')
   const isUserAuth = computed(() => refreshToken.value != '')
-
-  // инициализация fingerprint
 
   const initializeFingerprint = async () => {
     try {

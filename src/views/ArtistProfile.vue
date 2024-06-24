@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import router from '@/router'
-import { useAppStore } from '@/stores/baseStore'
 import { onMounted, onUnmounted } from 'vue'
-import CardList from '@/shared/ui/cardList/CardList.vue'
-import ArtistSection from '@/components/artistSection/ArtistSection.vue'
 
-defineProps<{ theme?: string }>()
+import ArtistSection from '@/components/artistSection'
+import router from '@/router'
+import CardList from '@/shared/ui/cardList'
+import { useAppStore } from '@/stores/baseStore'
 
 const store = useAppStore()
 const artistId = router.currentRoute.value.params.id as String
@@ -15,10 +14,10 @@ onUnmounted(() => store.unmountCurrentArtist())
 </script>
 
 <template>
-  <artist-section :artist="store.currentArtist" :theme="theme" />
+  <artist-section :artist="store.currentArtist" />
   <section class="wrapper">
-    <h3 class="section__title" :class="`section__title--${theme}`">Artworks</h3>
-    <card-list :cards="store.currentArtistCards" :is-artists="false" :theme="theme" />
+    <h3 class="section__title">Artworks</h3>
+    <card-list :cards="store.currentArtistCards" :is-artists="false" />
   </section>
 </template>
 
@@ -26,7 +25,7 @@ onUnmounted(() => store.unmountCurrentArtist())
 .section__title {
   @include headingH3;
   margin-bottom: 3.75rem;
-  color: var(--accent-red);
+  color: var(--accent);
 
   @media screen and (min-width: $breakpoint-md) {
     @include headingH1;
@@ -34,10 +33,6 @@ onUnmounted(() => store.unmountCurrentArtist())
 
   @media screen and (min-width: $breakpoint-lg) {
     margin-left: 5rem;
-  }
-
-  &--dark {
-    color: var(--accent-gold);
   }
 }
 </style>

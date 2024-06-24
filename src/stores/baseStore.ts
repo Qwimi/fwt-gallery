@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
-import type { Artist, ArtistPage, CardInterface, Painting } from './types'
 import { ref, type Ref } from 'vue'
+
+import type { Artist, ArtistPage, CardInterface, Painting } from './types'
+
 import { getArtistsStatic, getCurrentArtistStatic } from '@/api/main'
 
 export const useAppStore = defineStore('app', () => {

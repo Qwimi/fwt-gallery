@@ -1,5 +1,6 @@
-import ButtonBase from './ButtonBase.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
+
+import ButtonBase from './ButtonBase.vue'
 
 const meta: Meta<typeof ButtonBase> = {
   title: 'components/button/BattonBase',
@@ -8,10 +9,6 @@ const meta: Meta<typeof ButtonBase> = {
     variant: {
       control: 'select',
       options: ['default', 'round', 'underline', 'icon']
-    },
-    theme: {
-      control: 'select',
-      options: ['light', 'dark']
     },
     default: String
   },
@@ -25,23 +22,20 @@ type Story = StoryObj<typeof meta>
 export const ButtonDefault: Story = {
   args: {
     default: 'button',
-    variant: 'default',
-    theme: 'light'
+    variant: 'default'
   }
 }
 
 export const ButtonUnderline: Story = {
   args: {
     default: 'button',
-    variant: 'underline',
-    theme: 'light'
+    variant: 'underline'
   }
 }
 
 export const ButtonRound: Story = {
   args: {
     default: 'button',
-    variant: 'round',
-    theme: 'light'
+    variant: 'round'
   }
 }

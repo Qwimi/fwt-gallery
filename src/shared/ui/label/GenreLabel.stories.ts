@@ -1,14 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+
 import GenreLabel from './GenreLabel.vue'
 
 const meta: Meta<typeof GenreLabel> = {
   title: 'components/label/Genre Label',
   tags: ['autodocs'],
   argTypes: {
-    theme: {
-      control: 'select',
-      options: ['light', 'dark']
-    },
     deletable: {
       control: 'boolean'
     }
@@ -25,5 +22,15 @@ export const Label: Story = {
       _id: '1',
       name: 'genre'
     }
+  }
+}
+
+export const DeletableLabel: Story = {
+  args: {
+    genre: {
+      _id: '1',
+      name: 'genre'
+    },
+    deletable: true
   }
 }

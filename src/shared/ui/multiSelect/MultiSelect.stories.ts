@@ -1,14 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+
 import MultiSelect from './MultiSelect.vue'
 
 const meta: Meta<typeof MultiSelect> = {
   title: 'components/inputs/MultiSelect',
-  argTypes: {
-    theme: {
-      control: 'select',
-      options: ['light', 'dark']
-    }
-  },
   tags: ['autodocs'],
   component: MultiSelect
 }
@@ -21,7 +16,6 @@ export const MultiSelectShowcase: Story = {
     options: [
       { _id: '1', name: 'option 1' },
       { _id: '2', name: 'option 2' }
-    ],
-    theme: 'light'
+    ]
   }
 }

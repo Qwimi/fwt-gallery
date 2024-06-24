@@ -65,13 +65,10 @@ export interface CardInterface {
 export interface ArtistPage {
   paintings: Painting[]
   genres: Genre[]
-  _id: string
   name: string
   description: string
   yearsOfLife: string
   avatar: Image
-  __v: number
-  mainPainting: Painting
 }
 
 export interface Genre {

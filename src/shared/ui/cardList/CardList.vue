@@ -1,28 +1,21 @@
 <script lang="ts" setup>
+import CardItem from '@/shared/ui/card'
 import type { CardInterface } from '@/stores/types'
-import CardItem from '@/shared/ui/card/CardItem.vue'
 
 defineProps<{
   cards: CardInterface[]
   isArtists: boolean
-  theme?: string
 }>()
 </script>
 
 <template>
-  <section class="card--list">
-    <card-item
-      v-for="card in cards"
-      :key="card.id"
-      :is-artist="isArtists"
-      :card="card"
-      :theme="theme"
-    />
+  <section class="card-list">
+    <card-item v-for="card in cards" :key="card.id" :is-artist="isArtists" :card="card" />
   </section>
 </template>
 
 <style lang="scss" scoped>
-.card--list {
+.card-list {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(1, 1fr);

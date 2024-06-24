@@ -1,73 +1,65 @@
 @mixin inputMixin {
+  position: relative;
+
   &__label {
     @include inputText;
     margin-bottom: 0.5rem;
     display: block;
-    color: var(--primary-black);
+    color: var(--text-primary);
   }
+
   &__error {
     display: flex;
     flex-direction: row;
     gap: 0.25rem;
     align-items: center;
-    color: var(--accent-error);
+    position: absolute;
+    bottom: -0.25rem;
+    transform: translateY(100%);
+    color: var(--error);
     @include paragraphBaseLight;
   }
+
   &--wrapper {
     border-radius: 0.25rem;
     display: flex;
     gap: 0.75rem;
     align-items: center;
-    background-color: var(--primary-white);
-    border: 1px solid var(--primary-gray-light);
-    color: var(--primary-gray-dark);
+    background-color: var(--background-secondary);
+    border: 1px solid light-dark(var(--gray_de), transparent);
+    color: var(--text-secondary);
     position: relative;
+
     &:hover {
-      border-color: var(--secondary-gray);
+      border-color: var(--input-border-hover);
     }
-    &:has(.form__element__input:focus) {
-      border-color: var(--primary-gray-dark);
+
+    &:has(.form-element__input:focus) {
+      border-color: var(--text-secondary);
     }
   }
+
   &__input {
-    color: var(--primary-gray-dark);
+    color: var(--text-secondary);
     @include paragraphBaseLight;
     padding: 0.75rem 1rem;
     width: 100%;
     outline: none;
     background-color: transparent;
     border: none;
-    &::placeholder {
-      color: var(--secondary-gray);
-    }
-    &:focus + .form__element--wrapper {
-      border-color: var(--primary-gray-dark);
-    }
-  }
-  &.error {
-    .form__element--wrapper {
-      margin-bottom: 0.25rem;
-      border-color: var(--accent-error);
-    }
-  }
-  &--dark {
-    .form__element__label {
-      color: var(--primary-white);
-    }
-    .form__element--wrapper {
-      color: var(--primary-gray-light);
-      background-color: var(--secondary-black);
-      border-color: transparent;
-      &:hover {
-        border-color: var(--primary-gray-dark);
-      }
 
-      &:has(.form__element__input:focus) {
-        border-color: var(--primary-gray-light);
-      }
+    &::placeholder {
+      color: var(--gray_9c);
     }
-    .form__element__input {
-      color: var(--primary-gray-light);
+
+    &:focus + &--wrapper {
+      border-color: var(--text-secondary);
+    }
+  }
+
+  &.error {
+    .form-element--wrapper {
+      border-color: var(--error);
     }
   }
 }

@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { ref, type Ref } from 'vue'
-import type { Genre } from '@/stores/types'
-import TheCheckbox from '@/shared/ui/checkbox/TheCheckbox.vue'
-import GenreLabel from '@/shared/ui/label/GenreLabel.vue'
+
 import IconExpand from '@/components/icons/IconExpand.vue'
+import GenreLabel from '@/shared/ui/label'
+import TheCheckbox from '@/shared/ui/theCheckbox'
+import type { Genre } from '@/stores/types'
 
 const props = defineProps<{
   label: string
   options: Genre[]
-  theme?: string
 }>()
 
 const isSelectOpen: Ref<boolean> = ref(false)
@@ -29,10 +29,10 @@ const updateSelected = (event: { value: boolean; id: string }) => {
 </script>
 
 <template>
-  <div class="form__element multiple" :class="[`form__element--${theme}`, `multiple--${theme}`]">
-    <label class="form__element__label">{{ label }}</label>
+  <div class="form-element multiple">
+    <label class="form-element__label">{{ label }}</label>
     <div
-      class="form__element--wrapper"
+      class="form-element--wrapper"
       @click="isSelectOpen = !isSelectOpen"
       :class="{ 'multiple--opened': isSelectOpen }"
     >
@@ -43,7 +43,6 @@ const updateSelected = (event: { value: boolean; id: string }) => {
             :key="genre._id"
             :genre="genre"
             :deletable="true"
-            :theme="theme"
             @click.stop="deleteSelected(genre)"
           />
         </TransitionGroup>
@@ -57,7 +56,6 @@ const updateSelected = (event: { value: boolean; id: string }) => {
           :label="option.name"
           :checked="selectedGenres.includes(option)"
           @check="updateSelected"
-          :theme="theme"
         />
       </li>
     </ul>
@@ -65,7 +63,7 @@ const updateSelected = (event: { value: boolean; id: string }) => {
 </template>
 
 <style lang="scss" scoped>
-.form__element {
+.form-element {
   @include inputMixin;
   &--wrapper {
     height: 3rem;
@@ -88,7 +86,8 @@ const updateSelected = (event: { value: boolean; id: string }) => {
   &__options {
     overflow: hidden;
     padding: 1.25rem 0 0.75rem;
-    border: 1px solid var(--primary-gray-light);
+    border: 1px solid light-dark(var(--gray_de), transparent);
+    background-color: light-dark(var(--white_ff), var(--black_1a));
     border-top: none;
     border-radius: 0.25rem;
     transform: translateY(-0.5rem);
@@ -104,27 +103,14 @@ const updateSelected = (event: { value: boolean; id: string }) => {
   &__option {
     padding: 0.5rem 1rem;
     &:hover {
-      background-color: color-mix(in srgb, var(--primary-black) 5%, transparent);
+      background-color: var(--background-transparent);
     }
   }
-  &--opened {
-    border-color: var(--primary-gray-dark);
+  &--opened,
+  &--opened:hover {
+    border-color: var(--text-primary);
     .multiple--toggler {
       transform: rotate(-180deg);
-    }
-  }
-  &--dark {
-    .multiple__options {
-      border-color: transparent;
-      background-color: var(--secondary-black);
-    }
-    .multiple__option {
-      &:hover {
-        background-color: color-mix(in srgb, #cdcdcd 5%, transparent);
-      }
-    }
-    .multiple--opened {
-      border-color: var(--primary-gray-light);
     }
   }
 }

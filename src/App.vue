@@ -1,24 +1,26 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import TheHeader from '@/components/header/TheHeader.vue'
-import TheFooter from '@/components/footer/TheFooter.vue'
-import TheModal from '@/components/modal/TheModal.vue'
-import TheSidebar from '@/components/sidebar/TheSidebar.vue'
-import { useThemeStore } from './stores/themeStore'
-import { useModalStore } from './stores/modalStore'
-import { useAuthStore } from './stores/authStore'
 
-const themeStore = useThemeStore()
+import { useAuthStore } from './stores/authStore'
+import { useModalStore } from './stores/modalStore'
+import { useThemeStore } from './stores/themeStore'
+
+import TheSidebar from '@/components/theSidebar'
+import TheFooter from '@/components/theFooter'
+import TheHeader from '@/components/theHeader'
+import TheModal from '@/components/theModal'
+
+useThemeStore()
 useAuthStore()
 useModalStore()
 </script>
 
 <template>
-  <the-sidebar :theme="themeStore.theme" />
-  <the-modal :theme="themeStore.theme" />
-  <the-header :theme="themeStore.theme" />
+  <the-sidebar />
+  <the-modal />
+  <the-header />
   <main>
-    <router-view :theme="themeStore.theme" />
+    <router-view />
   </main>
-  <the-footer :theme="themeStore.theme" />
+  <the-footer />
 </template>

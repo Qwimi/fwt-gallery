@@ -9,7 +9,7 @@ export const useThemeStore = defineStore('theme', () => {
   }
 
   const setTheme = () => {
-    document.body.setAttribute('theme', theme.value)
+    document.documentElement.setAttribute('theme', theme.value)
     saveTheme(theme.value)
   }
 

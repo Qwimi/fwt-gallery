@@ -10,6 +10,16 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i
       }
+    },
+    theme: {
+      selector: 'body',
+      dataAttr: 'theme',
+      themeOptions: {
+        default: '',
+        light: 'light',
+        dark: 'dark'
+      },
+      defaultTheme: ''
     }
   }
 }
