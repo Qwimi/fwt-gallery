@@ -17,7 +17,7 @@
   --accent: var(--red);
   --background-primary: var(--white_ff);
   --background-secondary: var(--white_fc);
-  --background-transparent: color-mix(in srgb, var(--black_12) 5%, transparent);
+  --background-semi-transparent: color-mix(in srgb, var(--black_12) 5%, transparent);
   --input-border-hover: var(--gray_9c);
 }
 
@@ -28,6 +28,6 @@
   --accent: var(--gold);
   --background-primary: var(--black_12);
   --background-secondary: var(--black_1a);
-  --background-transparent: color-mix(in srgb, #cdcdcd 5%, transparent);
+  --background-semi-transparent: color-mix(in srgb, #cdcdcd 5%, transparent);
   --input-border-hover: var(--gray_57);
 }

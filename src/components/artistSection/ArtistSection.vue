@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
 import ExpandableText from '@/shared/ui/expandableText'
 import GenreLabel from '@/shared/ui/label'
 import NoImage from '@/shared/ui/noImage'
@@ -12,10 +11,6 @@ defineProps<{
 
 <template>
   <section class="artist-section">
-    <router-link :to="{ name: 'home' }" class="link">
-      <icon-arrow-decoration class="icon" />
-      <span class="link__text">back</span>
-    </router-link>
     <div class="artist-section__avatar">
       <img :src="artist?.avatar?.src" alt="can't load the picture" v-if="artist?.avatar" />
       <no-image :is-big="true" v-else />
@@ -45,31 +40,6 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
-.link {
-  position: absolute;
-  top: -0.75rem;
-  transform: translateY(-100%);
-  left: 1.25rem;
-
-  @media screen and (min-width: $breakpoint-lg) {
-    left: calc((100vw - 1240px) / 2);
-  }
-
-  &__text {
-    @include buttonText;
-    display: none;
-
-    @media screen and (min-width: $breakpoint-md) {
-      display: inline;
-    }
-  }
-
-  .icon {
-    margin-right: 0.75rem;
-    rotate: 180deg;
-  }
-}
-
 .artist-section {
   display: flex;
   flex-direction: column;

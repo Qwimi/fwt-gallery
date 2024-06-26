@@ -22,7 +22,7 @@ defineProps<{
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   color: var(--text-secondary);
-  background-color: var(--background-transparent);
+  background-color: var(--background-semi-transparent);
   border-radius: 2rem;
   border: 1px solid light-dark(transparent, var(--white_ff));
   @include paragraphSmallMadium;

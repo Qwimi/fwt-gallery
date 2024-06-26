@@ -49,6 +49,7 @@ body,
 }
 
 main {
+  position: relative;
   flex: 1;
   padding: 5rem 0;
   @media screen and (min-width: $breakpoint-md) {

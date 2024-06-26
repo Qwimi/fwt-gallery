@@ -5,10 +5,10 @@ import { useAuthStore } from './stores/authStore'
 import { useModalStore } from './stores/modalStore'
 import { useThemeStore } from './stores/themeStore'
 
-import TheSidebar from '@/components/theSidebar'
 import TheFooter from '@/components/theFooter'
 import TheHeader from '@/components/theHeader'
 import TheModal from '@/components/theModal'
+import TheSidebar from '@/components/theSidebar'
 
 useThemeStore()
 useAuthStore()

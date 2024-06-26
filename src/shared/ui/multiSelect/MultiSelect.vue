@@ -103,7 +103,7 @@ const updateSelected = (event: { value: boolean; id: string }) => {
   &__option {
     padding: 0.5rem 1rem;
     &:hover {
-      background-color: var(--background-transparent);
+      background-color: var(--background-semi-transparent);
     }
   }
   &--opened,
