@@ -56,6 +56,8 @@ export const useAppStore = defineStore('app', () => {
     try {
       currentArtist.value = await getCurrentArtistStatic(id)
       currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`
+      currentArtist.value = await getCurrentArtistStatic(id)
+      currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`
       setCurrentArtistCards()
     } catch (error) {
       console.error(error)

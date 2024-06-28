@@ -75,3 +75,7 @@ export interface Genre {
   _id: string
   name: string
 }
+
+export interface ButtonProps {
+  variant: 'default' | 'round' | 'underline' | 'icon'
+}

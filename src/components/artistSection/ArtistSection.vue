@@ -8,12 +8,17 @@ import type { ArtistPage } from '@/stores/types'
 defineProps<{
   artist: ArtistPage
 }>()
+defineProps<{
+  artist: ArtistPage
+}>()
 </script>
 
 <template>
   <section class="artist-section">
     <router-link :to="{ name: 'home' }" class="link">
+    <router-link :to="{ name: 'home' }" class="link">
       <icon-arrow-decoration class="icon" />
+      <span class="link__text">back</span>
       <span class="link__text">back</span>
     </router-link>
     <div class="artist-section__avatar">
@@ -70,6 +75,31 @@ defineProps<{
   }
 }
 
+.link {
+  position: absolute;
+  top: -0.75rem;
+  transform: translateY(-100%);
+  left: 1.25rem;
+
+  @media screen and (min-width: $breakpoint-lg) {
+    left: calc((100vw - 1240px) / 2);
+  }
+
+  &__text {
+    @include buttonText;
+    display: none;
+
+    @media screen and (min-width: $breakpoint-md) {
+      display: inline;
+    }
+  }
+
+  .icon {
+    margin-right: 0.75rem;
+    rotate: 180deg;
+  }
+}
+
 .artist-section {
   display: flex;
   flex-direction: column;
@@ -82,22 +112,29 @@ defineProps<{
   }
 
   &__avatar {
+  &__avatar {
     width: 100%;
     max-height: 28.5rem;
     overflow: hidden;
 
+
     @media screen and (min-width: $breakpoint-md) {
       max-height: 500px;
     }
+
 
     @media screen and (min-width: $breakpoint-lg) {
       max-height: none;
       width: fit-content;
       height: 1000px;
       aspect-ratio: 1;
+      aspect-ratio: 1;
     }
   }
 }
+
+.biography {
+  position: relative;
 
 .biography {
   position: relative;
