@@ -9,23 +9,29 @@ import type { Genre } from '@/stores/types'
 const props = defineProps<{
   label: string
   options: Genre[]
+  modelValue?: Genre[]
 }>()
+
+const emit = defineEmits(['update:modelValue'])
 
 const isSelectOpen: Ref<boolean> = ref(false)
 
-const selectedGenres: Ref<Genre[]> = ref([])
+const selectedGenres: Ref<string[]> = ref(
+  props.modelValue?.map((option: Genre) => option._id) || []
+)
 
 const deleteSelected = (option: Genre) => {
-  const deleteIndex = selectedGenres.value.indexOf(option)
-  selectedGenres.value.splice(deleteIndex, 1)
+  selectedGenres.value = selectedGenres.value.filter((element: string) => element != option._id)
 }
 
 const updateSelected = (event: { value: boolean; id: string }) => {
   const focusGenre = props.options.find((option) => option._id == event.id)
-  event.value ? selectedGenres.value.push(focusGenre!!) : deleteSelected(focusGenre!!)
+  event.value ? selectedGenres.value.push(focusGenre?._id!!) : deleteSelected(focusGenre!!)
+  emit(
+    'update:modelValue',
+    props.options.filter((option: Genre) => selectedGenres.value.includes(option._id))
+  )
 }
-
-// defineEmits(['update:modelValue'])
 </script>
 
 <template>
@@ -38,13 +44,14 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     >
       <div class="multiple__selected">
         <TransitionGroup name="list">
-          <genre-label
-            v-for="genre in selectedGenres"
-            :key="genre._id"
-            :genre="genre"
-            :deletable="true"
-            @click.stop="deleteSelected(genre)"
-          />
+          <template v-for="genre in options" :key="genre._id">
+            <genre-label
+              :genre="genre"
+              :deletable="true"
+              v-if="selectedGenres.includes(genre._id)"
+              @click.stop="deleteSelected(genre)"
+            />
+          </template>
         </TransitionGroup>
       </div>
       <IconExpand class="icon multiple--toggler" />
@@ -54,7 +61,7 @@ const updateSelected = (event: { value: boolean; id: string }) => {
         <the-checkbox
           :id="option._id"
           :label="option.name"
-          :checked="selectedGenres.includes(option)"
+          :checked="selectedGenres.includes(option._id)"
           @check="updateSelected"
         />
       </li>
@@ -91,7 +98,8 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     border-top: none;
     border-radius: 0.25rem;
     transform: translateY(-0.5rem);
-    position: relative;
+    position: absolute;
+    width: 100%;
     z-index: 0;
     max-height: 150px;
     overflow-y: auto;

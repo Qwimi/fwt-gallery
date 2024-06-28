@@ -25,7 +25,7 @@ const $v = useVuelidate(rules, form)
 const submitForm = async () => {
   const isValid = await $v.value.$validate()
   if (isValid) {
-    authStore.sentLoginRequest(form.value)
+    authStore.sentAuthRequest(form.value, true)
   }
 }
 </script>

@@ -5,7 +5,9 @@ import IconSearch from '@/components/icons/IconSearch.vue'
 defineProps<{
   placeholder?: string
   error?: string
+  modelValue?: string
 }>()
+
 defineEmits(['update:modelValue'])
 </script>
 
@@ -17,6 +19,7 @@ defineEmits(['update:modelValue'])
         class="form-element__input"
         type="text"
         :placeholder="placeholder"
+        :value="modelValue"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       />
     </div>

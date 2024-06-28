@@ -5,10 +5,13 @@ import { useAuthStore } from './authStore'
 import type { Artist, ArtistPage, CardInterface, Genre, Painting } from './types'
 
 import {
-  getArtistsAuth,
-  getArtistsStatic,
-  getCurrentArtistStatic,
-  getGenresStatic
+  handleDeletArtist,
+  handleGetArtists,
+  handleGetArtistsStatic,
+  handleGetCurrentArtist,
+  handleGetCurrentArtistStatic,
+  handleGetGenres,
+  handleGetGenresStatic
 } from '@/api/main'
 
 export const useAppStore = defineStore('app', () => {
@@ -54,16 +57,13 @@ export const useAppStore = defineStore('app', () => {
 
   const getArtists = async () => {
     try {
-      artists.value = authStore.isUserAuth ? await getArtistsAuth() : await getArtistsStatic()
-      console.log(artists.value)
+      if (authStore.isUserAuth) {
+        const request = await handleGetArtists()
+        artists.value = request.data
+      } else {
+        artists.value = await handleGetArtistsStatic()
+      }
       setAuthorCards()
-      // response.then(() => {
-      //   artists.value = response
-      // })
-      // if (!authStore.isUserAuth) {
-      // } else {
-      //   console.log('auth')
-      // }
     } catch (error) {
       console.error(error)
     }
@@ -71,8 +71,12 @@ export const useAppStore = defineStore('app', () => {
 
   const getCurrentArtist = async (id: String) => {
     try {
-      currentArtist.value = await getCurrentArtistStatic(id)
+      currentArtist.value = authStore.isUserAuth
+        ? await handleGetCurrentArtist(id)
+        : await handleGetCurrentArtistStatic(id)
+
       currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`
+
       setCurrentArtistCards()
     } catch (error) {
       console.error(error)
@@ -81,9 +85,18 @@ export const useAppStore = defineStore('app', () => {
 
   const getGenres = async () => {
     try {
-      genres.value = await getGenresStatic()
+      genres.value = authStore.isUserAuth ? await handleGetGenres() : await handleGetGenresStatic()
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  const deleteArtist = async (id: string) => {
+    try {
+      return await handleDeletArtist(id)
+    } catch (error) {
+      console.error(error)
+      return
     }
   }
 
@@ -95,6 +108,7 @@ export const useAppStore = defineStore('app', () => {
     unmountCurrentArtist,
     getCurrentArtist,
     getArtists,
-    getGenres
+    getGenres,
+    deleteArtist
   }
 })

@@ -1,34 +1,50 @@
 import { axiosInstance } from '.'
 
-import type { AuthRequest, RefreshRequest } from '@/stores/types'
+import type { AuthRequest } from '@/stores/types'
 
-// список артистов для неавторизированного пользователя
+// список художников для неавторизированного пользователя
 
-export const getArtistsStatic = async () => {
+export const handleGetArtistsStatic = async () => {
   const response = await axiosInstance.get('/artists/static')
 
   return response.data
 }
 
-// список артистов для авторизированного пользователя
+// список художников для авторизированного пользователя
 
-export const getArtistsAuth = async () => {
+export const handleGetArtists = async () => {
   const response = await axiosInstance.get('/artists')
 
   return response.data
 }
 
-// профиль артиста для неавторизированного пользователя
+// профиль художника для неавторизированного пользователя
 
-export const getCurrentArtistStatic = async (id: String) => {
+export const handleGetCurrentArtistStatic = async (id: String) => {
   const response = await axiosInstance.get(`/artists/static/${id}`)
+
+  return response.data
+}
+
+// профиль художника для авторизированного пользователя
+
+export const handleGetCurrentArtist = async (id: String) => {
+  const response = await axiosInstance.get(`/artists/${id}`)
+
+  return response.data
+}
+
+// удаление художника
+
+export const handleDeletArtist = async (id: String) => {
+  const response = await axiosInstance.delete(`/artists/${id}`)
 
   return response.data
 }
 
 // получение жанров для авторизированного пользователя
 
-export const getGenresAuth = async () => {
+export const handleGetGenres = async () => {
   const response = await axiosInstance.get(`/genres`)
 
   return response.data
@@ -36,27 +52,30 @@ export const getGenresAuth = async () => {
 
 // получение жанров для неавторизированного пользователя
 
-export const getGenresStatic = async () => {
+export const handleGetGenresStatic = async () => {
   const response = await axiosInstance.get(`/genres/static`)
 
   return response.data
 }
 //auth
 
-export const sentRegisterData = async (user: AuthRequest) => {
+export const handleRegister = async (user: AuthRequest) => {
   const response = await axiosInstance.post(`/auth/register`, user)
 
   return response.data
 }
 
-export const sentLoginData = async (user: AuthRequest) => {
+export const handleLogin = async (user: AuthRequest) => {
   const response = await axiosInstance.post(`/auth/login`, user)
 
   return response.data
 }
 
-export const getNewTokens = async (refreshRequest: RefreshRequest) => {
-  const response = await axiosInstance.post(`/auth/refresh`, refreshRequest)
+export const handleRefresh = async (fingerprint: string, refreshToken: string) => {
+  const response = await axiosInstance.post(`/auth/refresh`, {
+    fingerprint: fingerprint,
+    refreshToken: refreshToken
+  })
 
   return response.data
 }

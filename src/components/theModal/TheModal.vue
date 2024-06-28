@@ -22,14 +22,10 @@ const currentModalContent = {
       <div class="modal--shadow" v-show="modalStore.isModalOpen" @click="modalStore.closeModal">
         <div class="modal" @click.stop>
           <transition name="component-fade" mode="out-in">
-            <KeepAlive>
-              <component
-                :is="
-                  currentModalContent[modalStore.currentModal as keyof typeof currentModalContent]
-                "
-                @click.stop
-              />
-            </KeepAlive>
+            <component
+              :is="currentModalContent[modalStore.currentModal as keyof typeof currentModalContent]"
+              @click.stop
+            />
           </transition>
           <icon-close class="icon modal__icon-close" @click="modalStore.closeModal" />
         </div>
@@ -63,6 +59,7 @@ const currentModalContent = {
 
   &:has(&--small) {
     height: fit-content;
+    width: 100%;
 
     @media screen and (min-width: $breakpoint-md) {
       max-width: 320px;

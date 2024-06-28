@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import IconError from '@/components/icons/IconError.vue'
+
 defineProps<{
   label: string
   placeholder?: string
   error?: string
+  modelValue?: string
 }>()
 
 defineEmits(['update:modelValue'])
@@ -16,6 +18,7 @@ defineEmits(['update:modelValue'])
       <textarea
         class="form-element__input"
         :placeholder="placeholder"
+        :value="modelValue"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       ></textarea>
     </div>

@@ -1,12 +1,21 @@
 <script lang="ts" setup>
+import { ref, type Ref } from 'vue'
+
 import IconError from '@/components/icons/IconError.vue'
+import IconEye from '@/components/icons/IconEye.vue'
+import IconEyeHide from '@/components/icons/IconEyeHide.vue'
 
 defineProps<{
   label: string
-  type: string
+  type: 'text' | 'email' | 'password'
   placeholder?: string
   error?: string
+  modelValue?: string
 }>()
+
+const isPasswordShow: Ref<boolean> = ref(false)
+
+const showPassword = () => (isPasswordShow.value = !isPasswordShow.value)
 
 defineEmits(['update:modelValue'])
 </script>
@@ -17,10 +26,19 @@ defineEmits(['update:modelValue'])
     <div class="form-element--wrapper">
       <input
         class="form-element__input"
-        :type="type"
+        :type="isPasswordShow ? 'text' : type"
         :placeholder="placeholder"
+        :value="modelValue"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       />
+      <span
+        class="form-element__type-toggler"
+        @click="showPassword()"
+        v-if="type == 'password' && modelValue"
+      >
+        <icon-eye-hide class="icon" v-if="isPasswordShow" />
+        <icon-eye class="icon" v-else />
+      </span>
     </div>
     <transition name="fade">
       <div class="form-element__error" v-if="error">

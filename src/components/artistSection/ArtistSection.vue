@@ -53,17 +53,25 @@ defineProps<{
 
   &__avatar {
     width: 100%;
-    max-height: 28.5rem;
+    height: 28.5rem;
     overflow: hidden;
+    img {
+      height: 100%;
+    }
 
     @media screen and (min-width: $breakpoint-md) {
-      max-height: 500px;
+      height: 500px;
+      img {
+        height: auto;
+      }
     }
 
     @media screen and (min-width: $breakpoint-lg) {
-      max-height: none;
       width: fit-content;
       height: 1000px;
+      img {
+        height: 100%;
+      }
       aspect-ratio: 1;
     }
   }

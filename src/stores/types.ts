@@ -46,6 +46,16 @@ export interface Artist {
   mainPainting: MainPainting
 }
 
+export interface ArtistPage {
+  _id: string
+  paintings: Painting[]
+  genres: Genre[]
+  name: string
+  description: string
+  yearsOfLife: string
+  avatar: Image
+}
+
 export interface Painting {
   _id: string
   name: string
@@ -60,15 +70,6 @@ export interface CardInterface {
   date: string
   image: string | null
   image2x: string | null
-}
-
-export interface ArtistPage {
-  paintings: Painting[]
-  genres: Genre[]
-  name: string
-  description: string
-  yearsOfLife: string
-  avatar: Image
 }
 
 export interface Genre {

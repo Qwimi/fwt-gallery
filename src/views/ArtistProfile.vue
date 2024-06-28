@@ -29,12 +29,18 @@ onUnmounted(() => store.unmountCurrentArtist())
         <span class="link__text">back</span>
       </router-link>
       <div class="tools-row__right-column" v-if="authStore.isUserAuth">
-        <button-base :variant="'icon'">
+        <button-base
+          :variant="'icon'"
+          @click="modalStore.openModal('addArtist', store.currentArtist)"
+        >
           <template #icon>
             <icon-edit class="icon" />
           </template>
         </button-base>
-        <button-base :variant="'icon'" @click="modalStore.openModal('delete')">
+        <button-base
+          :variant="'icon'"
+          @click="modalStore.openModal('delete', { id: store.currentArtist._id, target: 'artist' })"
+        >
           <template #icon>
             <icon-delete class="icon" />
           </template>

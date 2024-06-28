@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue'
-
 import IconPlus from '@/components/icons/IconPlus.vue'
 import ButtonBase from '@/shared/ui/button'
 import CardList from '@/shared/ui/cardList/CardList.vue'
@@ -10,10 +8,6 @@ import { useModalStore } from '@/stores/modalStore'
 
 const store = useAppStore()
 const authStore = useAuthStore()
-
-onMounted(() => {
-  store.getArtists()
-})
 </script>
 <template>
   <div class="tools-row" v-if="authStore.isUserAuth">

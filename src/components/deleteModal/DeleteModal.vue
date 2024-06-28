@@ -1,17 +1,46 @@
 <script lang="ts" setup>
+import { ref, type Ref } from 'vue'
+
 import IconDeleteBig from '@/components/icons/IconDeleteBig.vue'
+import router from '@/router'
 import ButtonBase from '@/shared/ui/button'
+import { useAppStore } from '@/stores/baseStore'
 import { useModalStore } from '@/stores/modalStore'
 
 const modalStore = useModalStore()
+const store = useAppStore()
+const props: Ref<{ id: string; target: string }> = ref(modalStore.currentModalProps)
+
+const deleteFunction = async () => {
+  if (await store.deleteArtist(props.value.id)) {
+    modalStore.closeModal()
+    store.getArtists()
+    router.push({ name: 'home' })
+    console.log('success')
+  } else {
+    console.log('error')
+  }
+}
 </script>
 
 <template>
   <div class="modal__content modal--small">
     <icon-delete-big class="icon modal__illustration" />
-    <h5 class="modal__title">Do you want to delete this artist profile?</h5>
-    <p class="modal__text">You will not be able to recover this profile afterwards.</p>
-    <button-base :variant="'default'" class="modal__button">delete</button-base>
+    <h5 class="modal__title">
+      <template v-if="props.target == 'artist'">
+        Do you want to delete this artist profile?
+      </template>
+      <template v-else> Do you want to delete this picture? </template>
+    </h5>
+    <p class="modal__text">
+      <template v-if="props.target == 'artist'">
+        You will not be able to recover this profile afterwards.
+      </template>
+      <template v-else> You will not be able to recover this picture afterwards. </template>
+    </p>
+    <button-base :variant="'default'" class="modal__button" @click.stop="deleteFunction"
+      >delete</button-base
+    >
     <button-base :variant="'underline'" @click="modalStore.closeModal">cancel</button-base>
   </div>
 </template>

@@ -7,7 +7,7 @@ defineProps<{
 
 <template>
   <div class="no-image" :class="{ 'no-image--big': isBig }">
-    <icon-photo class="no-image__icon" />
+    <icon-photo class="no-image__icon icon--semi-transparent" />
     <p class="no-image__title">No Image uploaded</p>
   </div>
 </template>
@@ -18,14 +18,13 @@ defineProps<{
   gap: 0.75rem;
   flex-direction: column;
   align-items: center;
-  padding-top: 3.75rem;
+  padding-top: 2rem;
   background-color: var(--background-secondary);
   height: 100%;
 
   &__icon {
     height: 3.75rem;
     width: fit-content;
-    opacity: 0.2;
   }
 
   &__title {
@@ -48,9 +47,13 @@ defineProps<{
       font-size: 1.25rem;
     }
   }
-}
 
-[theme='dark'] .no-image__icon {
-  opacity: 0.1;
+  @media screen and (min-width: $breakpoint-md) {
+    padding-top: 2.5rem;
+  }
+
+  @media screen and (min-width: $breakpoint-lg) {
+    padding-top: 3.75rem;
+  }
 }
 </style>
