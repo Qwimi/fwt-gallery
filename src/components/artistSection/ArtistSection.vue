@@ -8,17 +8,12 @@ import type { ArtistPage } from '@/stores/types'
 defineProps<{
   artist: ArtistPage
 }>()
-defineProps<{
-  artist: ArtistPage
-}>()
 </script>
 
 <template>
   <section class="artist-section">
     <router-link :to="{ name: 'home' }" class="link">
-    <router-link :to="{ name: 'home' }" class="link">
       <icon-arrow-decoration class="icon" />
-      <span class="link__text">back</span>
       <span class="link__text">back</span>
     </router-link>
     <div class="artist-section__avatar">
@@ -112,29 +107,22 @@ defineProps<{
   }
 
   &__avatar {
-  &__avatar {
     width: 100%;
     max-height: 28.5rem;
     overflow: hidden;
 
-
     @media screen and (min-width: $breakpoint-md) {
       max-height: 500px;
     }
-
 
     @media screen and (min-width: $breakpoint-lg) {
       max-height: none;
       width: fit-content;
       height: 1000px;
       aspect-ratio: 1;
-      aspect-ratio: 1;
     }
   }
 }
-
-.biography {
-  position: relative;
 
 .biography {
   position: relative;
