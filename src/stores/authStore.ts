@@ -25,44 +25,55 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   initializeFingerprint()
-    .then(() => {
-      getRefreshToken()
-    })
+    .then(() => getLocalTokens())
     .catch((e) => {
       console.log('Error in initializeFingerprint:', e)
     })
 
-  // работа с токенами
+  const getAccessToken = () => accessToken.value
 
   const logout = () => {
     refreshToken.value = ''
     accessToken.value = ''
     localStorage.removeItem('refreshToken')
+    localStorage.removeItem('accessToken')
+  }
+
+  const setAccessToken = (value: string) => {
+    localStorage.setItem('accessToken', value)
+    accessToken.value = value
+  }
+
+  const setRefreshToken = (value: string) => {
+    localStorage.setItem('refreshToken', value)
+    refreshToken.value = value
   }
 
   const setTokens = (tokens: AuthResponse) => {
-    localStorage.setItem('refreshToken', tokens.refreshToken)
-    refreshToken.value = tokens.refreshToken
-    accessToken.value = tokens.accessToken
+    setAccessToken(tokens.accessToken)
+    setRefreshToken(tokens.refreshToken)
   }
 
-  const refreshTokens = async (oldToken: string) => {
+  const refreshTokens = async () => {
     try {
       const refreshData: RefreshRequest = {
         fingerprint: fingerprint.value,
-        refreshToken: oldToken
+        refreshToken: refreshToken.value
       }
-      const response: AuthResponse = await getNewTokens(refreshData)
-      setTokens(response)
+      console.log(refreshData)
+
+      const response = await getNewTokens(refreshData)
+      // setTokens(response)
     } catch (e: unknown) {
       console.log('token refresh error:', e)
       logout()
     }
   }
 
-  const getRefreshToken = () => {
+  const getLocalTokens = () => {
     if (localStorage.getItem('refreshToken')) {
-      refreshTokens(localStorage.getItem('refreshToken')!!)
+      setAccessToken(localStorage.getItem('accessToken')!!)
+      setRefreshToken(localStorage.getItem('refreshToken')!!)
     } else {
       console.log('no local refresh token')
     }
@@ -93,6 +104,10 @@ export const useAuthStore = defineStore('auth', () => {
         fingerprint: fingerprint.value
       }
       const response: AuthResponse = await sentLoginData(formData)
+      console.log(response)
+      console.log(response.accessToken)
+      console.log(response.refreshToken)
+
       setTokens(response)
       useModalStore().closeModal()
     } catch (errors) {
@@ -100,5 +115,13 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { isUserAuth, sentRegisterRequest, sentLoginRequest, logout }
+  return {
+    isUserAuth,
+    getAccessToken,
+    sentRegisterRequest,
+    sentLoginRequest,
+    getLocalTokens,
+    refreshTokens,
+    logout
+  }
 })

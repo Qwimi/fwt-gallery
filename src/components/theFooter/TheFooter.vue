@@ -40,13 +40,13 @@ import IconVk from '@/components/icons/IconVk.vue'
 
   .link-underline {
     display: inline;
-    @include paragraphSmallMadium;
+    @include paragraphSmallMedium;
   }
 
   @media screen and (min-width: $breakpoint-md) {
     @include paragraphBaseLight;
     .link-underline {
-      @include paragraphBaseMadium;
+      @include paragraphBaseMedium;
     }
   }
 

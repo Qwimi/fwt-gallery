@@ -11,8 +11,8 @@ import TheModal from '@/components/theModal'
 import TheSidebar from '@/components/theSidebar'
 
 useThemeStore()
-useAuthStore()
 useModalStore()
+useAuthStore()
 </script>
 
 <template>

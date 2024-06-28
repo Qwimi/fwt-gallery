@@ -38,6 +38,10 @@ body {
   display: none;
 }
 
+.no-scroll {
+  overflow-y: hidden;
+}
+
 body,
 #app {
   min-height: 100vh;

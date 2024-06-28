@@ -10,20 +10,25 @@ export const useModalStore = defineStore('modal', () => {
   const openModal = (targetModal: string) => {
     isModalOpen.value = true
     currentModal.value = targetModal
+    document.documentElement.classList.add('no-scroll')
   }
 
   const closeModal = () => {
     isModalOpen.value = false
     currentModal.value = null
+    document.documentElement.classList.remove('no-scroll')
   }
 
   const openSidebar = (targetSidebar: string) => {
     isSidebarOpen.value = true
     currentSidebar.value = targetSidebar
+    document.documentElement.classList.add('no-scroll')
   }
+
   const closeSidebar = () => {
     isSidebarOpen.value = false
     currentSidebar.value = null
+    document.documentElement.classList.remove('no-scroll')
   }
 
   return {

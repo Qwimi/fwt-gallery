@@ -1,15 +1,24 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 
-import type { Artist, ArtistPage, CardInterface, Painting } from './types'
+import { useAuthStore } from './authStore'
+import type { Artist, ArtistPage, CardInterface, Genre, Painting } from './types'
 
-import { getArtistsStatic, getCurrentArtistStatic } from '@/api/main'
+import {
+  getArtistsAuth,
+  getArtistsStatic,
+  getCurrentArtistStatic,
+  getGenresStatic
+} from '@/api/main'
 
 export const useAppStore = defineStore('app', () => {
   const artists: Ref<Array<Artist>> = ref([])
   const artistCards: Ref<Array<CardInterface>> = ref([])
   const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage)
   const currentArtistCards: Ref<Array<CardInterface>> = ref([])
+  const genres: Ref<Array<Genre>> = ref([])
+
+  const authStore = useAuthStore()
 
   const setCurrentArtistCards = () => {
     currentArtistCards.value = currentArtist.value.paintings.map((painting: Painting) => {
@@ -45,8 +54,16 @@ export const useAppStore = defineStore('app', () => {
 
   const getArtists = async () => {
     try {
-      artists.value = await getArtistsStatic()
+      artists.value = authStore.isUserAuth ? await getArtistsAuth() : await getArtistsStatic()
+      console.log(artists.value)
       setAuthorCards()
+      // response.then(() => {
+      //   artists.value = response
+      // })
+      // if (!authStore.isUserAuth) {
+      // } else {
+      //   console.log('auth')
+      // }
     } catch (error) {
       console.error(error)
     }
@@ -62,12 +79,22 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
+  const getGenres = async () => {
+    try {
+      genres.value = await getGenresStatic()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     artistCards,
+    genres,
     currentArtist,
     currentArtistCards,
     unmountCurrentArtist,
     getCurrentArtist,
-    getArtists
+    getArtists,
+    getGenres
   }
 })

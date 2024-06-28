@@ -43,11 +43,9 @@ defineEmits(['check'])
         display: none;
       }
     }
-    &:checked {
-      + .checkbox--custom {
-        .icon {
-          display: block;
-        }
+    &:checked + .checkbox--custom {
+      .icon {
+        display: block;
       }
     }
   }

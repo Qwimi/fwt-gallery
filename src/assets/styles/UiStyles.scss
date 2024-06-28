@@ -15,9 +15,6 @@
   }
   &__img {
     display: none;
-    img {
-      margin-top: 4px;
-    }
   }
   &__form {
     width: 100%;
@@ -33,9 +30,10 @@
   @media screen and (min-width: $breakpoint-lg) {
     &__content {
       width: 1028px;
-      height: 700px;
+      height: auto;
     }
     &__img {
+      height: 100%;
       display: block;
     }
     &__form {
@@ -66,7 +64,7 @@
   }
 
   &__switch {
-    @include paragraphSmallMadium;
+    @include paragraphSmallMedium;
     border-bottom: 1px solid light-dark(var(--text-secondary), var(--white_ff));
     cursor: pointer;
   }

@@ -40,12 +40,14 @@ const currentSidebarContent = {
 <style lang="scss" scoped>
 .sidebar {
   @include modalMixin;
-  right: 0;
-  height: 100vh;
   width: 80%;
   @media screen and (min-width: $breakpoint-md) {
     width: 60%;
   }
+}
+
+.sidebar--shadow {
+  justify-content: flex-end;
 }
 
 .fade-enter-active,

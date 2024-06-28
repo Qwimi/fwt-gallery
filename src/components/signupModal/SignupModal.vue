@@ -31,7 +31,7 @@ const submitForm = async () => {
 </script>
 
 <template>
-  <div class="modal__content modal-auth__content">
+  <div class="modal-auth__content">
     <div class="modal-auth__img">
       <img src="@/assets/signup.png" alt="" />
     </div>
@@ -63,6 +63,9 @@ const submitForm = async () => {
 </template>
 
 <style lang="scss" scoped>
+.modal-auth {
+  @include modalMixin;
+}
 .auth-form__title {
   @media screen and (min-width: $breakpoint-lg) {
     @include headingH2;

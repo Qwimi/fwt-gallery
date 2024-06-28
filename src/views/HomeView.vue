@@ -6,6 +6,7 @@ import ButtonBase from '@/shared/ui/button'
 import CardList from '@/shared/ui/cardList/CardList.vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useAppStore } from '@/stores/baseStore'
+import { useModalStore } from '@/stores/modalStore'
 
 const store = useAppStore()
 const authStore = useAuthStore()
@@ -17,7 +18,7 @@ onMounted(() => {
 <template>
   <div class="tools-row" v-if="authStore.isUserAuth">
     <div class="wrapper">
-      <button-base :variant="'underline'">
+      <button-base :variant="'underline'" @click="useModalStore().openModal('addArtist')">
         <template #icon><icon-plus class="icon" /></template>
         Add artist
       </button-base>

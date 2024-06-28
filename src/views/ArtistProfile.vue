@@ -10,9 +10,11 @@ import ButtonBase from '@/shared/ui/button'
 import CardList from '@/shared/ui/cardList'
 import { useAuthStore } from '@/stores/authStore'
 import { useAppStore } from '@/stores/baseStore'
+import { useModalStore } from '@/stores/modalStore'
 
 const store = useAppStore()
 const authStore = useAuthStore()
+const modalStore = useModalStore()
 const artistId = router.currentRoute.value.params.id as String
 
 onMounted(() => store.getCurrentArtist(artistId))
@@ -32,7 +34,7 @@ onUnmounted(() => store.unmountCurrentArtist())
             <icon-edit class="icon" />
           </template>
         </button-base>
-        <button-base :variant="'icon'">
+        <button-base :variant="'icon'" @click="modalStore.openModal('delete')">
           <template #icon>
             <icon-delete class="icon" />
           </template>

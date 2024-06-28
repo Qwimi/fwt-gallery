@@ -1,15 +1,16 @@
 @mixin modalMixin {
-  position: fixed;
-  overflow: hidden;
-  z-index: 3;
   color: var(--text-primary);
   background-color: var(--background-primary);
+  overflow: hidden auto;
+  position: relative;
+  height: 100%;
 
   &__icon-close {
     position: absolute;
     top: 1.25rem;
     right: 1.25rem;
     cursor: pointer;
+    color: var(--text-secondary);
 
     @media screen and (min-width: $breakpoint-md) {
       top: 2rem;
@@ -21,11 +22,9 @@
   }
 
   &--shadow {
+    display: flex;
     position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+    inset: 0;
     background-color: rgba($color: #030303, $alpha: 0.6);
     z-index: 2;
   }

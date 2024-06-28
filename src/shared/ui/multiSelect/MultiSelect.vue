@@ -93,6 +93,8 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     transform: translateY(-0.5rem);
     position: relative;
     z-index: 0;
+    max-height: 150px;
+    overflow-y: auto;
   }
   &--toggler {
     color: var(--secondary-gray);
