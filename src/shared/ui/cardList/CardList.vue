@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import CardItem from '@/shared/ui/card'
+import CardItem from '@/shared/ui/CardItem'
 import type { CardInterface } from '@/stores/types'
 
 defineProps<{

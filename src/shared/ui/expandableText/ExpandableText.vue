@@ -2,7 +2,7 @@
 import { computed, ref, type Ref } from 'vue'
 
 import IconExpand from '@/components/icons/IconExpand.vue'
-import ButtonBase from '@/shared/ui/button'
+import ButtonBase from '@/shared/ui/ButtonBase'
 
 const props = defineProps<{ text?: string }>()
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ThemeToggler from '@/components/themeToggler'
+import ThemeToggler from '@/components/ThemeToggler'
 import { useAuthStore } from '@/stores/authStore'
 import { useModalStore } from '@/stores/modalStore'
 

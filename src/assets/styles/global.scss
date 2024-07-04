@@ -93,3 +93,11 @@ img {
   width: 100%;
   object-fit: cover;
 }
+
+.icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  path {
+    fill: currentColor;
+  }
+}

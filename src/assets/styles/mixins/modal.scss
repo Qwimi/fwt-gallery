@@ -34,3 +34,45 @@
     display: flex;
   }
 }
+
+@mixin authModalMixin {
+  &__content {
+    padding: 0 1.75rem 2rem;
+    align-items: end;
+    height: 100vh;
+    width: 100vw;
+  }
+  &__img {
+    display: none;
+    img {
+      margin-top: 4px;
+    }
+  }
+  &__form {
+    width: 100%;
+  }
+  @media screen and (min-width: $breakpoint-md) {
+    &__content {
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+  }
+
+  @media screen and (min-width: $breakpoint-lg) {
+    &__content {
+      width: 1028px;
+      height: 700px;
+    }
+    &__img {
+      display: block;
+    }
+    &__form {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-wrap: wrap;
+    }
+  }
+}

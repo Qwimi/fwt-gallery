@@ -2,7 +2,7 @@ import type { ErrorObject } from '@vuelidate/core'
 import { email, required } from '@vuelidate/validators'
 import { computed } from 'vue'
 
-export const rules = computed(() => ({
+export const authRules = computed(() => ({
   emailValue: {
     required,
     email

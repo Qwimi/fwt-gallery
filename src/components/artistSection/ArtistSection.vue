@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
-import ExpandableText from '@/shared/ui/expandableText'
-import GenreLabel from '@/shared/ui/label'
-import NoImage from '@/shared/ui/noImage'
+import ExpandableText from '@/shared/ui/ExpandableText'
+import GenreLabel from '@/shared/ui/GenreLabel'
+import NoImage from '@/shared/ui/NoImage'
 import type { ArtistPage } from '@/stores/types'
 
 defineProps<{

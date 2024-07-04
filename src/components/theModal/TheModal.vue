@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import IconClose from '@/components/icons/IconClose.vue'
-import LoginModal from '@/components/loginModal'
-import SignUpModal from '@/components/signupModal'
+import LoginModal from '@/components/LoginModal'
+import SignUpModal from '@/components/SignupModal'
 import { useModalStore } from '@/stores/modalStore'
 
 const modalStore = useModalStore()
