@@ -3,7 +3,7 @@ import { ref, type Ref } from 'vue'
 
 import IconDeleteBig from '@/components/icons/IconDeleteBig.vue'
 import router from '@/router'
-import ButtonBase from '@/shared/ui/button'
+import ButtonBase from '@/shared/ui/ButtonBase'
 import { useAppStore } from '@/stores/baseStore'
 import { useModalStore } from '@/stores/modalStore'
 

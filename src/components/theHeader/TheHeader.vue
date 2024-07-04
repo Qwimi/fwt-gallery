@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import IconBurger from '@/components/icons/IconBurger.vue'
 import IconLogo from '@/components/icons/IconLogo.vue'
-import ThemeToggler from '@/components/themeToggler'
+import ThemeToggler from '@/components/ThemeToggler'
 import { useAuthStore } from '@/stores/authStore'
 import { useModalStore } from '@/stores/modalStore'
 

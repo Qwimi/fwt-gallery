@@ -2,8 +2,8 @@
 import { ref, type Ref } from 'vue'
 
 import IconExpand from '@/components/icons/IconExpand.vue'
-import GenreLabel from '@/shared/ui/label'
-import TheCheckbox from '@/shared/ui/theCheckbox'
+import GenreLabel from '@/shared/ui/GenreLabel'
+import TheCheckbox from '@/shared/ui/TheCheckbox'
 import type { Genre } from '@/stores/types'
 
 const props = defineProps<{

@@ -3,7 +3,7 @@ import { ref, type Ref } from 'vue'
 
 import IconDelete from '@/components/icons/IconDelete.vue'
 import IconProfile from '@/components/icons/IconProfile.vue'
-import ButtonBase from '@/shared/ui/button'
+import ButtonBase from '@/shared/ui/ButtonBase'
 
 const isDragging: Ref<boolean> = ref(false)
 const fileInput = ref<HTMLInputElement | undefined>()

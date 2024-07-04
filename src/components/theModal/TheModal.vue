@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import ArtistInteractionModal from '@/components/artistInteractionModal'
-import DeleteModal from '@/components/deleteModal'
+import ArtistInteraction from '@/components/ArtistInteraction'
+import DeleteModal from '@/components/DeleteModal'
 import IconClose from '@/components/icons/IconClose.vue'
-import LoginModal from '@/components/loginModal'
-import SignUpModal from '@/components/signupModal'
+import LoginModal from '@/components/LoginModal'
+import SignUpModal from '@/components/SignupModal'
 import { useModalStore } from '@/stores/modalStore'
 
 const modalStore = useModalStore()
@@ -12,7 +12,7 @@ const currentModalContent = {
   logIn: LoginModal,
   signUp: SignUpModal,
   delete: DeleteModal,
-  addArtist: ArtistInteractionModal
+  addArtist: ArtistInteraction
 }
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import IconPlus from '@/components/icons/IconPlus.vue'
-import ButtonBase from '@/shared/ui/button'
-import CardList from '@/shared/ui/cardList/CardList.vue'
+import ButtonBase from '@/shared/ui/ButtonBase'
+import CardList from '@/shared/ui/CardList'
 import { useAuthStore } from '@/stores/authStore'
 import { useAppStore } from '@/stores/baseStore'
 import { useModalStore } from '@/stores/modalStore'

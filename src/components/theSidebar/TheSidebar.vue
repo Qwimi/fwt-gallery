@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import HeaderSidebar from '@/components/headerSidebar'
+import HeaderSidebar from '@/components/HeaderSidebar'
 import IconClose from '@/components/icons/IconClose.vue'
 import { useModalStore } from '@/stores/modalStore'
 const modalStore = useModalStore()

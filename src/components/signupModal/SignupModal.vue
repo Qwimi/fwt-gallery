@@ -2,10 +2,9 @@
 import useVuelidate from '@vuelidate/core'
 import { computed, ref, type Ref } from 'vue'
 
-import { rules, useValidationErrors } from '../auth/validation'
-
-import ButtonBase from '@/shared/ui/button'
-import TheInput from '@/shared/ui/theInput'
+import { authRules, useValidationErrors } from '@/helpers/validation'
+import ButtonBase from '@/shared/ui/ButtonBase'
+import TheInput from '@/shared/ui/TheInput'
 import { useAuthStore } from '@/stores/authStore'
 import { useModalStore } from '@/stores/modalStore'
 import type { AuthForm } from '@/stores/types'
@@ -20,7 +19,7 @@ const form: Ref<AuthForm> = ref({
 
 const errors = computed(() => useValidationErrors<AuthForm>($v.value.$errors))
 
-const $v = useVuelidate(rules, form)
+const $v = useVuelidate(authRules, form)
 
 const submitForm = async () => {
   const isValid = await $v.value.$validate()
@@ -31,18 +30,18 @@ const submitForm = async () => {
 </script>
 
 <template>
-  <div class="modal-auth__content">
-    <div class="modal-auth__img">
+  <div class="modal__content">
+    <div class="modal__img">
       <img src="@/assets/signup.png" alt="" />
     </div>
-    <div class="modal-auth__form">
-      <form class="auth-form" @submit.prevent="submitForm">
-        <legend class="auth-form__title">Create your profile</legend>
-        <p class="auth-form__description">
+    <div class="modal__form">
+      <form class="form" @submit.prevent="submitForm">
+        <legend class="form__title">Create your profile</legend>
+        <p class="form__description">
           If you already have an account, please
-          <span class="auth-form__switch" @click="modalStore.openModal('logIn')">log in</span>
+          <span class="form__switch" @click="modalStore.openModal('logIn')">log in</span>
         </p>
-        <div class="auth-form__inputs">
+        <div class="form__inputs">
           <TheInput
             v-model="form.emailValue"
             :type="'email'"
@@ -63,12 +62,18 @@ const submitForm = async () => {
 </template>
 
 <style lang="scss" scoped>
-.modal-auth {
-  @include modalMixin;
+.modal {
+  @include authModalMixin;
 }
-.auth-form__title {
-  @media screen and (min-width: $breakpoint-lg) {
-    @include headingH2;
+
+.form {
+  @include formMixin;
+  @include authFormMixin;
+
+  &__title {
+    @media screen and (min-width: $breakpoint-lg) {
+      @include headingH2;
+    }
   }
 }
 </style>

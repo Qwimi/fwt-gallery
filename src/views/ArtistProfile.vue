@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted } from 'vue'
 
-import ArtistSection from '@/components/artistSection'
+import ArtistSection from '@/components/ArtistSection'
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
 import IconDelete from '@/components/icons/IconDelete.vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import router from '@/router'
-import ButtonBase from '@/shared/ui/button'
-import CardList from '@/shared/ui/cardList'
+import ButtonBase from '@/shared/ui/ButtonBase'
+import CardList from '@/shared/ui/CardList'
 import { useAuthStore } from '@/stores/authStore'
 import { useAppStore } from '@/stores/baseStore'
 import { useModalStore } from '@/stores/modalStore'
