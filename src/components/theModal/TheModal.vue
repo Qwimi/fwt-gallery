@@ -71,17 +71,8 @@ const currentModalContent = {
   }
 }
 
-.fade-enter-active,
-.fade-leave-active,
-.component-fade-enter-active,
-.component-fade-leave-active {
-  transition: opacity 0.5s ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to,
-.component-fade-enter-from,
-.component-fade-leave-to {
-  opacity: 0;
+.fade,
+.component-fade {
+  @include fade(0.5s);
 }
 </style>

@@ -62,6 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
       refreshTokens()
     } else {
       console.log('no local refresh token')
+      useAppStore().getArtists()
     }
   }
 

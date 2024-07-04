@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, type Ref } from 'vue'
 
-import IconProfile from '@/components/icons/IconProfile.vue'
+import AvatarUpload from '@/components/AvatarUpload'
 import ButtonBase from '@/shared/ui/button'
 import MultiSelect from '@/shared/ui/multiSelect'
 import TheInput from '@/shared/ui/theInput'
@@ -17,6 +17,7 @@ const name: Ref<string> = ref(currentArtist.value?.name || '')
 const yearsOfLife: Ref<string> = ref(currentArtist.value?.yearsOfLife || '')
 const description: Ref<string> = ref(currentArtist.value?.description || '')
 const selectedGenres: Ref<Genre[]> = ref(currentArtist.value?.genres || [])
+const avatar: Ref<string | null> = ref(currentArtist.value?.avatar.src || null)
 
 onMounted(() => {
   store.getGenres()
@@ -25,16 +26,8 @@ onMounted(() => {
 
 <template>
   <div class="modal__content">
-    <form class="form__container">
-      <div class="drag-n-drop">
-        <div class="drag-n-drop__area">
-          <div class="drag-n-drop__icon">
-            <icon-profile class="icon--semi-transparent" />
-          </div>
-          <p class="drag-n-drop__title">You can drop your image here</p>
-        </div>
-        <button-base :variant="'underline'">Browse Profile Photo</button-base>
-      </div>
+    <form class="form__container" enctype="multipart/form-data">
+      <avatar-upload v-model="avatar" />
       <div class="form">
         <div class="form__inputs">
           <the-input :label="'Name*'" :type="'text'" v-model="name" />
@@ -65,9 +58,12 @@ onMounted(() => {
   @include formMixin;
   align-items: center;
 
+  @media screen and (min-width: $breakpoint-md) {
+    max-width: 340px;
+  }
+
   @media screen and (min-width: $breakpoint-lg) {
     align-items: start;
-    max-width: 340px;
   }
 
   &__container {
@@ -75,6 +71,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+    align-items: center;
 
     @media screen and (min-width: $breakpoint-md) {
       gap: 3.75rem;
@@ -82,20 +79,7 @@ onMounted(() => {
 
     @media screen and (min-width: $breakpoint-lg) {
       flex-direction: row;
-    }
-  }
-}
-
-.drag-n-drop {
-  @include dragNdrop;
-  &__area {
-    height: 200px;
-    width: 200px;
-  }
-  &__title {
-    display: none;
-    @media screen and (min-width: $breakpoint-lg) {
-      display: block;
+      align-items: flex-start;
     }
   }
 }

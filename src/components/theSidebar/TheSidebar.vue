@@ -50,18 +50,8 @@ const currentSidebarContent = {
   justify-content: flex-end;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  &.sidebar--shadow {
-    transition: opacity 0.5s ease-in-out;
-  }
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  &.sidebar--shadow {
-    opacity: 0;
-  }
+.fade {
+  @include fade(0.5s);
 }
 
 .slide-enter-active,

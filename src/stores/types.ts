@@ -56,6 +56,14 @@ export interface ArtistPage {
   avatar: Image
 }
 
+export interface ArtistRequest {
+  genres: string[]
+  name: string
+  description: string
+  yearsOfLife: string
+  avatar: string
+}
+
 export interface Painting {
   _id: string
   name: string

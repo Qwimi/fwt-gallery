@@ -11,7 +11,7 @@ import TheFooter from '@/components/theFooter'
 import TheHeader from '@/components/theHeader'
 import TheModal from '@/components/theModal'
 import TheSidebar from '@/components/theSidebar'
-import TheToast from '@/shared/ui/theToast'
+import TheToast from '@/shared/ui/TheToast'
 
 useThemeStore()
 useModalStore()
