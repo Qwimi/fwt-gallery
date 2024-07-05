@@ -1,15 +1,18 @@
 <script lang="ts" setup>
-import IconClose from '@/components/icons/IconClose.vue'
-import LoginModal from '@/components/LoginModal'
-import SignUpModal from '@/components/SignupModal'
-import { useModalStore } from '@/stores/modalStore'
+import { computed } from 'vue';
+import IconClose from '@/components/icons/IconClose.vue';
+import LoginModal from '@/components/LoginModal';
+import SignUpModal from '@/components/SignupModal';
+import { useModalStore } from '@/stores/modalStore';
 
-const modalStore = useModalStore()
+const modalStore = useModalStore();
 
-const currentModalContent = {
+const components = {
   logIn: LoginModal,
   signUp: SignUpModal
-}
+};
+
+const currentModal = computed(() => components[modalStore.currentModal as keyof typeof components]);
 </script>
 
 <template>
@@ -20,11 +23,7 @@ const currentModalContent = {
           <icon-close class="icon modal__icon-close" @click="modalStore.closeModal" />
           <transition name="component-fade" mode="out-in">
             <KeepAlive>
-              <component
-                :is="
-                  currentModalContent[modalStore.currentModal as keyof typeof currentModalContent]
-                "
-              />
+              <component :is="currentModal" />
             </KeepAlive>
           </transition>
         </div>

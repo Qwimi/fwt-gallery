@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted } from 'vue';
+import CardList from '@/shared/ui/CardList';
+import { useAppStore } from '@/stores/baseStore';
 
-import CardList from '@/shared/ui/CardList'
-import { useAppStore } from '@/stores/baseStore'
-
-const store = useAppStore()
+const store = useAppStore();
 onMounted(() => {
-  store.getArtists()
-})
+  store.getArtists();
+});
 </script>
 <template>
   <div class="wrapper">

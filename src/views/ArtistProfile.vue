@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue';
+import ArtistSection from '@/components/ArtistSection';
+import router from '@/router';
+import CardList from '@/shared/ui/CardList';
+import { useAppStore } from '@/stores/baseStore';
 
-import ArtistSection from '@/components/ArtistSection'
-import router from '@/router'
-import CardList from '@/shared/ui/CardList'
-import { useAppStore } from '@/stores/baseStore'
+const store = useAppStore();
 
-const store = useAppStore()
-const artistId = router.currentRoute.value.params.id as String
+const artistId = router.currentRoute.value.params.id as String;
 
-onMounted(() => store.getCurrentArtist(artistId))
-onUnmounted(() => store.unmountCurrentArtist())
+onMounted(() => store.getCurrentArtist(artistId));
+onUnmounted(() => store.unmountCurrentArtist());
 </script>
 
 <template>

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import CardItem from '@/shared/ui/CardItem'
-import type { CardInterface } from '@/stores/types'
+import CardItem from '@/shared/ui/CardItem';
+import type { CardInterface } from '@/stores/types';
 
 defineProps<{
-  cards: CardInterface[]
-  isArtists: boolean
-}>()
+  cards: CardInterface[];
+  isArtists: boolean;
+}>();
 </script>
 
 <template>

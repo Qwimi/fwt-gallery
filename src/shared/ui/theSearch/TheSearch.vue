@@ -1,53 +1,28 @@
 <script lang="ts" setup>
-import IconError from '@/components/icons/IconError.vue'
-import IconSearch from '@/components/icons/IconSearch.vue'
+import { ref, type Ref } from 'vue';
+import IconSearch from '@/components/icons/IconSearch.vue';
+import TheInput from '@/shared/ui/TheInput';
 
 defineProps<{
-  placeholder?: string
-  error?: string
-}>()
-defineEmits(['update:modelValue'])
+  placeholder?: string;
+  error?: string;
+}>();
+
+const searchString: Ref<string | null> = ref(null);
+
+const search = () => {
+  console.log(searchString.value);
+};
 </script>
 
 <template>
-  <div class="form-element" :class="{ error: error }">
-    <div class="form-element--wrapper">
-      <icon-search class="icon" />
-      <input
-        class="form-element__input"
-        type="text"
-        :placeholder="placeholder"
-        @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-      />
-    </div>
-    <transition name="fade">
-      <div class="form-element__error" v-if="error">
-        <icon-error class="icon" />
-        <p>
-          {{ error }}
-        </p>
-      </div>
-    </transition>
-  </div>
+  <the-input
+    type="text"
+    :error="error"
+    :input-attributes="{ placeholder: placeholder }"
+    v-model="searchString"
+    @update:model-value="search"
+  >
+    <template #icon><icon-search class="icon" /></template>
+  </the-input>
 </template>
-
-<style lang="scss" scoped>
-.form-element {
-  @include inputMixin;
-  &--wrapper {
-    .icon {
-      margin-left: 1rem;
-    }
-  }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

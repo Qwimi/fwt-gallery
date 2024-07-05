@@ -1,15 +1,15 @@
-import { defineStore } from 'pinia'
-import { ref, type Ref } from 'vue'
+import { defineStore } from 'pinia';
+import { ref, type Ref } from 'vue';
 
-import type { Artist, ArtistPage, CardInterface, Painting } from './types'
+import type { Artist, ArtistPage, CardInterface, Painting } from './types';
 
-import { getArtistsStatic, getCurrentArtistStatic } from '@/api/main'
+import { getArtistsStatic, getCurrentArtistStatic } from '@/api/main';
 
 export const useAppStore = defineStore('app', () => {
-  const artists: Ref<Array<Artist>> = ref([])
-  const artistCards: Ref<Array<CardInterface>> = ref([])
-  const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage)
-  const currentArtistCards: Ref<Array<CardInterface>> = ref([])
+  const artists: Ref<Array<Artist>> = ref([]);
+  const artistCards: Ref<Array<CardInterface>> = ref([]);
+  const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage);
+  const currentArtistCards: Ref<Array<CardInterface>> = ref([]);
 
   const setCurrentArtistCards = () => {
     currentArtistCards.value = currentArtist.value.paintings.map((painting: Painting) => {
@@ -19,14 +19,14 @@ export const useAppStore = defineStore('app', () => {
         date: painting.yearOfCreation,
         image: painting.image && `${import.meta.env.VITE_BASE_URL}${painting.image.src}`,
         image2x: painting.image && `${import.meta.env.VITE_BASE_URL}${painting.image.src2x}`
-      }
-    })
-  }
+      };
+    });
+  };
 
   const unmountCurrentArtist = () => {
-    currentArtist.value = {} as ArtistPage
-    currentArtistCards.value = []
-  }
+    currentArtist.value = {} as ArtistPage;
+    currentArtistCards.value = [];
+  };
 
   const setAuthorCards = () => {
     artistCards.value = artists.value.map((artist: Artist) => {
@@ -39,30 +39,28 @@ export const useAppStore = defineStore('app', () => {
         image2x:
           artist.mainPainting &&
           `${import.meta.env.VITE_BASE_URL}${artist.mainPainting.image.src2x}`
-      }
-    })
-  }
+      };
+    });
+  };
 
   const getArtists = async () => {
     try {
-      artists.value = await getArtistsStatic()
-      setAuthorCards()
+      artists.value = await getArtistsStatic();
+      setAuthorCards();
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const getCurrentArtist = async (id: String) => {
     try {
-      currentArtist.value = await getCurrentArtistStatic(id)
-      currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`
-      currentArtist.value = await getCurrentArtistStatic(id)
-      currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`
-      setCurrentArtistCards()
+      currentArtist.value = await getCurrentArtistStatic(id);
+      currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`;
+      setCurrentArtistCards();
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   return {
     artistCards,
@@ -71,5 +69,5 @@ export const useAppStore = defineStore('app', () => {
     unmountCurrentArtist,
     getCurrentArtist,
     getArtists
-  }
-})
+  };
+});

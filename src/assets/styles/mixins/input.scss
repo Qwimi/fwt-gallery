@@ -20,9 +20,10 @@
     @include paragraphBaseLight;
   }
 
-  &--wrapper {
+  &__wrapper {
     border-radius: 0.25rem;
     display: flex;
+    padding: 0.75rem 1rem;
     gap: 0.75rem;
     align-items: center;
     background-color: var(--background-secondary);
@@ -33,16 +34,15 @@
     &:hover {
       border-color: var(--input-border-hover);
     }
+  }
 
-    &:has(.form-element__input:focus) {
-      border-color: var(--text-secondary);
-    }
+  &__wrapper:has(&__input:focus) {
+    border-color: var(--text-secondary);
   }
 
   &__input {
     color: var(--text-secondary);
     @include paragraphBaseLight;
-    padding: 0.75rem 1rem;
     width: 100%;
     outline: none;
     background-color: transparent;
@@ -52,14 +52,12 @@
       color: var(--gray_9c);
     }
 
-    &:focus + &--wrapper {
+    &:focus + &__wrapper {
       border-color: var(--text-secondary);
     }
   }
 
-  &.error {
-    .form-element--wrapper {
-      border-color: var(--error);
-    }
+  &:has(&__error) &__wrapper {
+    border-color: var(--error);
   }
 }

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import IconFacebook from '@/components/icons/IconFacebook.vue'
-import IconInstagram from '@/components/icons/IconInstagram.vue'
-import IconVk from '@/components/icons/IconVk.vue'
+import IconFacebook from '@/components/icons/IconFacebook.vue';
+import IconInstagram from '@/components/icons/IconInstagram.vue';
+import IconVk from '@/components/icons/IconVk.vue';
 </script>
 
 <template>

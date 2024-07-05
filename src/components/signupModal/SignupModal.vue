@@ -1,32 +1,32 @@
 <script lang="ts" setup>
-import useVuelidate from '@vuelidate/core'
-import { computed, ref, type Ref } from 'vue'
+import useVuelidate from '@vuelidate/core';
+import { computed, ref, type Ref } from 'vue';
+import { authRules, useValidationErrors } from '@/helpers/validation';
+import ButtonBase from '@/shared/ui/ButtonBase';
+import TheInput from '@/shared/ui/TheInput';
+import { useAuthStore } from '@/stores/authStore';
+import { useModalStore } from '@/stores/modalStore';
+import type { AuthForm } from '@/stores/types';
 
-import { authRules, useValidationErrors } from '@/helpers/validation'
-import ButtonBase from '@/shared/ui/ButtonBase'
-import TheInput from '@/shared/ui/TheInput'
-import { useAuthStore } from '@/stores/authStore'
-import { useModalStore } from '@/stores/modalStore'
-import type { AuthForm } from '@/stores/types'
-
-const modalStore = useModalStore()
-const authStore = useAuthStore()
+const modalStore = useModalStore();
+const authStore = useAuthStore();
 
 const form: Ref<AuthForm> = ref({
   emailValue: '',
   passwordValue: ''
-})
+});
 
-const errors = computed(() => useValidationErrors<AuthForm>($v.value.$errors))
+const errors = computed(() => useValidationErrors<AuthForm>($v.value.$errors));
 
-const $v = useVuelidate(authRules, form)
+const $v = useVuelidate(authRules, form);
 
 const submitForm = async () => {
-  const isValid = await $v.value.$validate()
-  if (isValid) {
-    authStore.sentRegisterRequest(form.value)
-  }
-}
+  const isValid = await $v.value.$validate();
+
+  if (!isValid) return;
+
+  authStore.sentRegisterRequest(form.value);
+};
 </script>
 
 <template>
@@ -42,16 +42,16 @@ const submitForm = async () => {
           <span class="form__switch" @click="modalStore.openModal('logIn')">log in</span>
         </p>
         <div class="form__inputs">
-          <TheInput
+          <the-input
             v-model="form.emailValue"
-            :type="'email'"
-            :label="'email'"
+            type="email"
+            label="email"
             :error="errors.emailValue"
           />
-          <TheInput
+          <the-input
             v-model="form.passwordValue"
-            :type="'password'"
-            :label="'password'"
+            type="password"
+            label="password"
             :error="errors.passwordValue"
           />
         </div>

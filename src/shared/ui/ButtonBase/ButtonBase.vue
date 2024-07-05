@@ -1,15 +1,18 @@
 <script lang="ts" setup>
-defineProps<{ variant: 'default' | 'round' | 'underline' | 'icon' }>()
+import type { ButtonHTMLAttributes } from 'vue';
+
+defineProps<{
+  variant?: 'default' | 'round' | 'underline' | 'icon';
+  buttonProps?: ButtonHTMLAttributes;
+}>();
 </script>
 
 <template>
-  <button class="button" :class="`button--${variant}`">
+  <button class="button" :class="`button--${variant}`" v-bind="buttonProps">
     <span class="button__icon icon" v-if="$slots.icon">
       <slot name="icon"></slot>
     </span>
-    <span class="button__text" v-if="$slots.default">
-      <slot></slot>
-    </span>
+    <slot></slot>
   </button>
 </template>
 
@@ -57,16 +60,11 @@ defineProps<{ variant: 'default' | 'round' | 'underline' | 'icon' }>()
   }
 
   &--underline {
-    .button__text {
-      border-bottom: 1px solid;
-    }
+    text-decoration: underline;
 
     &:disabled {
       opacity: 1;
       color: var(--gray_9c);
-      .button__text {
-        border-color: var(--gray_9c);
-      }
     }
   }
 }

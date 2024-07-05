@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import IconPhoto from '@/components/icons/IconPhoto.vue'
+import IconPhoto from '@/components/icons/IconPhoto.vue';
+
 defineProps<{
-  isBig?: Boolean
-}>()
+  isBig?: boolean;
+}>();
 </script>
 
 <template>

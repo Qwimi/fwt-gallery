@@ -1,29 +1,28 @@
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue'
-
-import IconExpand from '@/components/icons/IconExpand.vue'
-import GenreLabel from '@/shared/ui/GenreLabel'
-import TheCheckbox from '@/shared/ui/TheCheckbox'
-import type { Genre } from '@/stores/types'
+import { ref, type Ref } from 'vue';
+import IconExpand from '@/components/icons/IconExpand.vue';
+import GenreLabel from '@/shared/ui/GenreLabel';
+import TheCheckbox from '@/shared/ui/TheCheckbox';
+import type { Genre } from '@/stores/types';
 
 const props = defineProps<{
-  label: string
-  options: Genre[]
-}>()
+  label: string;
+  options: Genre[];
+}>();
 
-const isSelectOpen: Ref<boolean> = ref(false)
+const isSelectOpen: Ref<boolean> = ref(false);
 
-const selectedGenres: Ref<Genre[]> = ref([])
+const selectedGenres: Ref<Genre[]> = ref([]);
 
 const deleteSelected = (option: Genre) => {
-  const deleteIndex = selectedGenres.value.indexOf(option)
-  selectedGenres.value.splice(deleteIndex, 1)
-}
+  const deleteIndex = selectedGenres.value.indexOf(option);
+  selectedGenres.value.splice(deleteIndex, 1);
+};
 
 const updateSelected = (event: { value: boolean; id: string }) => {
-  const focusGenre = props.options.find((option) => option._id == event.id)
-  event.value ? selectedGenres.value.push(focusGenre!!) : deleteSelected(focusGenre!!)
-}
+  const focusGenre = props.options.find((option) => option._id == event.id);
+  event.value ? selectedGenres.value.push(focusGenre!!) : deleteSelected(focusGenre!!);
+};
 
 // defineEmits(['update:modelValue'])
 </script>
@@ -32,7 +31,7 @@ const updateSelected = (event: { value: boolean; id: string }) => {
   <div class="form-element multiple">
     <label class="form-element__label">{{ label }}</label>
     <div
-      class="form-element--wrapper"
+      class="form-element__wrapper"
       @click="isSelectOpen = !isSelectOpen"
       :class="{ 'multiple--opened': isSelectOpen }"
     >
@@ -52,9 +51,11 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     <ul class="multiple__options" v-if="isSelectOpen">
       <li v-for="option in options" :key="option._id" class="multiple__option">
         <the-checkbox
-          :id="option._id"
+          :input-attributes="{
+            id: option._id,
+            checked: selectedGenres.includes(option)
+          }"
           :label="option.name"
-          :checked="selectedGenres.includes(option)"
           @check="updateSelected"
         />
       </li>
@@ -65,7 +66,7 @@ const updateSelected = (event: { value: boolean; id: string }) => {
 <style lang="scss" scoped>
 .form-element {
   @include inputMixin;
-  &--wrapper {
+  &__wrapper {
     height: 3rem;
     position: relative;
     z-index: 2;

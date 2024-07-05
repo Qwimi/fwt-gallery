@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import ThemeToggler from '@/components/ThemeToggler'
-import { useAuthStore } from '@/stores/authStore'
-import { useModalStore } from '@/stores/modalStore'
+import ThemeToggler from '@/components/ThemeToggler';
+import { useAuthStore } from '@/stores/authStore';
+import { useModalStore } from '@/stores/modalStore';
 
-const modalStore = useModalStore()
-const authStore = useAuthStore()
+const modalStore = useModalStore();
+const authStore = useAuthStore();
 </script>
 
 <template>

@@ -1,33 +1,35 @@
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue'
-
-import IconError from '@/components/icons/IconError.vue'
-import IconEye from '@/components/icons/IconEye.vue'
-import IconEyeHide from '@/components/icons/IconEyeHide.vue'
+import type { InputHTMLAttributes } from 'vue';
+import { ref, type Ref } from 'vue';
+import IconError from '@/components/icons/IconError.vue';
+import IconEye from '@/components/icons/IconEye.vue';
+import IconEyeHide from '@/components/icons/IconEyeHide.vue';
 
 defineProps<{
-  label: string
-  type: 'text' | 'email' | 'password'
-  placeholder?: string
-  error?: string
-  modelValue?: string
-}>()
+  type: 'password' | 'text' | 'email';
+  label?: string;
+  error?: string;
+  modelValue?: string;
+  inputAttributes?: InputHTMLAttributes;
+}>();
 
-const isPasswordShow: Ref<boolean> = ref(false)
+defineEmits(['update:modelValue']);
 
-const showPassword = () => (isPasswordShow.value = !isPasswordShow.value)
+const isPasswordShow: Ref<boolean> = ref(false);
 
-defineEmits(['update:modelValue'])
+const showPassword = () => (isPasswordShow.value = !isPasswordShow.value);
 </script>
 
 <template>
-  <div class="form-element" :class="{ error: error }">
-    <label class="form-element__label">{{ label }}</label>
-    <div class="form-element--wrapper">
+  <div class="form-element">
+    <p class="form-element__label">{{ label }}</p>
+    <label class="form-element__wrapper" :for="inputAttributes?.id">
+      <slot name="icon"></slot>
       <input
         class="form-element__input"
-        :type="isPasswordShow ? 'text' : type"
-        :placeholder="placeholder"
+        :type="type === 'password' && isPasswordShow ? 'text' : type"
+        :value="modelValue"
+        v-bind="inputAttributes"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       />
       <span
@@ -38,16 +40,16 @@ defineEmits(['update:modelValue'])
         <icon-eye-hide class="icon" v-if="isPasswordShow" />
         <icon-eye class="icon" v-else />
       </span>
-    </div>
-    <transition name="fade">
-      <div class="form-element__error" v-if="error">
-        <icon-error class="icon" />
-        <p>
-          {{ error }}
-        </p>
-      </div>
-    </transition>
+    </label>
   </div>
+  <transition name="fade">
+    <div class="form-element__error" v-if="error">
+      <icon-error class="icon" />
+      <p>
+        {{ error }}
+      </p>
+    </div>
+  </transition>
 </template>
 
 <style lang="scss" scoped>
@@ -57,7 +59,6 @@ defineEmits(['update:modelValue'])
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-right: 1rem;
     cursor: pointer;
   }
 }
