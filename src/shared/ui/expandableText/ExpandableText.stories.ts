@@ -1,4 +1,5 @@
 import { type StoryObj, type Meta } from '@storybook/vue3'
+
 import ExpandableText from '.'
 
 const meta: Meta<typeof ExpandableText> = {

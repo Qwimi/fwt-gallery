@@ -1,46 +1,49 @@
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue'
-import { TheSidebar, HeaderSidebar } from '@/components/sidebar'
-import ThemeToggler from '@/components/themeToggler'
-import IconLogo from '@/components/icons/IconLogo.vue'
-import IconBurger from '@/components/icons/IconBurger.vue'
+import IconBurger from '@/components/icons/IconBurger.vue';
+import IconLogo from '@/components/icons/IconLogo.vue';
+import ThemeToggler from '@/components/ThemeToggler';
+import { useAuthStore } from '@/stores/authStore';
+import { useModalStore } from '@/stores/modalStore';
 
-const isMenuShow: Ref<boolean> = ref(false)
-
-const toggleMenu = () => {
-  isMenuShow.value = !isMenuShow.value
-}
+const modalStore = useModalStore();
+const authStore = useAuthStore();
 </script>
 
 <template>
   <header class="header">
     <div class="wrapper">
       <div class="header__content">
-        <router-link to="/" class="link-icon">
+        <router-link :to="{ name: 'home' }" class="link-icon">
           <icon-logo class="icon icon-logo" />
         </router-link>
         <div class="icon-burger">
-          <icon-burger @click="toggleMenu" class="icon" />
+          <icon-burger @click="modalStore.openSidebar('headerSidebar')" class="icon" />
         </div>
         <div class="header__menu">
           <nav class="menu">
-            <li class="menu__item">Log In</li>
-            <li class="menu__item">Sign up</li>
+            <template v-if="authStore.isUserAuth">
+              <li class="menu__item" @click="authStore.logout">Log Out</li>
+            </template>
+            <template v-else>
+              <li class="menu__item" @click="modalStore.openModal('logIn')">Log In</li>
+              <li class="menu__item" @click="modalStore.openModal('signUp')">Sign up</li>
+            </template>
           </nav>
-          <theme-toggler />
+          <theme-toggler :show-text="false" />
         </div>
       </div>
     </div>
-    <the-sidebar :is-menu-show="isMenuShow" @toggle-menu="toggleMenu">
-      <header-sidebar />
-    </the-sidebar>
   </header>
 </template>
 
 <style lang="scss" scoped>
 .header {
-  color: var(--primary-text-dafault);
-
+  color: var(--text-secondary);
+  background-color: var(--background-primary);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1;
   &__content {
     display: flex;
     flex-direction: row;
@@ -48,9 +51,7 @@ const toggleMenu = () => {
     justify-content: space-between;
     padding: 1.25rem 0;
   }
-
   &__menu {
-    display: flex;
     align-items: center;
   }
 
@@ -59,7 +60,6 @@ const toggleMenu = () => {
       display: none;
     }
   }
-
   .icon-logo {
     height: 1rem;
     width: fit-content;
@@ -68,20 +68,19 @@ const toggleMenu = () => {
       height: 1.25rem;
     }
   }
-}
+  &__menu {
+    flex-direction: row;
+    gap: 3.25rem;
+    display: none;
 
-.header__menu {
-  flex-direction: row;
-  gap: 3.25rem;
-  display: none;
+    @media screen and (min-width: $breakpoint-lg) {
+      display: flex;
+    }
 
-  @media screen and (min-width: $breakpoint-lg) {
-    display: flex;
-  }
-
-  .menu {
-    &__item {
-      @include headingH5;
+    .menu {
+      &__item {
+        @include headingH5;
+      }
     }
   }
 }

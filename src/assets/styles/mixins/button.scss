@@ -10,16 +10,24 @@
   gap: 0.75rem;
   transition: all 0.3s;
   width: fit-content;
-  color: var(--primary-text-dafault);
-  &_icon {
+  color: var(--text-secondary);
+  border-color: var(--text-secondary);
+  @include buttonText;
+
+  &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  &_text {
-    @include buttonText;
-  }
+
   &:disabled {
     opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:focus {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
   }
 }

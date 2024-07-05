@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import type { ArtistPage } from '@/stores/types'
-import NoImage from '@/components/noImage'
-import GenreLabel from '@/shared/ui/label'
-import ExpandableText from '@/shared/ui/expandableText'
-import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
+import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue';
+import ExpandableText from '@/shared/ui/ExpandableText';
+import GenreLabel from '@/shared/ui/GenreLabel';
+import NoImage from '@/shared/ui/NoImage';
+import type { ArtistPage } from '@/stores/types';
 
 defineProps<{
-  artist: ArtistPage
-}>()
+  artist: ArtistPage;
+}>();
 </script>
 
 <template>
@@ -18,7 +18,7 @@ defineProps<{
     </router-link>
     <div class="artist-section__avatar">
       <img :src="artist?.avatar?.src" alt="can't load the picture" v-if="artist?.avatar" />
-      <no-image v-else />
+      <no-image :is-big="true" v-else />
     </div>
     <div class="biography">
       <div class="biography__wrapper">
@@ -31,9 +31,12 @@ defineProps<{
             <expandable-text :text="artist.description" />
           </div>
           <div class="biography__genres">
-            <genre-label v-for="genre in artist.genres" :key="genre._id">
-              {{ genre.name }}
-            </genre-label>
+            <genre-label
+              v-for="genre in artist.genres"
+              :key="genre._id"
+              :genre="genre"
+              :deletable="false"
+            />
           </div>
         </div>
       </div>
@@ -42,6 +45,31 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
+.link {
+  position: absolute;
+  top: -0.75rem;
+  transform: translateY(-100%);
+  left: 1.25rem;
+
+  @media screen and (min-width: $breakpoint-lg) {
+    left: calc((100vw - 1240px) / 2);
+  }
+
+  &__text {
+    @include buttonText;
+    display: none;
+
+    @media screen and (min-width: $breakpoint-md) {
+      display: inline;
+    }
+  }
+
+  .icon {
+    margin-right: 0.75rem;
+    rotate: 180deg;
+  }
+}
+
 .link {
   position: absolute;
   top: -0.75rem;
@@ -107,7 +135,7 @@ defineProps<{
 
     &__wrapper {
       max-width: 604px;
-      background-color: var(--background);
+      background-color: var(--background-primary);
       padding: 3.25rem 5rem;
       margin-top: 3.25rem;
     }
@@ -128,8 +156,7 @@ defineProps<{
     flex-direction: column;
     gap: 0.5rem;
     padding: 1.25rem;
-    color: var(--primary-gray-d);
-    background-color: var(--background);
+    background-color: var(--background-primary);
 
     @media screen and (min-width: $breakpoint-md) {
       gap: 0.75rem;
@@ -147,6 +174,7 @@ defineProps<{
   }
 
   &__date {
+    color: light-dark(var(--gray_57), var(--gray_9c));
     @include captionMedium12;
 
     @media screen and (min-width: $breakpoint-md) {
@@ -193,7 +221,7 @@ defineProps<{
         left: 0;
         height: 2px;
         width: 2rem;
-        background-color: var(--primary-text-dafault);
+        background-color: var(--text-secondary);
       }
     }
   }

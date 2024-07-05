@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted } from 'vue'
-import router from '@/router'
-import { useAppStore } from '@/stores/artStore'
-import CardList from '@/shared/ui/cardList'
-import ArtistSection from '@/components/artistSection'
+import { onMounted, onUnmounted } from 'vue';
+import ArtistSection from '@/components/ArtistSection';
+import router from '@/router';
+import CardList from '@/shared/ui/CardList';
+import { useAppStore } from '@/stores/baseStore';
 
-const store = useAppStore()
-const artistId = router.currentRoute.value.params.id as String
+const store = useAppStore();
 
-onMounted(() => store.getCurrentArtist(artistId))
-onUnmounted(() => store.unmountCurrentArtist())
+const artistId = router.currentRoute.value.params.id as String;
+
+onMounted(() => store.getCurrentArtist(artistId));
+onUnmounted(() => store.unmountCurrentArtist());
 </script>
 
 <template>
@@ -23,8 +24,8 @@ onUnmounted(() => store.unmountCurrentArtist())
 <style lang="scss" scoped>
 .section__title {
   @include headingH3;
-  color: var(--accent);
   margin-bottom: 3.75rem;
+  color: var(--accent);
 
   @media screen and (min-width: $breakpoint-md) {
     @include headingH1;

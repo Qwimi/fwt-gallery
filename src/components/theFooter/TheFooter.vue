@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import IconFacebook from '@/components/icons/IconFacebook.vue'
-import IconInstagram from '@/components/icons/IconInstagram.vue'
-import IconVk from '@/components/icons/IconVk.vue'
+import IconFacebook from '@/components/icons/IconFacebook.vue';
+import IconInstagram from '@/components/icons/IconInstagram.vue';
+import IconVk from '@/components/icons/IconVk.vue';
 </script>
 
 <template>
@@ -11,18 +11,18 @@ import IconVk from '@/components/icons/IconVk.vue'
         <div class="footer__info">
           <p class="footer__about">
             Проект реализован в рамках стажировки для Frontend-разработчиков от компании
-            <router-link to="/" class="link-underline">Framework Team</router-link>
+            <router-link :to="{ name: 'home' }" class="link-underline">Framework Team</router-link>
           </p>
           <p class="footer__name">Нагаева Анастасия, 2024</p>
         </div>
         <div class="footer__contacts">
-          <router-link to="/" class="footer__link">
+          <router-link :to="{ name: 'home' }" class="footer__link">
             <icon-facebook class="icon" />
           </router-link>
-          <router-link to="/" class="footer__link">
+          <router-link :to="{ name: 'home' }" class="footer__link">
             <icon-vk class="icon" />
           </router-link>
-          <router-link to="/" class="footer__link">
+          <router-link :to="{ name: 'home' }" class="footer__link">
             <icon-instagram class="icon" />
           </router-link>
         </div>
@@ -33,9 +33,9 @@ import IconVk from '@/components/icons/IconVk.vue'
 
 <style lang="scss" scoped>
 .footer {
-  color: var(--primary-text-dafault);
+  color: var(--text-secondary);
   padding: 2rem 0;
-  border-top: 1px solid var(--secondary-gray);
+  border-top: 1px solid var(--gray_9c);
   @include paragraphSmallLight;
 
   .link-underline {
@@ -64,7 +64,7 @@ import IconVk from '@/components/icons/IconVk.vue'
   }
 
   &__name {
-    color: var(--secondary-gray);
+    color: var(--gray_9c);
   }
 
   &__content {
@@ -72,6 +72,7 @@ import IconVk from '@/components/icons/IconVk.vue'
     flex-direction: column;
     gap: 1.25rem;
     justify-content: space-between;
+
     @media screen and (min-width: $breakpoint-md) {
       flex-direction: row;
     }

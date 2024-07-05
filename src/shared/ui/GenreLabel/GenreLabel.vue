@@ -1,0 +1,35 @@
+<script lang="ts" setup>
+import IconClose from '@/components/icons/IconClose.vue';
+import type { Genre } from '@/stores/types';
+
+defineProps<{
+  genre: Genre;
+  deletable?: boolean;
+}>();
+</script>
+
+<template>
+  <span class="label">
+    {{ genre.name }}
+    <icon-close class="icon" v-if="deletable" />
+  </span>
+</template>
+
+<style lang="scss" scoped>
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--text-secondary);
+  background-color: var(--background-transparent);
+  border-radius: 2rem;
+  border: 1px solid light-dark(transparent, var(--white_ff));
+  @include paragraphSmallMadium;
+
+  .icon {
+    height: 0.75rem;
+    width: 0.75rem;
+  }
+}
+</style>

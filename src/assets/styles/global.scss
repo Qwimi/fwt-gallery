@@ -8,7 +8,59 @@
 }
 
 body {
-  background-color: var(--background);
+  background-color: var(--background-primary);
+
+  // firefox scrollbar
+  scrollbar-width: thin;
+  scrollbar-color: var(--background-semi-transparent);
+}
+
+// scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--background-semi-transparent);
+  border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: light-dark(var(--gray_de), var(--gray_9c));
+  border-radius: 0.25rem;
+  width: 0.25rem;
+}
+
+::-moz-scrollbar-button,
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+body,
+#app {
+  min-height: 100vh;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding: 5rem 0;
+  @media screen and (min-width: $breakpoint-md) {
+    padding: 6.25rem 0;
+  }
+}
+
+a {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-secondary);
+  &:hover {
+    color: var(--text-primary);
+  }
 }
 
 .wrapper {
@@ -19,13 +71,6 @@ body {
   margin: 0 1.25rem;
 }
 
-main {
-  padding: 5rem 0;
-  @media screen and (min-width: $breakpoint-md) {
-    padding: 6.25rem 0;
-  }
-}
-
 li {
   list-style-type: none;
 }
@@ -34,20 +79,12 @@ li {
   display: flex;
   gap: 1.25rem;
   list-style: none;
-  &_item {
-    color: var(--primary-text-dafault);
+  &__item {
+    color: var(--text-secondary);
+    cursor: pointer;
     &:hover {
-      color: var(--primary-text-hover);
+      color: var(--text-primary);
     }
-  }
-}
-
-a {
-  display: flex;
-  align-items: center;
-  color: var(--primary-text-dafault);
-  &:hover {
-    color: var(--primary-text-hover);
   }
 }
 
@@ -55,4 +92,12 @@ img {
   height: 100%;
   width: 100%;
   object-fit: cover;
+}
+
+.icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  path {
+    fill: currentColor;
+  }
 }

@@ -1,10 +1,14 @@
 import { shallowMount } from '@vue/test-utils'
+import { createPinia } from 'pinia'
 import { describe, expect, it } from 'vitest'
-import TheHeader from '@/components/theHeader'
 import { RouterLink } from 'vue-router'
+
+import TheHeader from '@/components/theHeader'
+import { useModalStore } from '@/stores/modalStore'
 
 describe('Header tests', () => {
   it('Header render test', () => {
+    useModalStore(createPinia())
     const wrapper = shallowMount(TheHeader, {
       components: {
         RouterLink

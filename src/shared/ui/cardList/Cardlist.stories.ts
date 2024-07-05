@@ -1,5 +1,9 @@
 import { type StoryObj, type Meta } from '@storybook/vue3'
+import { createPinia } from 'pinia'
+
 import CardList from './CardList.vue'
+
+import { useAppStore } from '@/stores/baseStore'
 
 const meta: Meta<typeof CardList> = {
   title: 'components/cardlist/Card list',
@@ -9,4 +13,12 @@ const meta: Meta<typeof CardList> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const ArtistCardList: Story = {}
+const store = useAppStore(createPinia())
+store.getArtists()
+const cardsTestData = store.artistCards
+
+export const ArtistCardList: Story = {
+  args: {
+    cards: cardsTestData
+  }
+}

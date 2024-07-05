@@ -1,8 +1,9 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
 import { createPinia } from 'pinia'
-import { useAppStore } from '@/stores/artStore'
+import { describe, it, expect } from 'vitest'
+
 import CardList from '@/shared/ui/cardList'
+import { useAppStore } from '@/stores/baseStore'
 
 describe('Card list tests', () => {
   it('Artist cardlist test', () => {
