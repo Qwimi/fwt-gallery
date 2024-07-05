@@ -1,31 +1,31 @@
 <script lang="ts" setup>
-import ArtistInteraction from '@/components/ArtistInteraction'
-import DeleteModal from '@/components/DeleteModal'
-import IconClose from '@/components/icons/IconClose.vue'
-import LoginModal from '@/components/LoginModal'
-import SignUpModal from '@/components/SignupModal'
-import { useModalStore } from '@/stores/modalStore'
+import { computed } from 'vue';
+import ArtistInteraction from '@/components/ArtistInteraction';
+import DeleteModal from '@/components/DeleteModal';
+import IconClose from '@/components/icons/IconClose.vue';
+import LoginModal from '@/components/LoginModal';
+import SignUpModal from '@/components/SignupModal';
+import { useModalStore } from '@/stores/modalStore';
 
-const modalStore = useModalStore()
+const modalStore = useModalStore();
 
-const currentModalContent = {
+const components = {
   logIn: LoginModal,
   signUp: SignUpModal,
   delete: DeleteModal,
   addArtist: ArtistInteraction
-}
+};
+
+const currentModal = computed(() => components[modalStore.currentModal as keyof typeof components]);
 </script>
 
 <template>
   <Teleport to="body">
     <Transition name="fade">
-      <div class="modal--shadow" v-show="modalStore.isModalOpen" @click="modalStore.closeModal">
+      <div class="modal--shadow" v-show="modalStore.currentModal" @click="modalStore.closeModal">
         <div class="modal" @click.stop>
           <transition name="component-fade" mode="out-in">
-            <component
-              :is="currentModalContent[modalStore.currentModal as keyof typeof currentModalContent]"
-              @click.stop
-            />
+            <component :is="currentModal" @click.stop />
           </transition>
           <icon-close class="icon modal__icon-close" @click="modalStore.closeModal" />
         </div>

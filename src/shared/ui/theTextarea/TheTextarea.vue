@@ -1,24 +1,25 @@
 <script lang="ts" setup>
-import IconError from '@/components/icons/IconError.vue'
+import type { TextareaHTMLAttributes } from 'vue';
+import IconError from '@/components/icons/IconError.vue';
 
 defineProps<{
-  label: string
-  placeholder?: string
-  error?: string
-  modelValue?: string
-}>()
+  label?: string;
+  error?: string;
+  modelValue?: string;
+  textareaAttributes?: TextareaHTMLAttributes;
+}>();
 
-defineEmits(['update:modelValue'])
+defineEmits(['update:modelValue']);
 </script>
 
 <template>
   <div class="form-element" :class="{ error: error }">
     <label class="form-element__label">{{ label }}</label>
-    <div class="form-element--wrapper">
+    <div class="form-element__wrapper">
       <textarea
         class="form-element__input"
-        :placeholder="placeholder"
         :value="modelValue"
+        v-bind="textareaAttributes"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       ></textarea>
     </div>
@@ -43,13 +44,7 @@ defineEmits(['update:modelValue'])
   }
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+.fade {
+  @include fade(0.5s);
 }
 </style>

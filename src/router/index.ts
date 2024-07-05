@@ -1,8 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
-import HomeView from '../views/HomeView.vue'
-
-import ArtistProfile from '@/views/ArtistProfile.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import ArtistProfile from '@/views/ArtistProfile.vue';
+import HomeView from '@/views/HomeView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,8 +17,8 @@ const router = createRouter({
     }
   ],
   scrollBehavior() {
-    return { top: 0 }
+    return { top: 0 };
   }
-})
+});
 
-export default router
+export default router;

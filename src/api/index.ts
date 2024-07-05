@@ -1,11 +1,11 @@
-import axios from 'axios'
+import axios from 'axios';
 
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     Accept: 'application/json'
   }
-})
+});
 
 export const setupInterceptors = (
   getAccessToken: () => string,
@@ -14,35 +14,36 @@ export const setupInterceptors = (
 ) => {
   axiosInstance.interceptors.request.use(
     (config) => {
-      const token = getAccessToken()
+      const token = getAccessToken();
       if (token) {
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers.Authorization = `Bearer ${token}`;
       }
-      return config
+      return config;
     },
     (error) => {
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
-  )
+  );
+
   axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
-      const originalRequest = error.config
+      const originalRequest = error.config;
 
-      const token = getAccessToken()
+      const token = getAccessToken();
 
       if (token && error.response.status === 401 && !originalRequest.isRetry) {
-        originalRequest.isRetry = true
+        originalRequest.isRetry = true;
         try {
-          await handleRefreshTokens()
-          originalRequest.headers.Authorization = `Bearer ${token}`
-          return axiosInstance(originalRequest)
+          await handleRefreshTokens();
+          originalRequest.headers.Authorization = `Bearer ${token}`;
+          return axiosInstance(originalRequest);
         } catch (e) {
-          logout()
-          return Promise.reject(e)
+          logout();
+          return Promise.reject(e);
         }
       }
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
-  )
-}
+  );
+};

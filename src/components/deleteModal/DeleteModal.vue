@@ -1,26 +1,25 @@
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue'
+import { reactive } from 'vue';
+import IconDeleteBig from '@/components/icons/IconDeleteBig.vue';
+import router from '@/router';
+import ButtonBase from '@/shared/ui/ButtonBase';
+import { useAppStore } from '@/stores/baseStore';
+import { useModalStore } from '@/stores/modalStore';
 
-import IconDeleteBig from '@/components/icons/IconDeleteBig.vue'
-import router from '@/router'
-import ButtonBase from '@/shared/ui/ButtonBase'
-import { useAppStore } from '@/stores/baseStore'
-import { useModalStore } from '@/stores/modalStore'
-
-const modalStore = useModalStore()
-const store = useAppStore()
-const props: Ref<{ id: string; target: string }> = ref(modalStore.currentModalProps)
+const modalStore = useModalStore();
+const store = useAppStore();
+const props: { id: string; target: string } = reactive(modalStore.currentModalProps);
 
 const deleteFunction = async () => {
-  if (await store.deleteArtist(props.value.id)) {
-    modalStore.closeModal()
-    store.getArtists()
-    router.push({ name: 'home' })
-    console.log('success')
+  if (props.target == 'artist') {
+    await store.deleteArtist(props.id);
+    modalStore.closeModal();
+    store.getArtists();
+    router.push({ name: 'home' });
   } else {
-    console.log('error')
+    console.log('error');
   }
-}
+};
 </script>
 
 <template>

@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import IconBurger from '@/components/icons/IconBurger.vue'
-import IconLogo from '@/components/icons/IconLogo.vue'
-import ThemeToggler from '@/components/ThemeToggler'
-import { useAuthStore } from '@/stores/authStore'
-import { useModalStore } from '@/stores/modalStore'
+import IconBurger from '@/components/icons/IconBurger.vue';
+import IconLogo from '@/components/icons/IconLogo.vue';
+import ThemeToggler from '@/components/ThemeToggler';
+import { useAuthStore } from '@/stores/authStore';
+import { useModalStore } from '@/stores/modalStore';
 
-const modalStore = useModalStore()
-const authStore = useAuthStore()
+const modalStore = useModalStore();
+const authStore = useAuthStore();
 </script>
 
 <template>

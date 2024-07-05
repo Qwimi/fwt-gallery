@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3';
 
-import TheInput from '.'
+import TheInput from '.';
 
 const meta: Meta<typeof TheInput> = {
   title: 'components/inputs/The Input',
@@ -12,9 +12,9 @@ const meta: Meta<typeof TheInput> = {
   },
   tags: ['autodocs'],
   component: TheInput
-}
-export default meta
-type Story = StoryObj<typeof meta>
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const TextInput: Story = {
   args: {
@@ -23,13 +23,13 @@ export const TextInput: Story = {
     placeholder: 'text',
     error: ''
   }
-}
+};
 
 export const InputWithError: Story = {
   args: {
     label: 'Error',
-    type: 'Error',
+    type: 'text',
     placeholder: 'Error',
     error: 'error message'
   }
-}
+};

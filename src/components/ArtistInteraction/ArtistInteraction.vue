@@ -1,41 +1,72 @@
 <script lang="ts" setup>
-import { onMounted, ref, type Ref } from 'vue'
+import useVuelidate from '@vuelidate/core';
+import { computed, reactive, type ComputedRef } from 'vue';
+import AvatarUpload from '@/components/AvatarUpload';
+import { artistRules, toFormData, useValidationErrors } from '@/helpers/validation';
+import ButtonBase from '@/shared/ui/ButtonBase';
+import MultiSelect from '@/shared/ui/MultiSelect';
+import TheInput from '@/shared/ui/TheInput';
+import TheTextarea from '@/shared/ui/TheTextarea';
+import { useAppStore } from '@/stores/baseStore';
+import { useModalStore } from '@/stores/modalStore';
+import type { ArtistPage, Genre, ArtistRequestForm } from '@/stores/types';
 
-import AvatarUpload from '@/components/AvatarUpload'
-import ButtonBase from '@/shared/ui/ButtonBase'
-import MultiSelect from '@/shared/ui/MultiSelect'
-import TheInput from '@/shared/ui/TheInput'
-import TheTextarea from '@/shared/ui/TheTextarea'
-import { useAppStore } from '@/stores/baseStore'
-import { useModalStore } from '@/stores/modalStore'
-import type { ArtistPage, Genre } from '@/stores/types'
+const store = useAppStore();
+const currentArtist: ArtistPage = reactive(useModalStore().currentModalProps as ArtistPage);
 
-const store = useAppStore()
-const currentArtist: Ref<ArtistPage> = ref(useModalStore().currentModalProps as ArtistPage)
+const form: ArtistRequestForm = reactive({
+  name: currentArtist?.name,
+  yearsOfLife: currentArtist?.yearsOfLife,
+  description: currentArtist?.description,
+  genres: currentArtist?.genres.map((element: Genre) => element._id),
+  avatar: currentArtist?.avatar
+});
 
-const name: Ref<string> = ref(currentArtist.value?.name || '')
-const yearsOfLife: Ref<string> = ref(currentArtist.value?.yearsOfLife || '')
-const description: Ref<string> = ref(currentArtist.value?.description || '')
-const selectedGenres: Ref<Genre[]> = ref(currentArtist.value?.genres || [])
-const avatar: Ref<string | null> = ref(currentArtist.value?.avatar.src || null)
+const $v = useVuelidate(artistRules, form);
 
-onMounted(() => {
-  store.getGenres()
-})
+const errors: ComputedRef<ArtistRequestForm> = computed(() =>
+  useValidationErrors($v.value.$errors)
+);
+
+const sentData = async () => {
+  const isValid = await $v.value.$validate();
+
+  if (!isValid) return;
+
+  const formData = toFormData(form);
+
+  currentArtist
+    ? await store.updateArtist(currentArtist._id, formData)
+    : await store.createArtist(formData);
+};
 </script>
 
 <template>
   <div class="modal__content">
-    <form class="form__container" enctype="multipart/form-data">
-      <avatar-upload v-model="avatar" />
+    <form class="form__container" enctype="multipart/form-data" @submit.prevent="sentData">
+      <avatar-upload v-model="form.avatar" />
       <div class="form">
         <div class="form__inputs">
-          <the-input :label="'Name*'" :type="'text'" v-model="name" />
-          <the-input :label="'Years of life'" :type="'text'" v-model="yearsOfLife" />
-          <the-textarea :label="'Description'" v-model="description" />
-          <multi-select :label="'Genres*'" :options="store.genres" v-model="selectedGenres" />
+          <the-input :label="'Name*'" :type="'text'" v-model="form.name" :error="errors.name" />
+          <the-input
+            :label="'Years of life'"
+            :type="'text'"
+            v-model="form.yearsOfLife"
+            :error="errors.yearsOfLife"
+          />
+          <the-textarea
+            :label="'Description'"
+            v-model="form.description"
+            :error="errors.description"
+          />
+          <multi-select
+            :label="'Genres*'"
+            :options="store.genres"
+            v-model="form.genres"
+            :error="errors.genres"
+          />
         </div>
-        <button-base :variant="'default'">save</button-base>
+        <button-base :variant="'default'" :button-props="{ type: 'submit' }">save</button-base>
       </div>
     </form>
   </div>

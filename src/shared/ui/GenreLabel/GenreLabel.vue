@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import IconClose from '@/components/icons/IconClose.vue'
-import type { Genre } from '@/stores/types'
+import IconClose from '@/components/icons/IconClose.vue';
+import type { Genre } from '@/stores/types';
 
 defineProps<{
-  genre: Genre
-  deletable?: boolean
-}>()
+  genre: Genre;
+  deletable?: boolean;
+}>();
 </script>
 
 <template>

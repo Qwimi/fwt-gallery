@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import IconClose from '@/components/icons/IconClose.vue'
-import IconError from '@/components/icons/IconError.vue'
-import { useModalStore } from '@/stores/modalStore'
+import IconClose from '@/components/icons/IconClose.vue';
+import IconError from '@/components/icons/IconError.vue';
+import { useModalStore } from '@/stores/modalStore';
 
-const modalStore = useModalStore()
+const modalStore = useModalStore();
 </script>
 
 <template>
   <Teleport to="body">
     <Transition name="fade">
-      <div class="toast" v-if="modalStore.toastMessage">
+      <div class="toast" v-if="modalStore.getToastMessage()">
         <icon-error class="toast__icon" />
         <div class="toast__about">
           <h3 class="toast__title">Error!</h3>
           <p class="toast__text">
-            {{ modalStore.toastMessage }}
+            {{ modalStore.getToastMessage() }}
           </p>
         </div>
-        <icon-close class="icon toast__icon-close" @click="modalStore.toastMessage = ''" />
+        <icon-close class="icon toast__icon-close" @click="modalStore.setToastMessage(null)" />
       </div>
     </Transition>
   </Teleport>
@@ -37,6 +37,7 @@ const modalStore = useModalStore()
   gap: 0.5rem;
   align-items: center;
   overflow: hidden;
+  z-index: 5;
 
   @media screen and (min-width: $breakpoint-md) {
     padding: 1.25rem;

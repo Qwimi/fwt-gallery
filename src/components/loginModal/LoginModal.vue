@@ -1,32 +1,32 @@
 <script lang="ts" setup>
-import useVuelidate from '@vuelidate/core'
-import { computed, ref, type Ref } from 'vue'
+import useVuelidate from '@vuelidate/core';
+import { computed, reactive } from 'vue';
+import { authRules, useValidationErrors } from '@/helpers/validation';
+import ButtonBase from '@/shared/ui/ButtonBase';
+import TheInput from '@/shared/ui/TheInput';
+import { useAuthStore } from '@/stores/authStore';
+import { useModalStore } from '@/stores/modalStore';
+import type { AuthForm } from '@/stores/types';
 
-import { authRules, useValidationErrors } from '@/helpers/validation'
-import ButtonBase from '@/shared/ui/ButtonBase'
-import TheInput from '@/shared/ui/TheInput'
-import { useAuthStore } from '@/stores/authStore'
-import { useModalStore } from '@/stores/modalStore'
-import type { AuthForm } from '@/stores/types'
+const modalStore = useModalStore();
+const authStore = useAuthStore();
 
-const modalStore = useModalStore()
-const authStore = useAuthStore()
-
-const form: Ref<AuthForm> = ref({
+const form: AuthForm = reactive({
   emailValue: '',
   passwordValue: ''
-})
+});
 
-const errors = computed(() => useValidationErrors<AuthForm>($v.value.$errors))
+const $v = useVuelidate(authRules, form);
 
-const $v = useVuelidate(authRules, form)
+const errors = computed(() => useValidationErrors<AuthForm>($v.value.$errors));
 
 const submitForm = async () => {
-  const isValid = await $v.value.$validate()
-  if (isValid) {
-    authStore.sentAuthRequest(form.value, true)
-  }
-}
+  const isValid = await $v.value.$validate();
+
+  if (!isValid) return;
+
+  authStore.sentAuthRequest(form, true);
+};
 </script>
 
 <template>
@@ -44,19 +44,18 @@ const submitForm = async () => {
         <div class="form__inputs">
           <the-input
             v-model="form.emailValue"
-            :type="'email'"
-            :label="'email'"
+            type="email"
+            label="email"
             :error="errors.emailValue"
           />
           <the-input
             v-model="form.passwordValue"
-            :type="'password'"
-            :label="'password'"
-            :value="form.passwordValue"
+            type="password"
+            label="password"
             :error="errors.passwordValue"
           />
         </div>
-        <button-base :variant="'default'">log in</button-base>
+        <button-base variant="default">log in</button-base>
       </form>
     </div>
   </div>

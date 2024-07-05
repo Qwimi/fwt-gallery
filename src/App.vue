@@ -1,23 +1,10 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { RouterView } from 'vue-router'
-
-import { useAuthStore } from './stores/authStore'
-import { useAppStore } from './stores/baseStore'
-import { useModalStore } from './stores/modalStore'
-import { useThemeStore } from './stores/themeStore'
-
-import TheFooter from '@/components/TheFooter'
-import TheHeader from '@/components/TheHeader'
-import TheModal from '@/components/TheModal'
-import TheSidebar from '@/components/TheSidebar'
-import TheToast from '@/shared/ui/TheToast'
-
-useThemeStore()
-useModalStore()
-useAuthStore()
-useAppStore()
-onMounted(() => useAuthStore().getLocalTokens())
+import { RouterView } from 'vue-router';
+import TheFooter from '@/components/TheFooter';
+import TheHeader from '@/components/TheHeader';
+import TheModal from '@/components/TheModal';
+import TheSidebar from '@/components/TheSidebar';
+import TheToast from '@/components/TheToast';
 </script>
 
 <template>

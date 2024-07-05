@@ -1,12 +1,18 @@
 <script lang="ts" setup>
-import HeaderSidebar from '@/components/HeaderSidebar'
-import IconClose from '@/components/icons/IconClose.vue'
-import { useModalStore } from '@/stores/modalStore'
-const modalStore = useModalStore()
+import { computed } from 'vue';
+import HeaderSidebar from '@/components/HeaderSidebar';
+import IconClose from '@/components/icons/IconClose.vue';
+import { useModalStore } from '@/stores/modalStore';
 
-const currentSidebarContent = {
+const modalStore = useModalStore();
+
+const components = {
   headerSidebar: HeaderSidebar
-}
+};
+
+const currentSidebar = computed(
+  () => components[modalStore.currentSidebar as keyof typeof components]
+);
 </script>
 
 <template>
@@ -14,22 +20,15 @@ const currentSidebarContent = {
     <Transition name="fade">
       <div
         class="sidebar--shadow"
-        v-show="modalStore.isSidebarOpen"
+        v-show="modalStore.currentSidebar"
         @click="modalStore.closeSidebar"
       >
         <Transition name="slide">
-          <div class="sidebar" v-if="modalStore.isSidebarOpen" @click.stop>
-            <icon-close class="icon sidebar__icon-close" @click="modalStore.closeSidebar" />
+          <div class="sidebar" v-if="modalStore.currentSidebar" @click.stop>
             <KeepAlive>
-              <component
-                :is="
-                  currentSidebarContent[
-                    modalStore.currentSidebar as keyof typeof currentSidebarContent
-                  ]
-                "
-                v-if="modalStore.currentSidebar"
-              />
+              <component :is="currentSidebar" v-if="modalStore.currentSidebar" />
             </KeepAlive>
+            <icon-close class="icon sidebar__icon-close" @click="modalStore.closeSidebar" />
           </div>
         </Transition>
       </div>

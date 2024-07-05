@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue'
-import NoImage from '@/shared/ui/NoImage'
-import type { CardInterface } from '@/stores/types'
+import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue';
+import NoImage from '@/shared/ui/NoImage';
+import type { CardInterface } from '@/stores/types';
 
 defineProps<{
-  card: CardInterface
-  isArtist: Boolean
-}>()
+  card: CardInterface;
+  isArtist: boolean;
+}>();
 </script>
 
 <template>

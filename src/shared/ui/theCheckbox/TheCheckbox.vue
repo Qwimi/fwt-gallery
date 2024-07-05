@@ -1,20 +1,27 @@
 <script lang="ts" setup>
-import IconSuccess from '@/components/icons/IconSuccess.vue'
+import type { InputHTMLAttributes } from 'vue';
+import IconSuccess from '@/components/icons/IconSuccess.vue';
+
 defineProps<{
-  label?: string
-  id: string
-  checked?: boolean
-}>()
-defineEmits(['check'])
+  label?: string;
+  inputAttributes?: InputHTMLAttributes;
+}>();
+
+defineEmits(['check']);
 </script>
 
 <template>
-  <label class="checkbox--container">
+  <label class="checkbox">
     <input
-      class="checkbox"
+      class="checkbox--default"
       type="checkbox"
-      :checked="checked"
-      @click="$emit('check', { value: ($event.target as HTMLInputElement).checked, id: id })"
+      v-bind="inputAttributes"
+      @click="
+        $emit('check', {
+          value: ($event.target as HTMLInputElement).checked,
+          id: inputAttributes?.id
+        })
+      "
     />
     <div class="checkbox--custom">
       <icon-success class="icon" />
@@ -24,29 +31,31 @@ defineEmits(['check'])
 </template>
 
 <style lang="scss" scoped>
-.checkbox--container {
+.checkbox {
   @include paragraphBaseLight;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   color: var(--text-secondary);
-  .checkbox {
+
+  &--default {
     display: none;
-    &--custom {
-      display: inline-block;
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 0.25rem;
-      background-color: light-dark(var(--white_fc), var(--black_12));
-      border: 1px solid light-dark(var(--gray_de), transparent);
-      .icon {
-        display: none;
-      }
+  }
+
+  &--custom {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+    background-color: light-dark(var(--white_fc), var(--black_12));
+    border: 1px solid light-dark(var(--gray_de), transparent);
+    .icon {
+      display: none;
     }
-    &:checked + .checkbox--custom {
-      .icon {
-        display: block;
-      }
+  }
+  &--default:checked + &--custom {
+    .icon {
+      display: block;
     }
   }
 }

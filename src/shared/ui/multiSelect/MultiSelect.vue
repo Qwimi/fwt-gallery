@@ -1,44 +1,39 @@
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue'
-
-import IconExpand from '@/components/icons/IconExpand.vue'
-import GenreLabel from '@/shared/ui/GenreLabel'
-import TheCheckbox from '@/shared/ui/TheCheckbox'
-import type { Genre } from '@/stores/types'
+import { ref, type Ref } from 'vue';
+import IconError from '@/components/icons/IconError.vue';
+import IconExpand from '@/components/icons/IconExpand.vue';
+import GenreLabel from '@/shared/ui/GenreLabel';
+import TheCheckbox from '@/shared/ui/TheCheckbox';
+import type { Genre } from '@/stores/types';
 
 const props = defineProps<{
-  label: string
-  options: Genre[]
-  modelValue?: Genre[]
-}>()
+  label: string;
+  options: Genre[];
+  error?: string[];
+  modelValue?: string[];
+}>();
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
-const isSelectOpen: Ref<boolean> = ref(false)
+const isSelectOpen: Ref<boolean> = ref(false);
 
-const selectedGenres: Ref<string[]> = ref(
-  props.modelValue?.map((option: Genre) => option._id) || []
-)
+const selectedGenres: Ref<string[]> = ref(props.modelValue || []);
 
-const deleteSelected = (option: Genre) => {
-  selectedGenres.value = selectedGenres.value.filter((element: string) => element != option._id)
-}
+const deleteSelected = (option: string) => {
+  selectedGenres.value = selectedGenres.value.filter((element: string) => element != option);
+};
 
-const updateSelected = (event: { value: boolean; id: string }) => {
-  const focusGenre = props.options.find((option) => option._id == event.id)
-  event.value ? selectedGenres.value.push(focusGenre?._id!!) : deleteSelected(focusGenre!!)
-  emit(
-    'update:modelValue',
-    props.options.filter((option: Genre) => selectedGenres.value.includes(option._id))
-  )
-}
+const updateSelected = (event: { value?: boolean; id: string }) => {
+  event.value ? selectedGenres.value.push(event.id!!) : deleteSelected(event.id!!);
+  emit('update:modelValue', selectedGenres.value);
+};
 </script>
 
 <template>
   <div class="form-element multiple">
     <label class="form-element__label">{{ label }}</label>
     <div
-      class="form-element--wrapper"
+      class="form-element__wrapper"
       @click="isSelectOpen = !isSelectOpen"
       :class="{ 'multiple--opened': isSelectOpen }"
     >
@@ -49,7 +44,7 @@ const updateSelected = (event: { value: boolean; id: string }) => {
               :genre="genre"
               :deletable="true"
               v-if="selectedGenres.includes(genre._id)"
-              @click.stop="deleteSelected(genre)"
+              @click.stop="updateSelected({ id: genre._id })"
             />
           </template>
         </TransitionGroup>
@@ -59,23 +54,36 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     <ul class="multiple__options" v-if="isSelectOpen">
       <li v-for="option in options" :key="option._id" class="multiple__option">
         <the-checkbox
-          :id="option._id"
+          :input-attributes="{
+            id: option._id,
+            checked: selectedGenres.includes(option._id)
+          }"
           :label="option.name"
-          :checked="selectedGenres.includes(option._id)"
-          @check="updateSelected"
+          @check="updateSelected($event)"
         />
       </li>
     </ul>
+    <transition name="fade">
+      <div class="form-element__error" v-if="error">
+        <icon-error class="icon" />
+        <p>
+          {{ error }}
+        </p>
+      </div>
+    </transition>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .form-element {
   @include inputMixin;
-  &--wrapper {
+  &__wrapper {
     height: 3rem;
     position: relative;
     z-index: 2;
+  }
+  &__error {
+    z-index: 0;
   }
 }
 
@@ -85,30 +93,25 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     overflow: hidden;
     white-space: nowrap;
     flex: 1;
-    margin-left: 1rem;
-    .label {
-      margin-right: 0.75rem;
-    }
   }
   &__options {
     overflow: hidden;
-    padding: 1.25rem 0 0.75rem;
     border: 1px solid light-dark(var(--gray_de), transparent);
     background-color: light-dark(var(--white_ff), var(--black_1a));
     border-top: none;
     border-radius: 0.25rem;
     transform: translateY(-0.5rem);
+    padding-top: 0.5rem;
     position: absolute;
     width: 100%;
-    z-index: 0;
-    max-height: 150px;
+    z-index: 1;
+    max-height: calc(150px + 0.5rem);
     overflow-y: auto;
   }
   &--toggler {
     color: var(--secondary-gray);
     width: 0.75rem;
     transition: transform 0.3s;
-    margin-right: 1rem;
   }
   &__option {
     padding: 0.5rem 1rem;
@@ -123,16 +126,13 @@ const updateSelected = (event: { value: boolean; id: string }) => {
       transform: rotate(-180deg);
     }
   }
+  .label {
+    margin-right: 1rem;
+  }
 }
 
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(1rem);
+.list,
+.fade {
+  @include fade(0.5s);
 }
 </style>
