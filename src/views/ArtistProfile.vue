@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted } from 'vue';
+import AddMainPicture from '@/shared/ui/AddMainPicture';
 import ArtistSection from '@/components/ArtistSection';
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue';
 import IconDelete from '@/components/icons/IconDelete.vue';
@@ -48,7 +49,16 @@ onUnmounted(() => store.unmountCurrentArtist());
   <artist-section :artist="store.currentArtist" />
   <section class="wrapper">
     <h3 class="section__title">Artworks</h3>
-    <card-list :cards="store.currentArtistCards" :is-artists="false" />
+    <card-list
+      :cards="store.currentArtistCards"
+      :is-artists="false"
+      v-if="store.currentArtistCards.length"
+    />
+    <div class="no-cards" v-else>
+      <add-main-picture />
+      <span class="no-cards__decoration"></span>
+      <p class="no-cards__title">The paintings of this artist have not been uploaded yet.</p>
+    </div>
   </section>
 </template>
 
@@ -84,6 +94,23 @@ onUnmounted(() => store.unmountCurrentArtist());
       margin-right: 0.75rem;
       rotate: 180deg;
     }
+  }
+}
+
+.no-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+  text-align: center;
+  &__title {
+    color: var(--text-secondary);
+    @include headingH4;
+  }
+  &__decoration {
+    height: 2px;
+    width: 160px;
+    background-color: var(--accent);
   }
 }
 </style>

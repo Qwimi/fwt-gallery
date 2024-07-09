@@ -31,6 +31,10 @@ export const useModalStore = defineStore('modal', () => {
 
   const setToastMessage = (error: string | null) => {
     toastMessage.value = error;
+
+    if (!error) return;
+
+    setTimeout(() => setToastMessage(null), 5000);
   };
 
   const getToastMessage = () => toastMessage.value;
