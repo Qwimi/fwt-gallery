@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 import { describe, it, expect } from 'vitest'
 
 import CardList from '@/shared/ui/cardList'
-import { useAppStore } from '@/stores/artStore'
+import { useAppStore } from '@/stores/baseStore'
 
 describe('Card list tests', () => {
   it('Artist cardlist test', () => {
