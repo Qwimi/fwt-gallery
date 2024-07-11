@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
-import PaintingUpload from '@/components/PaintingUpload';
+import IconNoImage from '../icons/IconNoImage.vue';
 import ButtonBase from '@/shared/ui/ButtonBase';
+import DragAndDrop from '@/shared/ui/DragAndDrop/DragAndDrop.vue';
 import TheInput from '@/shared/ui/TheInput';
 import { useAppStore } from '@/stores/baseStore';
 import { useModalStore } from '@/stores/modalStore';
@@ -31,7 +32,13 @@ const sentData = async () => {
         </div>
       </div>
       <div class="form__inputs form__inputs--drag-zone">
-        <painting-upload v-model="form.image" />
+        <drag-and-drop v-model="form.image" :placeholder-icon="IconNoImage">
+          <p class="drag-n-drop__title">
+            Drop your image here, or <span class="drag-n-drop__title--underline"> browse </span>
+          </p>
+          <div class="drag-n-drop__title--underline">browse image</div>
+          <p class="drag-n-drop__subtitle">Upload only .jpg or .png format less than 3 MB</p>
+        </drag-and-drop>
       </div>
       <button-base :variant="'default'" :button-props="{ type: 'submit' }">save</button-base>
     </form>
@@ -71,6 +78,10 @@ const sentData = async () => {
         gap: 3rem;
       }
     }
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    width: 100%;
   }
 }
 

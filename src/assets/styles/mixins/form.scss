@@ -11,9 +11,12 @@
     width: 100%;
     margin-bottom: 2.5rem;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       margin-bottom: 3.75rem;
     }
+  }
+  @media (min-width: $breakpoint-md) {
+    width: 340px;
   }
 }
 
@@ -41,12 +44,12 @@
 
   .button {
     margin-bottom: 3.75rem;
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       margin: 0;
     }
   }
 
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     max-width: 340px;
     margin: 0 auto;
 
@@ -62,7 +65,7 @@
     }
   }
 
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     color: light-dark(var(--text-secondary), var(--white_ff));
 
     .form-element__label {

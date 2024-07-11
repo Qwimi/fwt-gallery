@@ -29,7 +29,9 @@ const currentModal = computed(() => components[modalStore.currentModal as keyof 
           <transition name="component-fade" mode="out-in">
             <component :is="currentModal" @click.stop />
           </transition>
-          <icon-close class="icon modal__icon-close" @click="modalStore.closeModal" />
+          <button class="modal__close-button" @click="modalStore.closeModal">
+            <icon-close class="icon" />
+          </button>
         </div>
       </div>
     </Transition>
@@ -52,7 +54,7 @@ const currentModal = computed(() => components[modalStore.currentModal as keyof 
     }
   }
 
-  &--small + &__icon-close {
+  &--small + &__close-button {
     display: none;
     @media screen and (min-width: $breakpoint-md) {
       display: block;

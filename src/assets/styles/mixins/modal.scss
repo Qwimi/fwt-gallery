@@ -5,18 +5,18 @@
   position: relative;
   height: 100%;
 
-  &__icon-close {
+  &__close-button {
+    @include buttonMixin;
     position: absolute;
     top: 1.25rem;
     right: 1.25rem;
     cursor: pointer;
-    color: var(--text-secondary);
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       top: 2rem;
     }
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       right: 2rem;
     }
   }
@@ -47,8 +47,7 @@
   &__form {
     width: 100%;
   }
-
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     &__content {
       align-items: center;
       justify-content: center;
@@ -56,7 +55,7 @@
     }
   }
 
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     &__content {
       width: 1028px;
       height: 700px;

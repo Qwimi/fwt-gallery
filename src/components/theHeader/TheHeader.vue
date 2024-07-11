@@ -56,7 +56,7 @@ const authStore = useAuthStore();
   }
 
   .icon-burger {
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       display: none;
     }
   }
@@ -64,7 +64,7 @@ const authStore = useAuthStore();
     height: 1rem;
     width: fit-content;
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       height: 1.25rem;
     }
   }
@@ -73,7 +73,7 @@ const authStore = useAuthStore();
     gap: 3.25rem;
     display: none;
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       display: flex;
     }
 

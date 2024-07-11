@@ -57,7 +57,7 @@ export const handleCreateArtist = async (form: FormData) => {
 
 // обновление профиля художника
 
-export const handleUpdareArtist = async (id: string, form: FormData) => {
+export const handleUpdateArtist = async (id: string, form: FormData) => {
   const response = await axiosInstance.put(`/artists/${id}`, form, {
     headers: {
       'Content-Type': 'multipart/form-data'

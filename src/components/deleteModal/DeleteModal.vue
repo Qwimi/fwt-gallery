@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import IconDeleteBig from '@/components/icons/IconDeleteBig.vue';
+import handleError from '@/helpers/errorHandling';
 import router from '@/router';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import { useAppStore } from '@/stores/baseStore';
@@ -11,13 +12,22 @@ const store = useAppStore();
 const props: { id: string; target: string } = reactive(modalStore.currentModalProps);
 
 const deleteFunction = async () => {
-  if (props.target == 'artist') {
-    await store.deleteArtist(props.id);
-    modalStore.closeModal();
-    store.getArtists();
-    router.push({ name: 'home' });
-  } else {
-    console.log('error');
+  switch (props.target) {
+    case 'artist': {
+      await store.deleteArtist(props.id);
+      modalStore.closeModal();
+      store.getArtists();
+      router.push({ name: 'home' });
+      break;
+    }
+    case 'painting': {
+      console.log('*delete painting function*');
+      break;
+    }
+    default: {
+      handleError('unespected target value');
+      break;
+    }
   }
 };
 </script>
@@ -58,7 +68,7 @@ const deleteFunction = async () => {
     align-items: center;
     padding: 1.25rem 1.5rem;
     height: 100%;
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       padding: 3.75rem 2.5rem;
     }
   }
@@ -66,7 +76,7 @@ const deleteFunction = async () => {
   &__illustration {
     display: none;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       display: block;
     }
   }
@@ -81,7 +91,7 @@ const deleteFunction = async () => {
     color: var(--gray_9c);
     @include paragraphSmallLight;
     margin-bottom: 1.25rem;
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       margin-bottom: 2rem;
     }
   }

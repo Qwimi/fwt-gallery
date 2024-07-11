@@ -25,7 +25,7 @@ const submitForm = async () => {
 
   if (!isValid) return;
 
-  authStore.sentAuthRequest(form, false);
+  authStore.sentAuthRequest(form, 'register');
 };
 </script>
 
@@ -71,7 +71,7 @@ const submitForm = async () => {
   @include authFormMixin;
 
   &__title {
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       @include headingH2;
     }
   }

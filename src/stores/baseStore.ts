@@ -14,7 +14,7 @@ import {
   handleGetCurrentArtistStatic,
   handleGetGenres,
   handleGetGenresStatic,
-  handleUpdareArtist
+  handleUpdateArtist
 } from '@/api/main';
 import handleError from '@/helpers/errorHandling';
 
@@ -109,7 +109,7 @@ export const useAppStore = defineStore('app', () => {
 
   const updateArtist = async (id: string, form: FormData) => {
     try {
-      await handleUpdareArtist(id, form);
+      await handleUpdateArtist(id, form);
       getArtists();
       getCurrentArtist(id);
       modalStore.closeModal();
