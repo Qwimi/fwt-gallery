@@ -23,15 +23,14 @@ export const artistRules = computed(() => ({
 export const toFormData = (form: Object) => {
   const formData = new FormData();
 
-  for (const [key, value] of Object.entries(form)) {
-    if (key == 'avatar' && !(value instanceof File)) continue;
+  Object.entries(form).forEach(([key, value]) => {
+    if (key == 'avatar' && !(value instanceof File)) return;
     if (Array.isArray(value)) {
       value.forEach((element: any) => formData.append(key, element));
-      continue;
+      return;
     }
     formData.append(key, value || null);
-  }
-
+  });
   return formData;
 };
 

@@ -49,11 +49,11 @@ defineProps<{
     }
   }
 
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     padding-top: 2.5rem;
   }
 
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     padding-top: 3.75rem;
   }
 }

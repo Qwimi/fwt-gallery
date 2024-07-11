@@ -9,9 +9,9 @@ import { handleLogin, handleRefresh, handleRegister } from '@/api/main';
 import handleError from '@/helpers/errorHandling';
 
 export const useAuthStore = defineStore('auth', () => {
-  const fingerprint: Ref<string> = ref('');
-  const accessToken: Ref<string> = ref('');
-  const refreshToken: Ref<string> = ref('');
+  const fingerprint: Ref<string | null> = ref(null);
+  const accessToken: Ref<string | null> = ref(null);
+  const refreshToken: Ref<string | null> = ref(null);
   const isUserAuth = computed(() => !!accessToken.value);
   const store = useAppStore();
 
@@ -33,8 +33,8 @@ export const useAuthStore = defineStore('auth', () => {
   const getAccessToken = () => accessToken.value;
 
   const logout = () => {
-    refreshToken.value = '';
-    accessToken.value = '';
+    refreshToken.value = null;
+    accessToken.value = null;
     localStorage.removeItem('refreshToken');
     store.getArtists();
   };
@@ -54,7 +54,7 @@ export const useAuthStore = defineStore('auth', () => {
   const refreshTokens = async () => {
     try {
       await initializeFingerprint();
-      const response = await handleRefresh(fingerprint.value, refreshToken.value);
+      const response = await handleRefresh(fingerprint.value!!, refreshToken.value!!);
       setTokens(response);
       reloadAppData();
     } catch (error: unknown) {
@@ -75,7 +75,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   // авторизация пользователя
 
-  const sentAuthRequest = async (form: AuthForm, isLoginRequest: boolean) => {
+  const sentAuthRequest = async (form: AuthForm, action: 'login' | 'register') => {
     try {
       await initializeFingerprint();
       const formData: AuthRequest = {
@@ -83,9 +83,8 @@ export const useAuthStore = defineStore('auth', () => {
         password: form.passwordValue,
         fingerprint: fingerprint.value
       };
-      const response: AuthResponse = isLoginRequest
-        ? await handleLogin(formData)
-        : await handleRegister(formData);
+      const response: AuthResponse =
+        action === 'login' ? await handleLogin(formData) : await handleRegister(formData);
       setTokens(response);
       useModalStore().closeModal();
       reloadAppData();

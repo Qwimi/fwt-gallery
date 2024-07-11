@@ -47,7 +47,7 @@ defineProps<{
   position: relative;
   margin-bottom: 3.75rem;
 
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     flex-direction: row;
   }
 
@@ -59,14 +59,14 @@ defineProps<{
       height: 100%;
     }
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       height: 500px;
       img {
         height: auto;
       }
     }
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       width: fit-content;
       height: 1000px;
       img {
@@ -80,7 +80,7 @@ defineProps<{
 .biography {
   position: relative;
 
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     position: absolute;
     inset: 0;
     max-width: 1240px;
@@ -111,11 +111,11 @@ defineProps<{
     padding: 1.25rem;
     background-color: var(--background-primary);
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       gap: 0.75rem;
     }
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       gap: 2rem;
       transform: translateY(0);
       position: static;
@@ -130,7 +130,7 @@ defineProps<{
     color: light-dark(var(--gray_57), var(--gray_9c));
     @include captionMedium12;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       @include captionMedium16;
     }
   }
@@ -140,7 +140,7 @@ defineProps<{
     color: var(--accent);
     position: relative;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       @include headingH2;
       &::before {
         content: '';
@@ -153,7 +153,7 @@ defineProps<{
       }
     }
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       @include headingH1;
       &::before {
         left: -5rem;
@@ -165,7 +165,7 @@ defineProps<{
     padding: 1.25rem 1.25rem 0;
     position: relative;
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       padding: 0;
       &::before {
         content: '';
@@ -188,7 +188,7 @@ defineProps<{
     flex-wrap: wrap;
     gap: 0.5rem;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       gap: 1.25rem;
     }
   }

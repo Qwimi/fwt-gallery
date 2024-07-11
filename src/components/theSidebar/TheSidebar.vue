@@ -28,7 +28,9 @@ const currentSidebar = computed(
             <KeepAlive>
               <component :is="currentSidebar" v-if="modalStore.currentSidebar" />
             </KeepAlive>
-            <icon-close class="icon sidebar__icon-close" @click="modalStore.closeSidebar" />
+            <button class="sidebar__close-button" @click="modalStore.closeSidebar">
+              <icon-close class="icon" />
+            </button>
           </div>
         </Transition>
       </div>
@@ -40,13 +42,13 @@ const currentSidebar = computed(
 .sidebar {
   @include modalMixin;
   width: 80%;
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     width: 60%;
   }
-}
 
-.sidebar--shadow {
-  justify-content: flex-end;
+  &--shadow {
+    justify-content: flex-end;
+  }
 }
 
 .fade {

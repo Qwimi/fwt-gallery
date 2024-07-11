@@ -22,12 +22,12 @@ defineProps<{
   gap: 1.25rem;
   overflow: hidden;
 
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }

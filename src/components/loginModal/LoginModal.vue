@@ -25,7 +25,7 @@ const submitForm = async () => {
 
   if (!isValid) return;
 
-  authStore.sentAuthRequest(form, true);
+  authStore.sentAuthRequest(form, 'login');
 };
 </script>
 

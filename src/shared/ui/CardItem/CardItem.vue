@@ -65,11 +65,11 @@ defineProps<{
     max-width: 300px;
     background-color: var(--background-primary);
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       padding: 0.75rem 0;
     }
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       padding: 1.25rem 0;
     }
   }
@@ -99,7 +99,7 @@ defineProps<{
     flex-direction: column;
     gap: 0.5rem;
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       padding: 0 1.25rem;
 
       &::before {
@@ -118,7 +118,7 @@ defineProps<{
     color: var(--text-primary);
     @include headingH6;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       @include headingH4;
     }
   }
@@ -127,12 +127,12 @@ defineProps<{
     color: var(--accent);
     @include captionBold;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       @include buttonText;
     }
   }
 
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     &--decoration {
       display: none;
     }

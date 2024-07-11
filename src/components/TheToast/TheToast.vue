@@ -39,7 +39,7 @@ const modalStore = useModalStore();
   overflow: hidden;
   z-index: 5;
 
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     padding: 1.25rem;
     align-items: flex-start;
     width: 441px;
@@ -56,7 +56,7 @@ const modalStore = useModalStore();
     color: var(--error);
     display: none;
     margin-bottom: 0.5rem;
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       display: block;
     }
   }
@@ -66,7 +66,7 @@ const modalStore = useModalStore();
   }
 
   &__icon-close {
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       position: absolute;
       top: 0.75rem;
       right: 0.75rem;
@@ -82,7 +82,7 @@ const modalStore = useModalStore();
     width: 0.5rem;
     background: var(--error);
     display: none;
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       display: block;
     }
   }

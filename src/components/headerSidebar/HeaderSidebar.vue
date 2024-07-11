@@ -38,7 +38,7 @@ const authStore = useAuthStore();
     }
   }
 
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     padding: 12.5rem 6rem;
     gap: 3.25rem;
 
