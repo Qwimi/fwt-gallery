@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted } from 'vue';
-import AddMainPicture from '@/shared/ui/AddMainPicture';
 import ArtistSection from '@/components/ArtistSection';
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue';
 import IconDelete from '@/components/icons/IconDelete.vue';
 import IconEdit from '@/components/icons/IconEdit.vue';
 import router from '@/router';
+import AddMainPicture from '@/shared/ui/AddMainPicture';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import CardList from '@/shared/ui/CardList';
 import { useAuthStore } from '@/stores/authStore';
@@ -55,7 +55,7 @@ onUnmounted(() => store.unmountCurrentArtist());
       v-if="store.currentArtistCards.length"
     />
     <div class="no-cards" v-else>
-      <add-main-picture />
+      <add-main-picture @click="modalStore.openModal('addPicture')" />
       <span class="no-cards__decoration"></span>
       <p class="no-cards__title">The paintings of this artist have not been uploaded yet.</p>
     </div>

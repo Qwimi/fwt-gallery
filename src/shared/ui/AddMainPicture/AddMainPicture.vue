@@ -10,7 +10,7 @@ import IconPlus from '@/components/icons/IconPlus.vue';
 </template>
 <style lang="scss" scoped>
 .add-picture {
-  aspect-ratio: 98/65;
+  aspect-ratio: $card-aspect-ratio;
   position: relative;
   border: 1px dashed var(--input-border-hover);
   background-color: var(--background-secondary);

@@ -32,7 +32,7 @@ defineProps<{
 
 <style lang="scss" scoped>
 .card {
-  aspect-ratio: 98/65;
+  aspect-ratio: $card-aspect-ratio;
   position: relative;
   overflow: hidden;
 
