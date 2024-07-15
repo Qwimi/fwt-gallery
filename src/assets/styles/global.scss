@@ -36,6 +36,10 @@ body {
   display: none;
 }
 
+.no-scroll {
+  overflow-y: hidden;
+}
+
 body,
 #app {
   min-height: 100vh;
@@ -47,9 +51,10 @@ body,
 }
 
 main {
+  position: relative;
   flex: 1;
   padding: 5rem 0;
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     padding: 6.25rem 0;
   }
 }
@@ -64,7 +69,7 @@ a {
 }
 
 .wrapper {
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     max-width: 1240px;
     margin: 0 auto;
   }
@@ -89,7 +94,7 @@ li {
 }
 
 img {
-  height: 100%;
+  display: block;
   width: 100%;
   object-fit: cover;
 }

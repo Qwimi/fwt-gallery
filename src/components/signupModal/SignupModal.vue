@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { computed, ref, type Ref } from 'vue';
+import { computed, reactive } from 'vue';
 import { authRules, useValidationErrors } from '@/helpers/validation';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import TheInput from '@/shared/ui/TheInput';
@@ -11,7 +11,7 @@ import type { AuthForm } from '@/stores/types';
 const modalStore = useModalStore();
 const authStore = useAuthStore();
 
-const form: Ref<AuthForm> = ref({
+const form: AuthForm = reactive({
   emailValue: '',
   passwordValue: ''
 });
@@ -25,7 +25,7 @@ const submitForm = async () => {
 
   if (!isValid) return;
 
-  authStore.sentRegisterRequest(form.value);
+  authStore.sentAuthRequest(form, 'register');
 };
 </script>
 
@@ -71,7 +71,7 @@ const submitForm = async () => {
   @include authFormMixin;
 
   &__title {
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       @include headingH2;
     }
   }

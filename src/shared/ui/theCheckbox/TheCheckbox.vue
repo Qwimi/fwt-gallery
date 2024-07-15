@@ -53,7 +53,6 @@ defineEmits(['check']);
       display: none;
     }
   }
-
   &--default:checked + &--custom {
     .icon {
       display: block;

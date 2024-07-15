@@ -1,0 +1,15 @@
+@mixin toolsRow {
+  position: absolute;
+  width: 100%;
+  transform: translateY(calc(-100% - 1.25rem));
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__right-column {
+    display: flex;
+    gap: 1.25rem;
+  }
+}

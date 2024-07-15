@@ -23,7 +23,7 @@ const showPassword = () => (isPasswordShow.value = !isPasswordShow.value);
 <template>
   <div class="form-element">
     <p class="form-element__label">{{ label }}</p>
-    <label class="form-element__wrapper" :for="inputAttributes?.id">
+    <label class="form-element__wrapper">
       <slot name="icon"></slot>
       <input
         class="form-element__input"
@@ -41,6 +41,14 @@ const showPassword = () => (isPasswordShow.value = !isPasswordShow.value);
         <icon-eye class="icon" v-else />
       </span>
     </label>
+    <transition name="fade">
+      <div class="form-element__error" v-if="error">
+        <icon-error class="icon" />
+        <p>
+          {{ error }}
+        </p>
+      </div>
+    </transition>
   </div>
   <transition name="fade">
     <div class="form-element__error" v-if="error">
@@ -68,13 +76,7 @@ input[type='password']::-ms-clear {
   display: none;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+.fade {
+  @include fade(0.5s);
 }
 </style>

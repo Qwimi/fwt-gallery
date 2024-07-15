@@ -1,5 +1,5 @@
-@import '../fonts/cormorantSC/stylesheet.css';
-@import '../fonts/inter/stylesheet.css';
+@import '@/assets/fonts/cormorantSC/stylesheet.css';
+@import '@/assets/fonts/inter/stylesheet.css';
 
 .cormorant {
   font-family: 'Cormorant SC', serif;
@@ -54,7 +54,7 @@
   font-size: 1rem;
 }
 
-@mixin paragraphBaseMadium {
+@mixin paragraphBaseMedium {
   @extend .inter;
   font-weight: 500;
   font-size: 1rem;
@@ -66,7 +66,7 @@
   font-size: 0.75rem;
 }
 
-@mixin paragraphSmallMadium {
+@mixin paragraphSmallMedium {
   @extend .inter;
   font-weight: 500;
   font-size: 0.75rem;

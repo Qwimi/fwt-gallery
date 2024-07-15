@@ -16,16 +16,16 @@ const form: AuthForm = reactive({
   passwordValue: ''
 });
 
-const errors = computed(() => useValidationErrors<AuthForm>($v.value.$errors));
-
 const $v = useVuelidate(authRules, form);
+
+const errors = computed(() => useValidationErrors<AuthForm>($v.value.$errors));
 
 const submitForm = async () => {
   const isValid = await $v.value.$validate();
 
   if (!isValid) return;
 
-  authStore.sentLoginRequest(form);
+  authStore.sentAuthRequest(form, 'login');
 };
 </script>
 

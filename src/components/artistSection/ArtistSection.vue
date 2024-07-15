@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue';
 import ExpandableText from '@/shared/ui/ExpandableText';
 import GenreLabel from '@/shared/ui/GenreLabel';
 import NoImage from '@/shared/ui/NoImage';
@@ -12,10 +11,6 @@ defineProps<{
 
 <template>
   <section class="artist-section">
-    <router-link :to="{ name: 'home' }" class="link">
-      <icon-arrow-decoration class="icon" />
-      <span class="link__text">back</span>
-    </router-link>
     <div class="artist-section__avatar">
       <img :src="artist?.avatar?.src" alt="can't load the picture" v-if="artist?.avatar" />
       <no-image :is-big="true" v-else />
@@ -45,56 +40,6 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
-.link {
-  position: absolute;
-  top: -0.75rem;
-  transform: translateY(-100%);
-  left: 1.25rem;
-
-  @media screen and (min-width: $breakpoint-lg) {
-    left: calc((100vw - 1240px) / 2);
-  }
-
-  &__text {
-    @include buttonText;
-    display: none;
-
-    @media screen and (min-width: $breakpoint-md) {
-      display: inline;
-    }
-  }
-
-  .icon {
-    margin-right: 0.75rem;
-    rotate: 180deg;
-  }
-}
-
-.link {
-  position: absolute;
-  top: -0.75rem;
-  transform: translateY(-100%);
-  left: 1.25rem;
-
-  @media screen and (min-width: $breakpoint-lg) {
-    left: calc((100vw - 1240px) / 2);
-  }
-
-  &__text {
-    @include buttonText;
-    display: none;
-
-    @media screen and (min-width: $breakpoint-md) {
-      display: inline;
-    }
-  }
-
-  .icon {
-    margin-right: 0.75rem;
-    rotate: 180deg;
-  }
-}
-
 .artist-section {
   display: flex;
   flex-direction: column;
@@ -102,23 +47,31 @@ defineProps<{
   position: relative;
   margin-bottom: 3.75rem;
 
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     flex-direction: row;
   }
 
   &__avatar {
     width: 100%;
-    max-height: 28.5rem;
+    height: 28.5rem;
     overflow: hidden;
-
-    @media screen and (min-width: $breakpoint-md) {
-      max-height: 500px;
+    img {
+      height: 100%;
     }
 
-    @media screen and (min-width: $breakpoint-lg) {
-      max-height: none;
+    @media (min-width: $breakpoint-md) {
+      height: 500px;
+      img {
+        height: auto;
+      }
+    }
+
+    @media (min-width: $breakpoint-lg) {
       width: fit-content;
       height: 1000px;
+      img {
+        height: 100%;
+      }
       aspect-ratio: 1;
     }
   }
@@ -127,7 +80,7 @@ defineProps<{
 .biography {
   position: relative;
 
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     position: absolute;
     inset: 0;
     max-width: 1240px;
@@ -158,11 +111,11 @@ defineProps<{
     padding: 1.25rem;
     background-color: var(--background-primary);
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       gap: 0.75rem;
     }
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       gap: 2rem;
       transform: translateY(0);
       position: static;
@@ -177,7 +130,7 @@ defineProps<{
     color: light-dark(var(--gray_57), var(--gray_9c));
     @include captionMedium12;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       @include captionMedium16;
     }
   }
@@ -187,7 +140,7 @@ defineProps<{
     color: var(--accent);
     position: relative;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       @include headingH2;
       &::before {
         content: '';
@@ -200,7 +153,7 @@ defineProps<{
       }
     }
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       @include headingH1;
       &::before {
         left: -5rem;
@@ -212,7 +165,7 @@ defineProps<{
     padding: 1.25rem 1.25rem 0;
     position: relative;
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       padding: 0;
       &::before {
         content: '';
@@ -235,7 +188,7 @@ defineProps<{
     flex-wrap: wrap;
     gap: 0.5rem;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       gap: 1.25rem;
     }
   }

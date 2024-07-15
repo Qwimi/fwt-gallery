@@ -1,31 +1,30 @@
 @mixin modalMixin {
-  position: fixed;
-  overflow: hidden;
-  z-index: 3;
   color: var(--text-primary);
   background-color: var(--background-primary);
+  overflow: hidden auto;
+  position: relative;
+  height: 100%;
 
-  &__icon-close {
+  &__close-button {
+    @include buttonMixin;
     position: absolute;
     top: 1.25rem;
     right: 1.25rem;
     cursor: pointer;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       top: 2rem;
     }
 
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       right: 2rem;
     }
   }
 
   &--shadow {
+    display: flex;
     position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+    inset: 0;
     background-color: rgba($color: #030303, $alpha: 0.6);
     z-index: 2;
   }
@@ -44,14 +43,11 @@
   }
   &__img {
     display: none;
-    img {
-      margin-top: 4px;
-    }
   }
   &__form {
     width: 100%;
   }
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     &__content {
       align-items: center;
       justify-content: center;
@@ -59,7 +55,7 @@
     }
   }
 
-  @media screen and (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     &__content {
       width: 1028px;
       height: 700px;

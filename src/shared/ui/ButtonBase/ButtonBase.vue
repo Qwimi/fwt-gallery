@@ -39,7 +39,7 @@ defineProps<{
   }
 
   &--icon {
-    background-color: var(--secondary-background);
+    background-color: var(--background-secondary);
     padding: 0.125rem;
     border-radius: 0.25rem;
   }

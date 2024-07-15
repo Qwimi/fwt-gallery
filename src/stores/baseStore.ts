@@ -1,15 +1,34 @@
 import { defineStore } from 'pinia';
 import { ref, type Ref } from 'vue';
 
-import type { Artist, ArtistPage, CardInterface, Painting } from './types';
+import { useAuthStore } from './authStore';
+import { useModalStore } from './modalStore';
+import type { Artist, ArtistPage, CardInterface, Genre, Painting } from './types';
 
-import { getArtistsStatic, getCurrentArtistStatic } from '@/api/main';
+import {
+  handleCreateArtist,
+  handleDeletArtist,
+  handleGetArtists,
+  handleGetArtistsStatic,
+  handleGetCurrentArtist,
+  handleGetCurrentArtistStatic,
+  handleGetGenres,
+  handleGetGenresStatic,
+  handleUpdateArtist
+} from '@/api/main';
+import handleError from '@/helpers/errorHandling';
 
 export const useAppStore = defineStore('app', () => {
   const artists: Ref<Array<Artist>> = ref([]);
   const artistCards: Ref<Array<CardInterface>> = ref([]);
   const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage);
   const currentArtistCards: Ref<Array<CardInterface>> = ref([]);
+  const genres: Ref<Array<Genre>> = ref([]);
+
+  const authStore = useAuthStore();
+  const modalStore = useModalStore();
+
+  // cards
 
   const setCurrentArtistCards = () => {
     currentArtistCards.value = currentArtist.value.paintings.map((painting: Painting) => {
@@ -21,11 +40,6 @@ export const useAppStore = defineStore('app', () => {
         image2x: painting.image && `${import.meta.env.VITE_BASE_URL}${painting.image.src2x}`
       };
     });
-  };
-
-  const unmountCurrentArtist = () => {
-    currentArtist.value = {} as ArtistPage;
-    currentArtistCards.value = [];
   };
 
   const setAuthorCards = () => {
@@ -43,31 +57,93 @@ export const useAppStore = defineStore('app', () => {
     });
   };
 
+  // artists
+
   const getArtists = async () => {
     try {
-      artists.value = await getArtistsStatic();
+      if (authStore.isUserAuth) {
+        const request = await handleGetArtists();
+        artists.value = request.data;
+      } else {
+        artists.value = await handleGetArtistsStatic();
+      }
       setAuthorCards();
-    } catch (error) {
-      console.error(error);
+    } catch (error: unknown) {
+      handleError(error);
     }
   };
 
-  const getCurrentArtist = async (id: String) => {
+  const getCurrentArtist = async (id: string) => {
     try {
-      currentArtist.value = await getCurrentArtistStatic(id);
-      currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`;
+      currentArtist.value = authStore.isUserAuth
+        ? await handleGetCurrentArtist(id)
+        : await handleGetCurrentArtistStatic(id);
+      if (currentArtist.value.avatar) {
+        currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`;
+      }
       setCurrentArtistCards();
-    } catch (error) {
-      console.error(error);
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  const deleteArtist = async (id: string) => {
+    try {
+      await handleDeletArtist(id);
+      getArtists();
+      modalStore.closeModal();
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  const createArtist = async (form: FormData) => {
+    try {
+      await handleCreateArtist(form);
+      getArtists();
+      modalStore.closeModal();
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  const updateArtist = async (id: string, form: FormData) => {
+    try {
+      await handleUpdateArtist(id, form);
+      getArtists();
+      getCurrentArtist(id);
+      modalStore.closeModal();
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  const unmountCurrentArtist = () => {
+    currentArtist.value = {} as ArtistPage;
+    currentArtistCards.value = [];
+  };
+
+  // genres
+
+  const getGenres = async () => {
+    try {
+      genres.value = authStore.isUserAuth ? await handleGetGenres() : await handleGetGenresStatic();
+    } catch (error: unknown) {
+      handleError(error);
     }
   };
 
   return {
     artistCards,
+    genres,
     currentArtist,
     currentArtistCards,
     unmountCurrentArtist,
     getCurrentArtist,
-    getArtists
+    getArtists,
+    getGenres,
+    deleteArtist,
+    createArtist,
+    updateArtist
   };
 });

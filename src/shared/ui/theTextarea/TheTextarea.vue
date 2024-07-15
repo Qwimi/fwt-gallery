@@ -3,7 +3,6 @@ import type { TextareaHTMLAttributes } from 'vue';
 import IconError from '@/components/icons/IconError.vue';
 
 defineProps<{
-  type: 'password' | 'text' | 'email';
   label?: string;
   error?: string;
   modelValue?: string;
@@ -19,6 +18,7 @@ defineEmits(['update:modelValue']);
     <div class="form-element__wrapper">
       <textarea
         class="form-element__input"
+        :value="modelValue"
         v-bind="textareaAttributes"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       ></textarea>
@@ -44,13 +44,7 @@ defineEmits(['update:modelValue']);
   }
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+.fade {
+  @include fade(0.5s);
 }
 </style>

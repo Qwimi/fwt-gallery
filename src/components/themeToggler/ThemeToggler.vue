@@ -24,10 +24,12 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
-.button--theme {
-  @include buttonMixin;
+.button {
+  &--theme {
+    @include buttonMixin;
+  }
 
-  .button__icon {
+  &__icon {
     padding: 0.5rem;
     border-radius: 100%;
     background-color: var(--background-secondary);

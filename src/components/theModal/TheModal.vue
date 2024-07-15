@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
+import ArtistInteraction from '@/components/ArtistInteraction';
+import DeleteModal from '@/components/DeleteModal';
 import IconClose from '@/components/icons/IconClose.vue';
 import LoginModal from '@/components/LoginModal';
 import SignUpModal from '@/components/SignupModal';
@@ -9,7 +11,9 @@ const modalStore = useModalStore();
 
 const components = {
   logIn: LoginModal,
-  signUp: SignUpModal
+  signUp: SignUpModal,
+  delete: DeleteModal,
+  addArtist: ArtistInteraction
 };
 
 const currentModal = computed(() => components[modalStore.currentModal as keyof typeof components]);
@@ -18,14 +22,14 @@ const currentModal = computed(() => components[modalStore.currentModal as keyof 
 <template>
   <Teleport to="body">
     <Transition name="fade">
-      <div class="modal--shadow" v-show="modalStore.isModalOpen" @click="modalStore.closeModal">
+      <div class="modal--shadow" v-show="modalStore.currentModal" @click="modalStore.closeModal">
         <div class="modal" @click.stop>
-          <icon-close class="icon modal__icon-close" @click="modalStore.closeModal" />
           <transition name="component-fade" mode="out-in">
-            <KeepAlive>
-              <component :is="currentModal" />
-            </KeepAlive>
+            <component :is="currentModal" @click.stop />
           </transition>
+          <button class="modal__close-button" @click="modalStore.closeModal">
+            <icon-close class="icon" />
+          </button>
         </div>
       </div>
     </Transition>
@@ -35,24 +39,42 @@ const currentModal = computed(() => components[modalStore.currentModal as keyof 
 <style lang="scss" scoped>
 .modal {
   @include modalMixin;
+
+  &--shadow {
+    justify-content: center;
+    align-items: center;
+  }
+
+  &--shadow:has(&--small) {
+    align-items: flex-end;
+    @media screen and (min-width: $breakpoint-md) {
+      align-items: center;
+    }
+  }
+
+  &--small + &__close-button {
+    display: none;
+    @media screen and (min-width: $breakpoint-md) {
+      display: block;
+    }
+  }
+
+  &:has(&--small) {
+    height: fit-content;
+    width: 100%;
+
+    @media screen and (min-width: $breakpoint-md) {
+      max-width: 320px;
+    }
+  }
+
   @media screen and (min-width: $breakpoint-lg) {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    height: fit-content;
   }
 }
 
-.fade-enter-active,
-.fade-leave-active,
-.component-fade-enter-active,
-.component-fade-leave-active {
-  transition: opacity 0.5s ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to,
-.component-fade-enter-from,
-.component-fade-leave-to {
-  opacity: 0;
+.fade,
+.component-fade {
+  @include fade(0.5s);
 }
 </style>

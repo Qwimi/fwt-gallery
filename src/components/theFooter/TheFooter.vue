@@ -40,13 +40,13 @@ import IconVk from '@/components/icons/IconVk.vue';
 
   .link-underline {
     display: inline;
-    @include paragraphSmallMadium;
+    @include paragraphSmallMedium;
   }
 
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     @include paragraphBaseLight;
     .link-underline {
-      @include paragraphBaseMadium;
+      @include paragraphBaseMedium;
     }
   }
 
@@ -55,10 +55,10 @@ import IconVk from '@/components/icons/IconVk.vue';
     flex-direction: column;
     gap: 0.5rem;
     max-width: 435px;
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       gap: 0.75rem;
     }
-    @media screen and (min-width: $breakpoint-lg) {
+    @media (min-width: $breakpoint-lg) {
       gap: 1.25rem;
     }
   }
@@ -73,7 +73,7 @@ import IconVk from '@/components/icons/IconVk.vue';
     gap: 1.25rem;
     justify-content: space-between;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       flex-direction: row;
     }
   }

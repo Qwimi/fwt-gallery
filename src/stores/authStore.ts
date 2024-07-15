@@ -1,16 +1,19 @@
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { defineStore } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
+import { useAppStore } from './baseStore';
 import { useModalStore } from './modalStore';
-import type { AuthForm, AuthRequest, AuthResponse, RefreshRequest } from './types';
-import { getNewTokens } from '../api/main';
-import { sentLoginData, sentRegisterData } from '@/api/main';
+import type { AuthForm, AuthRequest, AuthResponse } from './types';
+import { setupInterceptors } from '@/api';
+import { handleLogin, handleRefresh, handleRegister } from '@/api/main';
+import handleError from '@/helpers/errorHandling';
 
 export const useAuthStore = defineStore('auth', () => {
   const fingerprint: Ref<string | null> = ref(null);
   const accessToken: Ref<string | null> = ref(null);
   const refreshToken: Ref<string | null> = ref(null);
   const isUserAuth = computed(() => !!accessToken.value);
+  const store = useAppStore();
 
   const initializeFingerprint = async () => {
     try {
@@ -22,46 +25,57 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  // работа с токенами
+  const reloadAppData = () => {
+    store.getArtists();
+    store.getGenres();
+  };
+
+  const getAccessToken = () => accessToken.value;
 
   const logout = () => {
     refreshToken.value = null;
     accessToken.value = null;
     localStorage.removeItem('refreshToken');
+    store.getArtists();
+  };
+
+  const setRefreshToken = (value: string) => {
+    localStorage.setItem('refreshToken', value);
+    refreshToken.value = value;
   };
 
   const setTokens = (tokens: AuthResponse) => {
     localStorage.setItem('refreshToken', tokens.refreshToken);
     refreshToken.value = tokens.refreshToken;
     accessToken.value = tokens.accessToken;
+    setRefreshToken(tokens.refreshToken);
   };
 
-  const refreshTokens = async (oldToken: string) => {
+  const refreshTokens = async () => {
     try {
       await initializeFingerprint();
-      const refreshData: RefreshRequest = {
-        fingerprint: fingerprint.value,
-        refreshToken: oldToken
-      };
-      const response: AuthResponse = await getNewTokens(refreshData);
+      const response = await handleRefresh(fingerprint.value!!, refreshToken.value!!);
       setTokens(response);
-    } catch (e: unknown) {
-      console.log('token refresh error:', e);
+      reloadAppData();
+    } catch (error: unknown) {
+      handleError(error);
       logout();
     }
   };
 
-  const getRefreshToken = () => {
+  const getLocalTokens = async () => {
     if (localStorage.getItem('refreshToken')) {
-      refreshTokens(localStorage.getItem('refreshToken')!!);
+      await setRefreshToken(localStorage.getItem('refreshToken')!!);
+      refreshTokens();
     } else {
       console.log('no local refresh token');
+      reloadAppData();
     }
   };
 
   // авторизация пользователя
 
-  const sentRegisterRequest = async (form: AuthForm) => {
+  const sentAuthRequest = async (form: AuthForm, action: 'login' | 'register') => {
     try {
       await initializeFingerprint();
       const formData: AuthRequest = {
@@ -69,29 +83,23 @@ export const useAuthStore = defineStore('auth', () => {
         password: form.passwordValue,
         fingerprint: fingerprint.value
       };
-      const response: AuthResponse = await sentRegisterData(formData);
+      const response: AuthResponse =
+        action === 'login' ? await handleLogin(formData) : await handleRegister(formData);
       setTokens(response);
       useModalStore().closeModal();
-    } catch (errors) {
-      console.log('Error:', errors);
+      reloadAppData();
+    } catch (error: unknown) {
+      handleError(error);
     }
   };
 
-  const sentLoginRequest = async (form: AuthForm) => {
-    try {
-      await initializeFingerprint();
-      const formData: AuthRequest = {
-        username: form.emailValue,
-        password: form.passwordValue,
-        fingerprint: fingerprint.value
-      };
-      const response: AuthResponse = await sentLoginData(formData);
-      setTokens(response);
-      useModalStore().closeModal();
-    } catch (errors) {
-      console.log('Error:', errors);
-    }
-  };
+  getLocalTokens();
+  setupInterceptors(getAccessToken, refreshTokens, logout);
 
-  return { isUserAuth, sentRegisterRequest, sentLoginRequest, logout, getRefreshToken };
+  return {
+    isUserAuth,
+    sentAuthRequest,
+    getLocalTokens,
+    logout
+  };
 });

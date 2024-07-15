@@ -15,7 +15,11 @@ export const MultiSelectShowcase: Story = {
     label: 'Field name',
     options: [
       { _id: '1', name: 'option 1' },
-      { _id: '2', name: 'option 2' }
+      { _id: '2', name: 'option 2' },
+      { _id: '3', name: 'option 3' },
+      { _id: '4', name: 'option 4' },
+      { _id: '5', name: 'option 5' },
+      { _id: '6', name: 'option 6' }
     ]
   }
 }

@@ -20,15 +20,17 @@ const currentSidebar = computed(
     <Transition name="fade">
       <div
         class="sidebar--shadow"
-        v-show="modalStore.isSidebarOpen"
+        v-show="modalStore.currentSidebar"
         @click="modalStore.closeSidebar"
       >
         <Transition name="slide">
-          <div class="sidebar" v-if="modalStore.isSidebarOpen" @click.stop>
-            <icon-close class="icon sidebar__icon-close" @click="modalStore.closeSidebar" />
+          <div class="sidebar" v-if="modalStore.currentSidebar" @click.stop>
             <KeepAlive>
               <component :is="currentSidebar" v-if="modalStore.currentSidebar" />
             </KeepAlive>
+            <button class="sidebar__close-button" @click="modalStore.closeSidebar">
+              <icon-close class="icon" />
+            </button>
           </div>
         </Transition>
       </div>
@@ -39,26 +41,18 @@ const currentSidebar = computed(
 <style lang="scss" scoped>
 .sidebar {
   @include modalMixin;
-  right: 0;
-  height: 100vh;
   width: 80%;
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     width: 60%;
   }
-}
 
-.fade-enter-active,
-.fade-leave-active {
-  &.sidebar--shadow {
-    transition: opacity 0.5s ease-in-out;
+  &--shadow {
+    justify-content: flex-end;
   }
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  &.sidebar--shadow {
-    opacity: 0;
-  }
+.fade {
+  @include fade(0.5s);
 }
 
 .slide-enter-active,

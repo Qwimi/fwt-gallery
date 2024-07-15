@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, type Ref } from 'vue';
+import IconError from '@/components/icons/IconError.vue';
 import IconExpand from '@/components/icons/IconExpand.vue';
 import GenreLabel from '@/shared/ui/GenreLabel';
 import TheCheckbox from '@/shared/ui/TheCheckbox';
@@ -8,23 +9,24 @@ import type { Genre } from '@/stores/types';
 const props = defineProps<{
   label: string;
   options: Genre[];
+  error?: string[];
+  modelValue?: string[];
 }>();
+
+const emit = defineEmits(['update:modelValue']);
 
 const isSelectOpen: Ref<boolean> = ref(false);
 
-const selectedGenres: Ref<Genre[]> = ref([]);
+const selectedGenres: Ref<string[]> = ref(props.modelValue || []);
 
-const deleteSelected = (option: Genre) => {
-  const deleteIndex = selectedGenres.value.indexOf(option);
-  selectedGenres.value.splice(deleteIndex, 1);
+const deleteSelected = (option: string) => {
+  selectedGenres.value = selectedGenres.value.filter((element: string) => element != option);
 };
 
-const updateSelected = (event: { value: boolean; id: string }) => {
-  const focusGenre = props.options.find((option) => option._id == event.id);
-  event.value ? selectedGenres.value.push(focusGenre!!) : deleteSelected(focusGenre!!);
+const updateSelected = (event: { value?: boolean; id: string }) => {
+  event.value ? selectedGenres.value.push(event.id!!) : deleteSelected(event.id!!);
+  emit('update:modelValue', selectedGenres.value);
 };
-
-// defineEmits(['update:modelValue'])
 </script>
 
 <template>
@@ -37,13 +39,14 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     >
       <div class="multiple__selected">
         <TransitionGroup name="list">
-          <genre-label
-            v-for="genre in selectedGenres"
-            :key="genre._id"
-            :genre="genre"
-            :deletable="true"
-            @click.stop="deleteSelected(genre)"
-          />
+          <template v-for="genre in options" :key="genre._id">
+            <genre-label
+              :genre="genre"
+              :deletable="true"
+              v-if="selectedGenres.includes(genre._id)"
+              @click.stop="updateSelected({ id: genre._id })"
+            />
+          </template>
         </TransitionGroup>
       </div>
       <IconExpand class="icon multiple--toggler" />
@@ -53,13 +56,21 @@ const updateSelected = (event: { value: boolean; id: string }) => {
         <the-checkbox
           :input-attributes="{
             id: option._id,
-            checked: selectedGenres.includes(option)
+            checked: selectedGenres.includes(option._id)
           }"
           :label="option.name"
-          @check="updateSelected"
+          @check="updateSelected($event)"
         />
       </li>
     </ul>
+    <transition name="fade">
+      <div class="form-element__error" v-if="error">
+        <icon-error class="icon" />
+        <p>
+          {{ error }}
+        </p>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -71,6 +82,9 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     position: relative;
     z-index: 2;
   }
+  &__error {
+    z-index: 0;
+  }
 }
 
 .multiple {
@@ -79,32 +93,30 @@ const updateSelected = (event: { value: boolean; id: string }) => {
     overflow: hidden;
     white-space: nowrap;
     flex: 1;
-    margin-left: 1rem;
-    .label {
-      margin-right: 0.75rem;
-    }
   }
   &__options {
     overflow: hidden;
-    padding: 1.25rem 0 0.75rem;
     border: 1px solid light-dark(var(--gray_de), transparent);
     background-color: light-dark(var(--white_ff), var(--black_1a));
     border-top: none;
     border-radius: 0.25rem;
     transform: translateY(-0.5rem);
-    position: relative;
-    z-index: 0;
+    padding-top: 0.5rem;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    max-height: calc(150px + 0.5rem);
+    overflow-y: auto;
   }
   &--toggler {
     color: var(--secondary-gray);
     width: 0.75rem;
     transition: transform 0.3s;
-    margin-right: 1rem;
   }
   &__option {
     padding: 0.5rem 1rem;
     &:hover {
-      background-color: var(--background-transparent);
+      background-color: var(--background-semi-transparent);
     }
   }
   &--opened,
@@ -114,16 +126,13 @@ const updateSelected = (event: { value: boolean; id: string }) => {
       transform: rotate(-180deg);
     }
   }
+  .label {
+    margin-right: 1rem;
+  }
 }
 
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(1rem);
+.list,
+.fade {
+  @include fade(0.5s);
 }
 </style>
