@@ -15,13 +15,13 @@ const deleteFunction = async () => {
   switch (props.target) {
     case 'artist': {
       await store.deleteArtist(props.id);
-      modalStore.closeModal();
-      store.getArtists();
       router.push({ name: 'home' });
       break;
     }
     case 'painting': {
-      console.log('*delete painting function*');
+      await store.deletePicture(store.currentArtist._id, props.id);
+      console.log(props);
+
       break;
     }
     default: {

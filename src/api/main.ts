@@ -44,13 +44,7 @@ export const handleDeletArtist = async (id: string) => {
 // создание художника
 
 export const handleCreateArtist = async (form: FormData) => {
-  const response = await axiosInstance.post('/artists', form, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  });
-
-  console.log(response.data);
+  const response = await axiosInstance.post('/artists', form);
 
   return response.data;
 };
@@ -58,11 +52,7 @@ export const handleCreateArtist = async (form: FormData) => {
 // обновление профиля художника
 
 export const handleUpdateArtist = async (id: string, form: FormData) => {
-  const response = await axiosInstance.put(`/artists/${id}`, form, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  });
+  const response = await axiosInstance.put(`/artists/${id}`, form);
 
   return response.data;
 };
@@ -82,6 +72,41 @@ export const handleGetGenresStatic = async () => {
 
   return response.data;
 };
+
+// создание картины
+
+export const handleCreatePainting = async (id: string, form: FormData) => {
+  const response = await axiosInstance.post(`/artists/${id}/paintings`, form);
+
+  return response.data;
+};
+
+// обновление картины
+
+export const handleUpdatePainting = async (id: string, paintingId: string, form: FormData) => {
+  const response = await axiosInstance.put(`/artists/${id}/paintings/${paintingId}`, form);
+
+  return response.data;
+};
+
+// обновление главной картины художника
+
+export const handleUpdateMainPainting = async (id: string, paintingId: string) => {
+  const response = await axiosInstance.patch(`/artists/${id}/main-painting`, {
+    mainPainting: paintingId
+  });
+
+  return response.data;
+};
+
+// удаление картины
+
+export const handleDeletePainting = async (id: string, paintingId: string) => {
+  const response = await axiosInstance.delete(`/artists/${id}/paintings/${paintingId}`);
+
+  return response.data;
+};
+
 //auth
 
 export const handleRegister = async (user: AuthRequest) => {

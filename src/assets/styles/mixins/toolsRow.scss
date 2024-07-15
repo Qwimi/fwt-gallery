@@ -1,14 +1,19 @@
 @mixin toolsRow {
   position: absolute;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: -webkit-fill-available;
+  margin: 0 1.25rem;
   transform: translateY(calc(-100% - 1.25rem));
-  .wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+
+  @media (min-width: $breakpoint-lg) {
+    max-width: 1240px;
+    margin: 0 calc((100vw - 1240px) / 2);
   }
 
   &__right-column {
+    margin-left: auto;
     display: flex;
     gap: 1.25rem;
   }

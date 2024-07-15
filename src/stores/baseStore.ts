@@ -7,23 +7,27 @@ import type { Artist, ArtistPage, CardInterface, Genre, Painting } from './types
 
 import {
   handleCreateArtist,
+  handleCreatePainting,
   handleDeletArtist,
+  handleDeletePainting,
   handleGetArtists,
   handleGetArtistsStatic,
   handleGetCurrentArtist,
   handleGetCurrentArtistStatic,
   handleGetGenres,
   handleGetGenresStatic,
-  handleUpdateArtist
+  handleUpdateArtist,
+  handleUpdateMainPainting,
+  handleUpdatePainting
 } from '@/api/main';
 import handleError from '@/helpers/errorHandling';
 
 export const useAppStore = defineStore('app', () => {
-  const artists: Ref<Array<Artist>> = ref([]);
-  const artistCards: Ref<Array<CardInterface>> = ref([]);
+  const artists: Ref<Artist[]> = ref([]);
+  const artistCards: Ref<CardInterface[]> = ref([]);
   const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage);
-  const currentArtistCards: Ref<Array<CardInterface>> = ref([]);
-  const genres: Ref<Array<Genre>> = ref([]);
+  const currentArtistCards: Ref<CardInterface[]> = ref([]);
+  const genres: Ref<Genre[]> = ref([]);
 
   const authStore = useAuthStore();
   const modalStore = useModalStore();
@@ -33,7 +37,7 @@ export const useAppStore = defineStore('app', () => {
   const setCurrentArtistCards = () => {
     currentArtistCards.value = currentArtist.value.paintings.map((painting: Painting) => {
       return {
-        id: painting.artist,
+        id: painting._id,
         name: painting.name,
         date: painting.yearOfCreation,
         image: painting.image && `${import.meta.env.VITE_BASE_URL}${painting.image.src}`,
@@ -133,6 +137,59 @@ export const useAppStore = defineStore('app', () => {
     }
   };
 
+  // paintings
+
+  const createPainting = async (id: string, form: FormData) => {
+    try {
+      const response: Painting = await handleCreatePainting(id, form);
+      getCurrentArtist(id);
+      modalStore.closeModal();
+      return response;
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  const setMainPainting = async (id: string, paintingId: string) => {
+    try {
+      await handleUpdateMainPainting(id, paintingId);
+      getArtists();
+      getCurrentArtist(id);
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  const createMainPainting = async (id: string, form: FormData) => {
+    try {
+      const response = await createPainting(id, form);
+
+      if (response) setMainPainting(id, response?._id!!);
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  const updatePainting = async (id: string, paintingId: string, form: FormData) => {
+    try {
+      await handleUpdatePainting(id, paintingId, form);
+      getCurrentArtist(id);
+      modalStore.closeModal();
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  const deletePicture = async (id: string, paintingId: string) => {
+    try {
+      await handleDeletePainting(id, paintingId);
+      getCurrentArtist(id);
+      modalStore.closeModal();
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
   return {
     artistCards,
     genres,
@@ -144,6 +201,11 @@ export const useAppStore = defineStore('app', () => {
     getGenres,
     deleteArtist,
     createArtist,
-    updateArtist
+    updateArtist,
+    createPainting,
+    setMainPainting,
+    createMainPainting,
+    updatePainting,
+    deletePicture
   };
 });

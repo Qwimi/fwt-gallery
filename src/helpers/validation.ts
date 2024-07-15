@@ -2,6 +2,8 @@ import type { ErrorObject } from '@vuelidate/core';
 import { email, minLength, required, helpers } from '@vuelidate/validators';
 import { computed } from 'vue';
 
+// form validation rules
+
 export const authRules = computed(() => ({
   emailValue: {
     required,
@@ -20,19 +22,31 @@ export const artistRules = computed(() => ({
   }
 }));
 
+export const paintingRules = computed(() => ({
+  name: { required },
+  yearOfCreation: { required },
+  image: { required }
+}));
+
+// convert variables to form data
+
 export const toFormData = (form: Object) => {
   const formData = new FormData();
 
   Object.entries(form).forEach(([key, value]) => {
-    if (key == 'avatar' && !(value instanceof File)) return;
+    if ((key === 'avatar' || key === 'image') && !(value instanceof File)) return;
+
     if (Array.isArray(value)) {
       value.forEach((element: any) => formData.append(key, element));
       return;
     }
+
     formData.append(key, value || null);
   });
   return formData;
 };
+
+// get validation errors
 
 export const useValidationErrors = <T extends Record<keyof T, string>>(
   errors: ErrorObject[]

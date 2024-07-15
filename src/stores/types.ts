@@ -42,8 +42,8 @@ export interface Painting {
 
 export interface PaintingRequestForm {
   name: string;
-  yearOfCreation: string;
-  image?: File | Image;
+  yearOfCreation: string | number;
+  image?: File | Image | string;
 }
 
 // artists
@@ -55,7 +55,7 @@ export interface Artist {
   description: string;
   yearsOfLife: string;
   __v: number;
-  mainPainting: Painting;
+  mainPainting: Painting | null;
 }
 
 export interface ArtistPage {
@@ -66,6 +66,7 @@ export interface ArtistPage {
   description: string;
   yearsOfLife: string;
   avatar: Image;
+  mainPainting: Painting | null;
 }
 
 export interface ArtistRequestForm {

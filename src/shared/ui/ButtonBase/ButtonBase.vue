@@ -2,7 +2,7 @@
 import type { ButtonHTMLAttributes } from 'vue';
 
 defineProps<{
-  variant?: 'default' | 'round' | 'underline' | 'icon';
+  variant?: 'default' | 'round' | 'underline' | 'icon' | 'icon-always-light';
   buttonProps?: ButtonHTMLAttributes;
 }>();
 </script>
@@ -42,6 +42,21 @@ defineProps<{
     background-color: var(--background-secondary);
     padding: 0.125rem;
     border-radius: 0.25rem;
+  }
+
+  &--icon-always-light {
+    color: var(--gray_de);
+    text-decoration: underline;
+    &:hover,
+    &:focus {
+      color: var(--white_ff);
+    }
+  }
+
+  &--icon-always-light &__icon {
+    background-color: rgba($color: #fff, $alpha: 0.1);
+    border-radius: 0.25rem;
+    padding: 0.125rem;
   }
 
   &--round {

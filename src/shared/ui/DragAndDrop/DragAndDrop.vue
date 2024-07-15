@@ -8,7 +8,7 @@ import type { Image } from '@/stores/types';
 const isDragging: Ref<boolean> = ref(false);
 const fileInput = ref<HTMLInputElement | undefined>();
 const props = defineProps<{
-  modelValue?: Image | File;
+  modelValue?: Image | File | string;
   placeholderIcon: typeof import('*.vue');
   button?: string;
   isAvatar?: boolean;
@@ -19,7 +19,10 @@ const getUrl = (file: Image | File) => {
   if (file instanceof File) {
     return URL.createObjectURL(file);
   }
-  return props.modelValue?.src;
+
+  if (file instanceof Image) return props.modelValue?.src;
+
+  return props.modelValue;
 };
 
 const dragenter = () => {
@@ -67,7 +70,11 @@ const deletePreview = () => {
       />
       <template v-if="modelValue">
         <img :src="getUrl(modelValue)" alt="can't load the photo" class="drag-n-drop__preview" />
-        <button-base variant="icon" @click.stop="deletePreview" class="drag-n-drop__delete">
+        <button-base
+          variant="icon-always-light"
+          @click.stop="deletePreview"
+          class="drag-n-drop__delete"
+        >
           <template #icon>
             <icon-delete class="icon" />
           </template>

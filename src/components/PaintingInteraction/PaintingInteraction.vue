@@ -1,24 +1,55 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import useVuelidate from '@vuelidate/core';
+import { computed, reactive, ref, type ComputedRef, type Ref } from 'vue';
 import IconNoImage from '../icons/IconNoImage.vue';
+import { paintingRules, toFormData, useValidationErrors } from '@/helpers/validation';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import DragAndDrop from '@/shared/ui/DragAndDrop/DragAndDrop.vue';
 import TheInput from '@/shared/ui/TheInput';
 import { useAppStore } from '@/stores/baseStore';
 import { useModalStore } from '@/stores/modalStore';
-import type { Painting, PaintingRequestForm } from '@/stores/types';
+import type { CardInterface, PaintingRequestForm } from '@/stores/types';
+
+interface PaintingProps extends CardInterface {
+  target: string;
+}
 
 const store = useAppStore();
-const currentPainting: Painting = reactive(useModalStore().currentModalProps as Painting);
+const props: Ref<PaintingProps> = ref(useModalStore().currentModalProps as PaintingProps);
 
 const form: PaintingRequestForm = reactive({
-  name: currentPainting?.name,
-  yearOfCreation: currentPainting?.yearOfCreation,
-  image: currentPainting?.image
+  name: props.value.name,
+  yearOfCreation: props.value.date,
+  image: props.value.image
 });
 
+const $v = useVuelidate(paintingRules, form);
+
+const errors: ComputedRef<PaintingRequestForm> = computed(() =>
+  useValidationErrors($v.value.$errors)
+);
+
 const sentData = async () => {
-  currentPainting ? console.log('update') : console.log('create');
+  const isValid = await $v.value.$validate();
+
+  if (!isValid) return;
+
+  const id = store.currentArtist._id;
+  const formData = toFormData(form);
+
+  switch (props.value.target) {
+    case 'createMain': {
+      store.createMainPainting(id, formData);
+      break;
+    }
+    case 'create': {
+      store.createPainting(id, formData);
+      break;
+    }
+    case 'update':
+      store.updatePainting(id, props.value.id, formData);
+      break;
+  }
 };
 </script>
 
@@ -27,8 +58,20 @@ const sentData = async () => {
     <form class="form" enctype="multipart/form-data" @submit.prevent="sentData">
       <div class="form__inputs">
         <div class="form__inputs--row">
-          <the-input type="text" label="The name of the picture" class="form-element--long" />
-          <the-input type="text" label="Year of creation" class="form-element--short" />
+          <the-input
+            v-model="form.name"
+            type="text"
+            label="The name of the picture"
+            class="form-element--long"
+            :error="errors.name"
+          />
+          <the-input
+            v-model="form.yearOfCreation"
+            type="number"
+            label="Year of creation"
+            class="form-element--short"
+            :error="errors.yearOfCreation"
+          />
         </div>
       </div>
       <div class="form__inputs form__inputs--drag-zone">
@@ -48,10 +91,10 @@ const sentData = async () => {
 <style lang="scss" scoped>
 .modal {
   &__content {
-    padding: 3.75rem 1.75rem;
+    padding: 5rem 1.75rem;
     width: 100vw;
 
-    @media screen and (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-md) {
       max-width: 700px;
       padding: 5rem 100px;
     }
@@ -66,32 +109,56 @@ const sentData = async () => {
     &--drag-zone {
       position: relative;
       width: 100%;
-      aspect-ratio: $card-aspect-ratio;
+      aspect-ratio: 98/65;
       overflow: hidden;
     }
     &--row {
       display: flex;
       flex-direction: column;
       gap: 2rem;
-      @media screen and (min-width: $breakpoint-md) {
+      @media (min-width: $breakpoint-md) {
         flex-direction: row;
         gap: 3rem;
       }
     }
   }
 
-  @media (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-md) {
     width: 100%;
   }
 }
 
 .form-element {
-  @media screen and (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     &--short {
       max-width: 105px;
     }
     &--long {
       flex: 1;
+    }
+  }
+}
+
+.drag-n-drop {
+  &__title {
+    display: none;
+
+    @media (min-width: $breakpoint-md) {
+      display: block;
+    }
+
+    &--underline {
+      @include paragraphBaseMedium;
+      text-decoration: underline;
+      display: inherit;
+    }
+  }
+
+  &__title + &__title--underline {
+    display: block;
+
+    @media (min-width: $breakpoint-md) {
+      display: none;
     }
   }
 }
