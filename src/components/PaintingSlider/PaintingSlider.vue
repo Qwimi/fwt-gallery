@@ -23,6 +23,7 @@ defineEmits(['close', 'makeTheCover', 'editPic', 'deletePic']);
 const swiperInstanse = ref();
 const currentSlide = computed(() => props.slides[currentIndex.value || 0]);
 const currentIndex = computed(() => swiperInstanse.value?.realIndex);
+
 const isUserAuth = ref(useAuthStore().isUserAuth);
 const buttonText = computed(() =>
   props.mainPainting === currentSlide.value.id ? 'Remove the cover' : 'Make the cover'
@@ -107,7 +108,7 @@ onMounted(() => {
   position: fixed;
   inset: 0;
   background-color: var(--background-primary);
-  z-index: 1;
+  z-index: 2;
 
   &__img {
     height: 100%;

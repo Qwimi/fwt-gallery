@@ -15,14 +15,14 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(['update:modelValue']);
 
-const getUrl = (file: Image | File) => {
+const getUrl = (file: Image | File | string) => {
+  if (typeof file === 'string') return props.modelValue;
+
   if (file instanceof File) {
     return URL.createObjectURL(file);
   }
 
-  if (file instanceof Image) return props.modelValue?.src;
-
-  return props.modelValue;
+  return props.modelValue?.src;
 };
 
 const dragenter = () => {

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onUnmounted, ref, watch, type Ref } from 'vue';
+import { onUnmounted, ref, type Ref } from 'vue';
 import ArtistSection from '@/components/ArtistSection';
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue';
 import IconDelete from '@/components/icons/IconDelete.vue';
@@ -29,8 +29,13 @@ const openSlider = (id: string) => {
   slideToOpen.value = id;
 };
 
-const openEdit = (card: CardInterface) =>
+const openDeletePaintingModal = (cardId: string) =>
+  modalStore.openModal('delete', { id: cardId, target: 'painting' });
+
+const openEditPaintingModal = (card: CardInterface) =>
   modalStore.openModal('addPicture', { ...card, target: 'update' });
+
+const setMainPainting = (cardId: string) => store.setMainPainting(artistId, cardId);
 
 onUnmounted(() => store.unmountCurrentArtist());
 </script>
@@ -58,14 +63,14 @@ onUnmounted(() => store.unmountCurrentArtist());
     </div>
   </div>
   <painting-slider
+    v-if="isSliderOpen"
     :slides="store.currentArtistCards"
     :main-painting="store.currentArtist.mainPainting?._id"
-    v-if="isSliderOpen"
     :open-slide="slideToOpen"
     @close="() => (isSliderOpen = false)"
-    @edit-pic="openEdit($event)"
-    @make-the-cover="store.setMainPainting(artistId, $event)"
-    @delete-pic="modalStore.openModal('delete', { id: $event, target: 'painting' })"
+    @edit-pic="openEditPaintingModal($event)"
+    @make-the-cover="setMainPainting($event)"
+    @delete-pic="openDeletePaintingModal($event)"
   />
   <artist-section :artist="store.currentArtist" />
   <section class="wrapper">
@@ -75,7 +80,7 @@ onUnmounted(() => store.unmountCurrentArtist());
         <div class="tools-row__right-column">
           <button-base
             variant="underline"
-            @click="useModalStore().openModal('addPicture', { target: 'create' })"
+            @click="modalStore.openModal('addPicture', { target: 'create' })"
           >
             <template #icon><icon-plus class="icon" /></template>
             Add artist
@@ -86,6 +91,9 @@ onUnmounted(() => store.unmountCurrentArtist());
         :cards="store.currentArtistCards"
         :is-artists="false"
         @open-slider="openSlider($event)"
+        @edit-pic="openEditPaintingModal($event)"
+        @make-the-cover="setMainPainting($event)"
+        @delete-pic="openDeletePaintingModal($event)"
       />
     </template>
     <div class="no-cards" v-else>

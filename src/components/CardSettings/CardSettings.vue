@@ -44,6 +44,20 @@ const buttonText = computed(() =>
     padding: 1rem 0;
     background-color: var(--background-secondary);
     border-radius: 0.25rem;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      bottom: 100%;
+      left: 0.75rem;
+      transform: translateX(-50%);
+      border: 0.25rem solid transparent;
+      border-top: none;
+      border-bottom-color: var(--background-secondary);
+    }
   }
   &__item {
     @include buttonMixin;
