@@ -50,6 +50,14 @@ const showPassword = () => (isPasswordShow.value = !isPasswordShow.value);
       </div>
     </transition>
   </div>
+  <transition name="fade">
+    <div class="form-element__error" v-if="error">
+      <icon-error class="icon" />
+      <p>
+        {{ error }}
+      </p>
+    </div>
+  </transition>
 </template>
 
 <style lang="scss" scoped>
