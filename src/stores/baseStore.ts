@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, type Ref } from 'vue';
+import { computed, ref, type Ref } from 'vue';
 
 import { useAuthStore } from './authStore';
 import { useModalStore } from './modalStore';
@@ -28,6 +28,13 @@ export const useAppStore = defineStore('app', () => {
   const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage);
   const currentArtistCards: Ref<CardInterface[]> = ref([]);
   const genres: Ref<Genre[]> = ref([]);
+  const usingGenres = computed(() => {
+    const set = new Set();
+    artists.value.map((elem: Artist) => {
+      elem.genres.forEach((genre: string) => set.add(genre));
+    });
+    return set;
+  });
 
   const authStore = useAuthStore();
   const modalStore = useModalStore();
@@ -193,6 +200,7 @@ export const useAppStore = defineStore('app', () => {
   return {
     artistCards,
     genres,
+    usingGenres,
     currentArtist,
     currentArtistCards,
     unmountCurrentArtist,

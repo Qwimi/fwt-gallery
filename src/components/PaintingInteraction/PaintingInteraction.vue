@@ -95,8 +95,11 @@ const sentData = async () => {
     width: 100vw;
 
     @media (min-width: $breakpoint-md) {
-      max-width: 700px;
       padding: 5rem 100px;
+    }
+
+    @media (min-width: $breakpoint-lg) {
+      max-width: 700px;
     }
   }
 }

@@ -22,7 +22,7 @@ const showPassword = () => (isPasswordShow.value = !isPasswordShow.value);
 
 <template>
   <div class="form-element">
-    <p class="form-element__label">{{ label }}</p>
+    <p class="form-element__label" v-if="label">{{ label }}</p>
     <label class="form-element__wrapper">
       <slot name="icon"></slot>
       <input

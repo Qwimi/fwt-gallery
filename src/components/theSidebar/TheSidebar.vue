@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
+import FiltersSidebar from '@/components/FiltersSidebar';
 import HeaderSidebar from '@/components/HeaderSidebar';
 import IconClose from '@/components/icons/IconClose.vue';
 import { useModalStore } from '@/stores/modalStore';
@@ -7,7 +8,8 @@ import { useModalStore } from '@/stores/modalStore';
 const modalStore = useModalStore();
 
 const components = {
-  headerSidebar: HeaderSidebar
+  headerSidebar: HeaderSidebar,
+  filters: FiltersSidebar
 };
 
 const currentSidebar = computed(
@@ -43,7 +45,11 @@ const currentSidebar = computed(
   @include modalMixin;
   width: 80%;
   @media (min-width: $breakpoint-md) {
-    width: 60%;
+    width: 50%;
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    width: 33.33%;
   }
 
   &--shadow {

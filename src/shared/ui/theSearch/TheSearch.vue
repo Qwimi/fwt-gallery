@@ -16,6 +16,7 @@ const searchString: Ref<string | null> = ref(null);
     type="text"
     :error="error"
     :input-attributes="inputAttributes"
+    :class="'form-element--thin'"
     v-model="searchString"
     @update:model-value="$emit('update:searchString', $event)"
   >
