@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue';
+import { ref } from 'vue';
 import IconMinus from '@/components/icons/IconMinus.vue';
 import IconPlus from '@/components/icons/IconPlus.vue';
 
 const props = defineProps<{
   label: string;
   type: 'checkbox' | 'radio';
-  options: string[];
+  options: Array<{ _id: string; name: string }>;
   modelValue: string | string[];
 }>();
 
@@ -39,15 +39,15 @@ const updateValue = (element: HTMLInputElement) => {
       </button>
     </summary>
     <div class="filter-item__body">
-      <label v-for="option in options" :key="option" class="filter-item__option">
+      <label v-for="option in options" :key="option._id" class="filter-item__option">
         <input
           :type="type"
           :name="label"
           class="filter-item__input"
-          :value="option"
+          :value="option._id"
           @change="updateValue($event.target as HTMLInputElement)"
         />
-        {{ option }}
+        {{ option.name }}
       </label>
     </div>
   </details>

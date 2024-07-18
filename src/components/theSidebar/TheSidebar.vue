@@ -26,9 +26,9 @@ const currentSidebar = computed(
         @click="modalStore.closeSidebar"
       >
         <Transition name="slide">
-          <div class="sidebar" v-if="modalStore.currentSidebar" @click.stop>
+          <div class="sidebar" v-show="modalStore.currentSidebar" @click.stop>
             <KeepAlive>
-              <component :is="currentSidebar" v-if="modalStore.currentSidebar" />
+              <component :is="currentSidebar" />
             </KeepAlive>
             <button class="sidebar__close-button" @click="modalStore.closeSidebar">
               <icon-close class="icon" />

@@ -1,49 +1,49 @@
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue';
+import { reactive } from 'vue';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import FilterItem from '@/shared/ui/FilterItem';
 import { useAppStore } from '@/stores/baseStore';
 
 const store = useAppStore();
-const selectedGenres: Ref<string[]> = ref([]);
-const selectedSort: Ref<string> = ref('');
+const initialState = {
+  selectedGenres: [],
+  selectedSort: ''
+};
 
-const options = [
-  'option 1',
-  'option 2',
-  'option 3',
-  'option 4',
-  'option 5',
-  'option 1',
-  'option 2',
-  'option 3',
-  'option 4',
-  'option 5',
-  'option 1',
-  'option 2',
-  'option 3',
-  'option 4',
-  'option 5',
-  'option 1',
-  'option 2',
-  'option 3',
-  'option 4',
-  'option 5'
+const form = reactive({ ...initialState });
+const sortByValues = [
+  { _id: '', name: 'Recently added' },
+  { _id: 'sortBy=name&orderBy=asc', name: 'A-Z' },
+  { _id: 'sortBy=name&orderBy=desc', name: 'Z-A' }
 ];
+
+const resetForm = () => Object.assign(form, initialState);
 </script>
 
 <template>
   <div class="sidebar__content">
     <form class="filters">
       <div class="filters__list">
-        <filter-item label="checkbox" :options="options" type="checkbox" v-model="selectedGenres" />
-        <filter-item label="radio" :options="options" type="radio" v-model="selectedSort" />
+        <filter-item
+          label="Genres"
+          :options="store.filterableGenres"
+          type="checkbox"
+          v-model="form.selectedGenres"
+        />
+        <filter-item
+          label="Sort by"
+          :options="sortByValues"
+          type="radio"
+          v-model="form.selectedSort"
+        />
       </div>
       <div class="filters__buttons">
         <button-base variant="underline" :button-props="{ type: 'submit' }">
           Show the results
         </button-base>
-        <button-base variant="underline" :button-props="{ type: 'reset' }"> reset </button-base>
+        <button-base variant="underline" :button-props="{ type: 'reset' }" @click="resetForm">
+          reset
+        </button-base>
       </div>
     </form>
   </div>

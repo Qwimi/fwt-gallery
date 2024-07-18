@@ -26,6 +26,14 @@ const authStore = useAuthStore();
   </div>
   <div class="wrapper">
     <card-list :cards="store.artistCards" :is-artists="true" />
+    <button-base
+      variant="underline"
+      v-if="store.isArtistListExpandable"
+      @click="store.loadMore"
+      class="button--load-more"
+    >
+      Load more
+    </button-base>
   </div>
 </template>
 
@@ -47,6 +55,14 @@ const authStore = useAuthStore();
       margin-right: 0.75rem;
       rotate: 180deg;
     }
+  }
+}
+
+.button--load-more {
+  display: flex;
+  margin: 2rem auto 0;
+  @media (min-width: $breakpoint-md) {
+    margin: 2.5rem auto 0;
   }
 }
 </style>

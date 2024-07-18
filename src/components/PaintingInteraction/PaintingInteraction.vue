@@ -2,7 +2,7 @@
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, ref, type ComputedRef, type Ref } from 'vue';
 import IconNoImage from '../icons/IconNoImage.vue';
-import { toFormData } from '@/helpers/formSubmit';
+import { toFormData } from '@/helpers/formActions';
 import { paintingRules, useValidationErrors } from '@/helpers/validation';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import DragAndDrop from '@/shared/ui/DragAndDrop/DragAndDrop.vue';

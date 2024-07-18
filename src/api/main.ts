@@ -11,8 +11,8 @@ export const handleGetArtistsStatic = async () => {
 
 // список художников для авторизированного пользователя
 
-export const handleGetArtists = async () => {
-  const response = await axiosInstance.get('/artists');
+export const handleGetArtists = async (page: number) => {
+  const response = await axiosInstance.get(`/artists?perPage=6&pageNumber=${page}`);
 
   return response.data;
 };

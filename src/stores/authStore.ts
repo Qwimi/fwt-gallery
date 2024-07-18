@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
   const fingerprint: Ref<string | null> = ref(null);
   const accessToken: Ref<string | null> = ref(null);
   const refreshToken: Ref<string | null> = ref(null);
-  const isUserAuth = computed(() => !!accessToken.value);
+  const isUserAuth = computed(() => Boolean(accessToken.value));
   const store = useAppStore();
 
   const initializeFingerprint = async () => {

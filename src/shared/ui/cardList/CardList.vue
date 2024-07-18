@@ -27,7 +27,7 @@ const cardClick = (event: string) => {
       <card-settings
         v-if="!isArtists"
         :card="card.id"
-        :main-painting="useAppStore().currentArtist.mainPainting?._id"
+        :main-painting="useAppStore().currentArtist?.mainPainting?._id"
         @click.stop
         @edit-pic="$emit('editPic', card)"
         @delete-pic="$emit('deletePic', card.id)"

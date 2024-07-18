@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import IconArrow from '@/components/icons/IconArrow.vue';
 import IconChangePic from '@/components/icons/IconChangePic.vue';
 import IconClose from '@/components/icons/IconClose.vue';
@@ -33,8 +33,20 @@ const onSwiper = (swiper: any) => {
   swiperInstanse.value = swiper;
 };
 
+const findIndex = (id: string | null) => {
+  return props.slides.findIndex((slide: CardInterface) => slide.id === id);
+};
+
+watch(
+  () => props.slides.length,
+  () => {
+    const newIndex = findIndex(props.openSlide);
+    if (newIndex === -1) swiperInstanse.value.slideTo(props.slides.length - 1);
+  }
+);
+
 onMounted(() => {
-  const slideTo = props.slides.findIndex((slide: CardInterface) => slide.id === props.openSlide);
+  const slideTo = findIndex(props.openSlide);
   swiperInstanse.value.slideTo(slideTo);
 });
 </script>

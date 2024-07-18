@@ -10,6 +10,7 @@ import router from '@/router';
 import AddMainPicture from '@/shared/ui/AddMainPicture';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import CardList from '@/shared/ui/CardList';
+import ThePagination from '@/shared/ui/ThePagination';
 import { useAuthStore } from '@/stores/authStore';
 import { useAppStore } from '@/stores/baseStore';
 import { useModalStore } from '@/stores/modalStore';
@@ -69,19 +70,19 @@ onUnmounted(() => store.unmountCurrentArtist());
     </div>
   </div>
   <painting-slider
-    v-if="isSliderOpen && store.currentArtistCards.length"
+    v-if="isSliderOpen && store.currentArtistCards?.length"
     :slides="store.currentArtistCards"
-    :main-painting="store.currentArtist.mainPainting?._id"
+    :main-painting="store.currentArtist?.mainPainting?._id"
     :open-slide="slideToOpen"
     @close="() => (isSliderOpen = false)"
     @edit-pic="openEditPaintingModal($event)"
     @make-the-cover="setMainPainting($event)"
     @delete-pic="openDeletePaintingModal($event)"
   />
-  <artist-section :artist="store.currentArtist" />
+  <artist-section :artist="store.currentArtist!" />
   <section class="wrapper">
     <h3 class="section__title">Artworks</h3>
-    <template v-if="store.currentArtistCards.length">
+    <template v-if="store.currentArtistCards?.length">
       <div class="tools-row" v-if="authStore.isUserAuth">
         <div class="tools-row__right-column">
           <button-base
@@ -93,13 +94,21 @@ onUnmounted(() => store.unmountCurrentArtist());
           </button-base>
         </div>
       </div>
+
       <card-list
-        :cards="store.currentArtistCards"
+        :cards="store.currentPaginationView"
         :is-artists="false"
         @open-slider="openSlider($event)"
         @edit-pic="openEditPaintingModal($event)"
         @make-the-cover="setMainPainting($event)"
         @delete-pic="openDeletePaintingModal($event)"
+      />
+
+      <the-pagination
+        v-if="store.paginationPagesCount > 1"
+        v-model="store.currentPaginationPage"
+        :pages-count="store.paginationPagesCount"
+        class="pagination"
       />
     </template>
     <div class="no-cards" v-else>
@@ -145,6 +154,13 @@ onUnmounted(() => store.unmountCurrentArtist());
       margin-right: 0.75rem;
       rotate: 180deg;
     }
+  }
+}
+
+.pagination {
+  margin: 2rem auto 0;
+  @media (min-width: $breakpoint-md) {
+    margin: 2.5rem auto 0;
   }
 }
 

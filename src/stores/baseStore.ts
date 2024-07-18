@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed, ref, type Ref } from 'vue';
+import { computed, ref, type ComputedRef, type Ref } from 'vue';
 
 import { useAuthStore } from './authStore';
 import { useModalStore } from './modalStore';
@@ -24,38 +24,16 @@ import handleError from '@/helpers/errorHandling';
 import router from '@/router';
 
 export const useAppStore = defineStore('app', () => {
-  const artists: Ref<Artist[]> = ref([]);
-  const artistCards: Ref<CardInterface[]> = ref([]);
-  const currentArtist: Ref<ArtistPage> = ref({} as ArtistPage);
-  const currentArtistCards: Ref<CardInterface[]> = ref([]);
-  const genres: Ref<Genre[]> = ref([]);
-  const usingGenres = computed(() => {
-    const set = new Set();
-    artists.value.map((elem: Artist) => {
-      elem.genres.forEach((genre: string) => set.add(genre));
-    });
-    return set;
-  });
+  // stores
 
   const authStore = useAuthStore();
   const modalStore = useModalStore();
 
-  // cards
+  // main page
+  const artists: Ref<Artist[]> = ref([]);
 
-  const setCurrentArtistCards = () => {
-    currentArtistCards.value = currentArtist.value.paintings.map((painting: Painting) => {
-      return {
-        id: painting._id,
-        name: painting.name,
-        date: painting.yearOfCreation,
-        image: painting.image && `${import.meta.env.VITE_BASE_URL}${painting.image.src}`,
-        image2x: painting.image && `${import.meta.env.VITE_BASE_URL}${painting.image.src2x}`
-      };
-    });
-  };
-
-  const setAuthorCards = () => {
-    artistCards.value = artists.value.map((artist: Artist) => {
+  const artistCards: ComputedRef<CardInterface[]> = computed(() => {
+    return artists.value.map((artist: Artist) => {
       return {
         id: artist._id,
         name: artist.name,
@@ -67,41 +45,86 @@ export const useAppStore = defineStore('app', () => {
           `${import.meta.env.VITE_BASE_URL}${artist.mainPainting.image.src2x}`
       };
     });
-  };
-
-  // artists
+  });
 
   const getArtists = async () => {
     try {
       if (authStore.isUserAuth) {
-        const request = await handleGetArtists();
+        const request = await handleGetArtists(pageCounter.value);
         artists.value = request.data;
+
+        artistCount.value = request.meta.count;
       } else {
         artists.value = await handleGetArtistsStatic();
       }
-      setAuthorCards();
     } catch (error: unknown) {
       handleError(error);
     }
   };
+
+  const loadMore = async () => {
+    pageCounter.value++;
+    const newArtist = await handleGetArtists(pageCounter.value);
+    artists.value = artists.value.concat(newArtist.data);
+  };
+
+  // infinite scroll
+
+  const artistCount: Ref<number> = ref(0);
+  const pageCounter: Ref<number> = ref(1);
+  const isArtistListExpandable = computed(() => artistCount.value > artistCards.value.length);
+
+  // artist profile
+
+  const currentArtist: Ref<ArtistPage | null> = ref(null);
+
+  const currentArtistCards: ComputedRef<CardInterface[] | undefined> = computed(() => {
+    return currentArtist.value?.paintings.map((painting: Painting) => {
+      return {
+        id: painting._id,
+        name: painting.name,
+        date: painting.yearOfCreation,
+        image: painting.image && `${import.meta.env.VITE_BASE_URL}${painting.image.src}`,
+        image2x: painting.image && `${import.meta.env.VITE_BASE_URL}${painting.image.src2x}`
+      };
+    });
+  });
 
   const getCurrentArtist = async (id: string) => {
     try {
       currentArtist.value = authStore.isUserAuth
         ? await handleGetCurrentArtist(id)
         : await handleGetCurrentArtistStatic(id);
-      if (currentArtist.value.avatar) {
+      if (currentArtist.value?.avatar) {
         currentArtist.value.avatar.src = `${import.meta.env.VITE_BASE_URL}${currentArtist.value.avatar.src2x}`;
       }
-      setCurrentArtistCards();
     } catch (error: unknown) {
       handleError(error);
     }
   };
 
+  const unmountCurrentArtist = () => {
+    currentArtist.value = null;
+  };
+
+  // pagination
+
+  const currentPaginationPage: Ref<number> = ref(1);
+
+  const paginationPagesCount = computed(() => Math.ceil(currentArtistCards.value?.length! / 6));
+
+  const currentPaginationView = computed(() => {
+    return currentArtistCards.value!.slice(
+      6 * (currentPaginationPage.value - 1),
+      6 * currentPaginationPage.value
+    );
+  });
+
+  // artist interactions
+
   const deleteArtist = async () => {
     try {
-      await handleDeletArtist(currentArtist.value._id);
+      await handleDeletArtist(currentArtist.value?._id!);
       getArtists();
       router.push({ name: 'home' });
       modalStore.closeModal();
@@ -131,12 +154,21 @@ export const useAppStore = defineStore('app', () => {
     }
   };
 
-  const unmountCurrentArtist = () => {
-    currentArtist.value = {} as ArtistPage;
-    currentArtistCards.value = [];
-  };
-
   // genres
+
+  const genres: Ref<Genre[]> = ref([]);
+
+  const usingGenres = computed(() => {
+    const set = new Set();
+    artists.value.map((elem: Artist) => {
+      elem.genres.forEach((genre: string) => set.add(genre));
+    });
+    return set;
+  });
+
+  const filterableGenres = computed(() =>
+    genres.value.filter((genre: Genre) => Array.from(usingGenres.value).includes(genre._id))
+  );
 
   const getGenres = async () => {
     try {
@@ -146,7 +178,7 @@ export const useAppStore = defineStore('app', () => {
     }
   };
 
-  // paintings
+  // paintings interactions
 
   const createPainting = async (id: string, form: FormData) => {
     try {
@@ -159,6 +191,30 @@ export const useAppStore = defineStore('app', () => {
       handleError(error);
     }
   };
+
+  const updatePainting = async (id: string, form: FormData, paintingId: string) => {
+    try {
+      await handleUpdatePainting(id, paintingId, form);
+      getCurrentArtist(id);
+      modalStore.closeModal();
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  const deletePicture = async (id: string) => {
+    try {
+      const isSuccess = await handleDeletePainting(currentArtist.value?._id!, id);
+      getCurrentArtist(currentArtist.value?._id!);
+      modalStore.closeModal();
+
+      return Boolean(isSuccess);
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  // main painting interactions
 
   const setMainPainting = async (id: string, paintingId: string) => {
     try {
@@ -179,32 +235,17 @@ export const useAppStore = defineStore('app', () => {
     }
   };
 
-  const updatePainting = async (id: string, form: FormData, paintingId: string) => {
-    try {
-      await handleUpdatePainting(id, paintingId, form);
-      getCurrentArtist(id);
-      modalStore.closeModal();
-    } catch (error: unknown) {
-      handleError(error);
-    }
-  };
-
-  const deletePicture = async (id: string) => {
-    try {
-      await handleDeletePainting(currentArtist.value._id, id);
-      getCurrentArtist(currentArtist.value._id);
-      modalStore.closeModal();
-    } catch (error: unknown) {
-      handleError(error);
-    }
-  };
-
   return {
     artistCards,
     genres,
-    usingGenres,
+    filterableGenres,
     currentArtist,
     currentArtistCards,
+    isArtistListExpandable,
+    paginationPagesCount,
+    currentPaginationView,
+    currentPaginationPage,
+    loadMore,
     unmountCurrentArtist,
     getCurrentArtist,
     getArtists,
