@@ -52,9 +52,9 @@ defineEmits({ click: (id: string) => id });
   &__info {
     bottom: 0;
     left: 0;
-    padding: 0.5rem 0;
+    padding: 0.5em 0;
     width: 85%;
-    max-width: 300px;
+    max-width: 18.75rem;
 
     @media (min-width: $breakpoint-md) {
       padding: 0.75rem 0;

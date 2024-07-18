@@ -3,10 +3,9 @@ import { computed, ref, type Ref } from 'vue';
 import IconSettings from '@/components/icons/IconSettings.vue';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import { useAuthStore } from '@/stores/authStore';
-import type { CardInterface } from '@/stores/types';
 
 const props = defineProps<{
-  card: CardInterface;
+  card: string;
   mainPainting?: string | null;
 }>();
 
@@ -14,7 +13,7 @@ defineEmits(['makeTheCover', 'editPic', 'deletePic']);
 
 const isModalOpen: Ref<boolean> = ref(false);
 const buttonText = computed(() =>
-  props.mainPainting === props.card.id ? 'Remove the cover' : 'Make the cover'
+  props.mainPainting === props.card ? 'Remove the cover' : 'Make the cover'
 );
 </script>
 
@@ -25,11 +24,11 @@ const buttonText = computed(() =>
     </button-base>
     <Transition name="fade">
       <div class="card-settings__modal" v-if="isModalOpen">
-        <button class="card-settings__item" @click="$emit('makeTheCover', card.id)">
+        <button class="card-settings__item" @click="$emit('makeTheCover')">
           {{ buttonText }}
         </button>
-        <button class="card-settings__item" @click="$emit('editPic', card)">Edit</button>
-        <button class="card-settings__item" @click="$emit('deletePic', card.id)">Delete</button>
+        <button class="card-settings__item" @click="$emit('editPic')">Edit</button>
+        <button class="card-settings__item" @click="$emit('deletePic')">Delete</button>
       </div>
     </Transition>
   </div>

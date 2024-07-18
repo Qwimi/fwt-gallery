@@ -29,13 +29,15 @@ const openSlider = (id: string) => {
   slideToOpen.value = id;
 };
 
-const openDeletePaintingModal = (cardId: string) =>
-  modalStore.openModal('delete', { id: cardId, target: 'painting' });
-
-const openEditPaintingModal = (card: CardInterface) =>
-  modalStore.openModal('addPicture', { ...card, target: 'update' });
-
-const setMainPainting = (cardId: string) => store.setMainPainting(artistId, cardId);
+const openDeletePaintingModal = (cardId: string) => {
+  modalStore.openModal('delete', { id: cardId, target: store.deletePicture });
+};
+const openEditPaintingModal = (card: CardInterface) => {
+  modalStore.openModal('addPicture', { ...card, target: store.updatePainting });
+};
+const setMainPainting = (cardId: string) => {
+  store.setMainPainting(artistId, cardId);
+};
 
 onUnmounted(() => store.unmountCurrentArtist());
 </script>
@@ -54,7 +56,11 @@ onUnmounted(() => store.unmountCurrentArtist());
       </button-base>
       <button-base
         variant="icon"
-        @click="modalStore.openModal('delete', { id: store.currentArtist._id, target: 'artist' })"
+        @click="
+          modalStore.openModal('delete', {
+            target: store.deleteArtist
+          })
+        "
       >
         <template #icon>
           <icon-delete class="icon" />
@@ -63,7 +69,7 @@ onUnmounted(() => store.unmountCurrentArtist());
     </div>
   </div>
   <painting-slider
-    v-if="isSliderOpen"
+    v-if="isSliderOpen && store.currentArtistCards.length"
     :slides="store.currentArtistCards"
     :main-painting="store.currentArtist.mainPainting?._id"
     :open-slide="slideToOpen"
@@ -80,7 +86,7 @@ onUnmounted(() => store.unmountCurrentArtist());
         <div class="tools-row__right-column">
           <button-base
             variant="underline"
-            @click="modalStore.openModal('addPicture', { target: 'create' })"
+            @click="modalStore.openModal('addPicture', { target: store.createPainting })"
           >
             <template #icon><icon-plus class="icon" /></template>
             Add artist
@@ -98,7 +104,7 @@ onUnmounted(() => store.unmountCurrentArtist());
     </template>
     <div class="no-cards" v-else>
       <add-main-picture
-        @click="modalStore.openModal('addPicture', { target: 'createMain' })"
+        @click="modalStore.openModal('addPicture', { target: store.createMainPainting })"
         v-if="authStore.isUserAuth"
       />
       <span class="no-cards__decoration"></span>
