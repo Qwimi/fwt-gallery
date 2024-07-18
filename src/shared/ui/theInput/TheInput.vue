@@ -6,7 +6,7 @@ import IconEye from '@/components/icons/IconEye.vue';
 import IconEyeHide from '@/components/icons/IconEyeHide.vue';
 
 defineProps<{
-  type: 'password' | 'text' | 'email';
+  type: 'password' | 'text' | 'email' | 'number';
   label?: string;
   error?: string;
   modelValue?: string;
@@ -74,6 +74,14 @@ const showPassword = () => (isPasswordShow.value = !isPasswordShow.value);
 input[type='password']::-ms-reveal,
 input[type='password']::-ms-clear {
   display: none;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 .fade {

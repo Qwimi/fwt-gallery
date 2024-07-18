@@ -32,7 +32,7 @@ export interface Image {
   original: string;
 }
 
-export interface MainPainting {
+export interface Painting {
   _id: string;
   name: string;
   yearOfCreation: string;
@@ -40,12 +40,10 @@ export interface MainPainting {
   artist: string;
 }
 
-export interface Painting {
-  _id: string;
+export interface PaintingRequestForm {
   name: string;
-  yearOfCreation: string;
-  image: Image;
-  artist: string;
+  yearOfCreation: string | number;
+  image?: File | Image | string;
 }
 
 // artists
@@ -57,7 +55,7 @@ export interface Artist {
   description: string;
   yearsOfLife: string;
   __v: number;
-  mainPainting: MainPainting;
+  mainPainting: Painting | null;
 }
 
 export interface ArtistPage {
@@ -68,6 +66,7 @@ export interface ArtistPage {
   description: string;
   yearsOfLife: string;
   avatar: Image;
+  mainPainting: Painting | null;
 }
 
 export interface ArtistRequestForm {

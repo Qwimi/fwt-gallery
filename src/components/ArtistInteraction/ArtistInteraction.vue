@@ -2,7 +2,8 @@
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, type ComputedRef } from 'vue';
 import IconProfile from '@/components/icons/IconProfile.vue';
-import { artistRules, toFormData, useValidationErrors } from '@/helpers/validation';
+import { toFormData } from '@/helpers/formSubmit';
+import { artistRules, useValidationErrors } from '@/helpers/validation';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import DragAndDrop from '@/shared/ui/DragAndDrop';
 import MultiSelect from '@/shared/ui/MultiSelect';
@@ -44,7 +45,12 @@ const sentData = async () => {
 <template>
   <div class="modal__content">
     <form class="form__container" enctype="multipart/form-data" @submit.prevent="sentData">
-      <drag-and-drop v-model="form.avatar" :placeholder-icon="IconProfile" :is-avatar="true">
+      <drag-and-drop
+        v-model="form.avatar"
+        :placeholder-icon="IconProfile"
+        variant="avatar"
+        button="Browse Profile Photo"
+      >
         <p class="drag-n-drop__title">You can drop your image here</p>
         <template #whileDragging>
           <p class="drag-n-drop__title">Drop your image here</p>

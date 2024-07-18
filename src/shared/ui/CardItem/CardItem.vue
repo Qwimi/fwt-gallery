@@ -5,17 +5,14 @@ import type { CardInterface } from '@/stores/types';
 
 defineProps<{
   card: CardInterface;
-  isArtist: boolean;
 }>();
+
+defineEmits({ click: (id: string) => id });
 </script>
 
 <template>
-  <article class="card">
-    <router-link
-      :to="{ name: 'artist', params: { id: card.id } }"
-      v-if="isArtist"
-      class="card__link"
-    />
+  <article class="card" @click="$emit('click', card.id)">
+    <slot></slot>
     <img :src="card?.image" alt="Can't load the picture" v-if="card?.image" class="card__img" />
     <no-image v-else />
     <div class="card__info">
@@ -35,13 +32,7 @@ defineProps<{
   aspect-ratio: 98/65;
   position: relative;
   overflow: hidden;
-
-  &__link {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    z-index: 1;
-  }
+  cursor: pointer;
 
   &__img {
     height: 100%;
@@ -56,14 +47,14 @@ defineProps<{
     }
   }
 
+  @include descriptionMixin;
+
   &__info {
-    position: absolute;
     bottom: 0;
     left: 0;
-    padding: 0.5rem 0;
+    padding: 0.5em 0;
     width: 85%;
-    max-width: 300px;
-    background-color: var(--background-primary);
+    max-width: 18.75rem;
 
     @media (min-width: $breakpoint-md) {
       padding: 0.75rem 0;
@@ -93,42 +84,18 @@ defineProps<{
   }
 
   &__text {
-    position: relative;
     padding: 0 0.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+
+    &::before {
+      display: none;
+    }
 
     @media (min-width: $breakpoint-lg) {
       padding: 0 1.25rem;
 
       &::before {
-        content: '';
-        height: 100%;
-        width: 2px;
-        background-color: var(--accent);
-        position: absolute;
-        top: 0;
-        left: 0;
+        display: block;
       }
-    }
-  }
-
-  &__title {
-    color: var(--text-primary);
-    @include headingH6;
-
-    @media (min-width: $breakpoint-md) {
-      @include headingH4;
-    }
-  }
-
-  &__date {
-    color: var(--accent);
-    @include captionBold;
-
-    @media (min-width: $breakpoint-md) {
-      @include buttonText;
     }
   }
 

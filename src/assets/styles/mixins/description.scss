@@ -1,0 +1,41 @@
+@mixin descriptionMixin {
+  &__info {
+    position: absolute;
+    background-color: var(--background-primary);
+  }
+
+  &__text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    &::before {
+      content: '';
+      height: 100%;
+      width: 2px;
+      background-color: var(--accent);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  &__title {
+    color: var(--text-primary);
+    @include headingH6;
+
+    @media (min-width: $breakpoint-md) {
+      @include headingH4;
+    }
+  }
+
+  &__date {
+    color: var(--accent);
+    @include captionBold;
+
+    @media (min-width: $breakpoint-md) {
+      @include buttonText;
+    }
+  }
+}

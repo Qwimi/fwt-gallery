@@ -87,6 +87,7 @@ export const useAuthStore = defineStore('auth', () => {
         action === 'login' ? await handleLogin(formData) : await handleRegister(formData);
       setTokens(response);
       useModalStore().closeModal();
+      useModalStore().closeSidebar();
       reloadAppData();
     } catch (error: unknown) {
       handleError(error);

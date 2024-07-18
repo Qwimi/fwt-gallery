@@ -18,6 +18,10 @@
     transform: translateY(100%);
     color: var(--error);
     @include paragraphBaseLight;
+
+    .icon {
+      flex: none;
+    }
   }
 
   &__wrapper {
