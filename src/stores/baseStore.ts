@@ -21,6 +21,7 @@ import {
   handleUpdatePainting
 } from '@/api/main';
 import handleError from '@/helpers/errorHandling';
+import router from '@/router';
 
 export const useAppStore = defineStore('app', () => {
   const artists: Ref<Artist[]> = ref([]);
@@ -98,10 +99,11 @@ export const useAppStore = defineStore('app', () => {
     }
   };
 
-  const deleteArtist = async (id: string) => {
+  const deleteArtist = async () => {
     try {
-      await handleDeletArtist(id);
+      await handleDeletArtist(currentArtist.value._id);
       getArtists();
+      router.push({ name: 'home' });
       modalStore.closeModal();
     } catch (error: unknown) {
       handleError(error);
@@ -148,9 +150,10 @@ export const useAppStore = defineStore('app', () => {
 
   const createPainting = async (id: string, form: FormData) => {
     try {
-      const response: Painting = await handleCreatePainting(id, form);
+      const response = await handleCreatePainting(id, form);
       getCurrentArtist(id);
       modalStore.closeModal();
+
       return response;
     } catch (error: unknown) {
       handleError(error);
@@ -170,14 +173,13 @@ export const useAppStore = defineStore('app', () => {
   const createMainPainting = async (id: string, form: FormData) => {
     try {
       const response = await createPainting(id, form);
-
-      if (response) setMainPainting(id, response?._id!!);
+      if (response) setMainPainting(id, response?._id);
     } catch (error: unknown) {
       handleError(error);
     }
   };
 
-  const updatePainting = async (id: string, paintingId: string, form: FormData) => {
+  const updatePainting = async (id: string, form: FormData, paintingId: string) => {
     try {
       await handleUpdatePainting(id, paintingId, form);
       getCurrentArtist(id);
@@ -187,10 +189,10 @@ export const useAppStore = defineStore('app', () => {
     }
   };
 
-  const deletePicture = async (id: string, paintingId: string) => {
+  const deletePicture = async (id: string) => {
     try {
-      await handleDeletePainting(id, paintingId);
-      getCurrentArtist(id);
+      await handleDeletePainting(currentArtist.value._id, id);
+      getCurrentArtist(currentArtist.value._id);
       modalStore.closeModal();
     } catch (error: unknown) {
       handleError(error);

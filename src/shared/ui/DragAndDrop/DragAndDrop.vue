@@ -6,12 +6,13 @@ import ButtonBase from '@/shared/ui/ButtonBase';
 import type { Image } from '@/stores/types';
 
 const isDragging: Ref<boolean> = ref(false);
+const maxFileSize = 3072;
 const fileInput = ref<HTMLInputElement | undefined>();
 const props = defineProps<{
   modelValue?: Image | File | string;
   placeholderIcon: typeof import('*.vue');
   button?: string;
-  isAvatar?: boolean;
+  variant?: string;
 }>();
 const emit = defineEmits(['update:modelValue']);
 
@@ -36,14 +37,16 @@ const dragleave = () => {
 const change = () => {
   const files = fileInput.value?.files;
 
-  if (files) {
-    const file = files.item(0);
-    if (Math.floor(file!!.size / 1024) >= 3072) {
-      handleError('File size is to big');
-      return;
-    }
-    emit('update:modelValue', file);
+  if (!files) return;
+
+  const file = files.item(0);
+  if (Math.floor(file!!.size / 1024) > maxFileSize) {
+    handleError('File size is to big');
+
+    return;
   }
+  emit('update:modelValue', file);
+
   isDragging.value = false;
 };
 
@@ -55,7 +58,7 @@ const deletePreview = () => {
 <template>
   <div
     class="drag-n-drop"
-    :class="{ 'drag-n-drop--dragging': isDragging, 'drag-n-drop--avatar': isAvatar }"
+    :class="[{ 'drag-n-drop--dragging': isDragging }, `drag-n-drop--${variant}`]"
   >
     <div class="drag-n-drop__area">
       <input
@@ -108,8 +111,8 @@ const deletePreview = () => {
   height: 100%;
 
   &--avatar &__area {
-    height: 200px;
-    width: 200px;
+    height: 12.5rem;
+    width: 12.5rem;
   }
 
   &__area {

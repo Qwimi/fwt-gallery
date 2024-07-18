@@ -26,12 +26,12 @@ const cardClick = (event: string) => {
     <card-item v-for="card in cards" :key="card.id" :card="card" @click="cardClick">
       <card-settings
         v-if="!isArtists"
-        :card="card"
+        :card="card.id"
         :main-painting="useAppStore().currentArtist.mainPainting?._id"
         @click.stop
-        @edit-pic="$emit('editPic', $event)"
-        @delete-pic="$emit('deletePic', $event)"
-        @make-the-cover="$emit('makeTheCover', $event)"
+        @edit-pic="$emit('editPic', card)"
+        @delete-pic="$emit('deletePic', card.id)"
+        @make-the-cover="$emit('makeTheCover', card.id)"
       />
     </card-item>
   </section>

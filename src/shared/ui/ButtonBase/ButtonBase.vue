@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <button class="button" :class="`button--${variant}`" v-bind="buttonProps">
-    <span class="button__icon icon" v-if="$slots.icon">
+    <span class="button__icon" v-if="$slots.icon">
       <slot name="icon"></slot>
     </span>
     <slot></slot>
@@ -21,16 +21,16 @@ defineProps<{
   @include buttonMixin;
 
   &--default {
-    padding: 1rem 1.25rem;
-    border-radius: 2rem;
+    padding: 1.25em 1.75em;
+    border-radius: 2.5em;
     background-color: light-dark(var(--black_12), var(--accent));
     color: var(--white_ff);
-    min-width: 12.5rem;
+    min-width: 16.75em;
 
     &:hover,
     &:focus {
       color: var(--white_ff);
-      box-shadow: 0 0.25rem 0.5rem light-dark(#00000040, #ab895640);
+      box-shadow: 0 0.25em 0.5em light-dark(#00000040, #ab895640);
     }
 
     &:focus {
@@ -40,8 +40,8 @@ defineProps<{
 
   &--icon {
     background-color: var(--background-secondary);
-    padding: 0.125rem;
-    border-radius: 0.25rem;
+    padding: 0.125em;
+    border-radius: 0.25em;
   }
 
   &--icon-always-light {
@@ -55,13 +55,13 @@ defineProps<{
 
   &--icon-always-light &__icon {
     background-color: rgba($color: #fff, $alpha: 0.1);
-    border-radius: 0.25rem;
-    padding: 0.125rem;
+    border-radius: 0.25em;
+    padding: 0.125em;
   }
 
   &--round {
     aspect-ratio: 1;
-    padding: 1.125rem;
+    padding: 1.5em;
     border-radius: 100%;
     border: 1px solid light-dark(var(--gray_9c), transparent);
     background-color: var(--background-secondary);

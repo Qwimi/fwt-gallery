@@ -2,7 +2,8 @@
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, ref, type ComputedRef, type Ref } from 'vue';
 import IconNoImage from '../icons/IconNoImage.vue';
-import { paintingRules, toFormData, useValidationErrors } from '@/helpers/validation';
+import { toFormData } from '@/helpers/formSubmit';
+import { paintingRules, useValidationErrors } from '@/helpers/validation';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import DragAndDrop from '@/shared/ui/DragAndDrop/DragAndDrop.vue';
 import TheInput from '@/shared/ui/TheInput';
@@ -11,7 +12,7 @@ import { useModalStore } from '@/stores/modalStore';
 import type { CardInterface, PaintingRequestForm } from '@/stores/types';
 
 interface PaintingProps extends CardInterface {
-  target: string;
+  target(id: string, form: FormData, paintingId?: string): void;
 }
 
 const store = useAppStore();
@@ -36,20 +37,7 @@ const sentData = async () => {
 
   const id = store.currentArtist._id;
   const formData = toFormData(form);
-
-  switch (props.value.target) {
-    case 'createMain': {
-      store.createMainPainting(id, formData);
-      break;
-    }
-    case 'create': {
-      store.createPainting(id, formData);
-      break;
-    }
-    case 'update':
-      store.updatePainting(id, props.value.id, formData);
-      break;
-  }
+  props.value.target(id, formData, props.value.id);
 };
 </script>
 

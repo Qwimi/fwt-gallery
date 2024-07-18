@@ -21,8 +21,8 @@ const props = defineProps<{
 defineEmits(['close', 'makeTheCover', 'editPic', 'deletePic']);
 
 const swiperInstanse = ref();
-const currentSlide = computed(() => props.slides[currentIndex.value || 0]);
-const currentIndex = computed(() => swiperInstanse.value?.realIndex);
+const currentSlide = computed(() => props.slides[swiperInstanse.value?.realIndex || 0]);
+const currentIndex = computed(() => swiperInstanse.value?.realIndex + 1);
 
 const isUserAuth = ref(useAuthStore().isUserAuth);
 const buttonText = computed(() =>
@@ -86,7 +86,7 @@ onMounted(() => {
           </div>
         </div>
         <div class="pagination tools-row__right-column">
-          {{ currentIndex + 1 }} / {{ slides.length }}
+          {{ currentIndex }} / {{ slides.length }}
         </div>
       </div>
 
