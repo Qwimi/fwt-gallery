@@ -81,6 +81,12 @@ export interface ArtistRequest extends Omit<ArtistRequestForm, 'avatar'> {
   avatar: string | null;
 }
 
+export interface ArtistFilters {
+  genres?: string[];
+  orderBy?: string;
+  search?: string;
+}
+
 // cards
 
 export interface CardInterface {

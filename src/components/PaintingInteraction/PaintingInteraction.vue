@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, ref, type ComputedRef, type Ref } from 'vue';
-import IconNoImage from '../icons/IconNoImage.vue';
+import IconNoImage from '@/components/icons/IconNoImage.vue';
 import { toFormData } from '@/helpers/formActions';
 import { paintingRules, useValidationErrors } from '@/helpers/validation';
 import ButtonBase from '@/shared/ui/ButtonBase';
@@ -35,15 +35,20 @@ const sentData = async () => {
 
   if (!isValid) return;
 
-  const id = store.currentArtist._id;
+  const id = store.currentArtist?._id;
   const formData = toFormData(form);
-  props.value.target(id, formData, props.value.id);
+  props.value.target(id!, formData, props.value.id);
 };
 </script>
 
 <template>
   <div class="modal__content">
-    <form class="form" enctype="multipart/form-data" @submit.prevent="sentData">
+    <form
+      class="form"
+      enctype="multipart/form-data"
+      @submit.prevent="sentData"
+      @keydown.enter.prevent
+    >
       <div class="form__inputs">
         <div class="form__inputs--row">
           <the-input

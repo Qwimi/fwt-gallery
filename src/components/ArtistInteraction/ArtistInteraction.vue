@@ -44,7 +44,12 @@ const sentData = async () => {
 
 <template>
   <div class="modal__content">
-    <form class="form__container" enctype="multipart/form-data" @submit.prevent="sentData">
+    <form
+      class="form__container"
+      enctype="multipart/form-data"
+      @submit.prevent="sentData"
+      @keydown.enter.prevent
+    >
       <drag-and-drop
         v-model="form.avatar"
         :placeholder-icon="IconProfile"

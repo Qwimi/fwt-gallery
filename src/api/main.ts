@@ -1,5 +1,5 @@
 import { axiosInstance } from '.';
-import type { AuthRequest } from '@/stores/types';
+import type { Artist, ArtistFilters, AuthRequest, Genre } from '@/stores/types';
 
 // список художников для неавторизированного пользователя
 
@@ -11,8 +11,15 @@ export const handleGetArtistsStatic = async () => {
 
 // список художников для авторизированного пользователя
 
-export const handleGetArtists = async (page: number) => {
-  const response = await axiosInstance.get(`/artists?perPage=6&pageNumber=${page}`);
+export const handleGetArtists = async (page: number, filters?: ArtistFilters | null) => {
+  const response = await axiosInstance.get('/artists', {
+    params: {
+      perPage: 6,
+      pageNumber: page,
+      sortBy: 'name',
+      ...filters
+    }
+  });
 
   return response.data;
 };
@@ -71,6 +78,20 @@ export const handleGetGenresStatic = async () => {
   const response = await axiosInstance.get(`/genres/static`);
 
   return response.data;
+};
+
+// получение жанров, по которым можно осуществить поиск
+
+export const handleGetFilterableGenres = async () => {
+  const response = await axiosInstance.get(`/artists`);
+  const artists = response.data.data;
+
+  const genresIdList = new Set();
+  artists.map((elem: Artist) => {
+    elem.genres.forEach((genre: string) => genresIdList.add(genre));
+  });
+
+  return Array.from(genresIdList);
 };
 
 // создание картины

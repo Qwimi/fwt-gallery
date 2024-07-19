@@ -28,7 +28,7 @@ const authStore = useAuthStore();
     <card-list :cards="store.artistCards" :is-artists="true" />
     <button-base
       variant="underline"
-      v-if="store.isArtistListExpandable"
+      v-if="store.isArtistListExpandable && authStore.isUserAuth"
       @click="store.loadMore"
       class="button--load-more"
     >

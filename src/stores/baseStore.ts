@@ -1,10 +1,8 @@
 import { defineStore } from 'pinia';
 import { computed, ref, type ComputedRef, type Ref } from 'vue';
-
 import { useAuthStore } from './authStore';
 import { useModalStore } from './modalStore';
-import type { Artist, ArtistPage, CardInterface, Genre, Painting } from './types';
-
+import type { Artist, ArtistFilters, ArtistPage, CardInterface, Genre, Painting } from './types';
 import {
   handleCreateArtist,
   handleCreatePainting,
@@ -14,6 +12,7 @@ import {
   handleGetArtistsStatic,
   handleGetCurrentArtist,
   handleGetCurrentArtistStatic,
+  handleGetFilterableGenres,
   handleGetGenres,
   handleGetGenresStatic,
   handleUpdateArtist,
@@ -29,7 +28,23 @@ export const useAppStore = defineStore('app', () => {
   const authStore = useAuthStore();
   const modalStore = useModalStore();
 
+  // infinite scroll
+
+  const artistCount: Ref<number> = ref(0);
+  const pageCounter: Ref<number> = ref(1);
+  const isArtistListExpandable = computed(() => artistCount.value > artistCards.value.length);
+
+  // filters
+  const filter: Ref<ArtistFilters | null> = ref(null);
+
+  const filterArtists = async (form: ArtistFilters) => {
+    filter.value = form;
+    getArtists();
+    modalStore.closeSidebar();
+  };
+
   // main page
+
   const artists: Ref<Artist[]> = ref([]);
 
   const artistCards: ComputedRef<CardInterface[]> = computed(() => {
@@ -50,10 +65,11 @@ export const useAppStore = defineStore('app', () => {
   const getArtists = async () => {
     try {
       if (authStore.isUserAuth) {
-        const request = await handleGetArtists(pageCounter.value);
-        artists.value = request.data;
+        pageCounter.value = 1;
+        const response = await handleGetArtists(pageCounter.value, filter.value);
+        artists.value = response.data;
 
-        artistCount.value = request.meta.count;
+        artistCount.value = response.meta.count;
       } else {
         artists.value = await handleGetArtistsStatic();
       }
@@ -64,15 +80,9 @@ export const useAppStore = defineStore('app', () => {
 
   const loadMore = async () => {
     pageCounter.value++;
-    const newArtist = await handleGetArtists(pageCounter.value);
+    const newArtist = await handleGetArtists(pageCounter.value, filter.value);
     artists.value = artists.value.concat(newArtist.data);
   };
-
-  // infinite scroll
-
-  const artistCount: Ref<number> = ref(0);
-  const pageCounter: Ref<number> = ref(1);
-  const isArtistListExpandable = computed(() => artistCount.value > artistCards.value.length);
 
   // artist profile
 
@@ -157,18 +167,7 @@ export const useAppStore = defineStore('app', () => {
   // genres
 
   const genres: Ref<Genre[]> = ref([]);
-
-  const usingGenres = computed(() => {
-    const set = new Set();
-    artists.value.map((elem: Artist) => {
-      elem.genres.forEach((genre: string) => set.add(genre));
-    });
-    return set;
-  });
-
-  const filterableGenres = computed(() =>
-    genres.value.filter((genre: Genre) => Array.from(usingGenres.value).includes(genre._id))
-  );
+  const filterableGenres: Ref<Genre[]> = ref([]);
 
   const getGenres = async () => {
     try {
@@ -177,6 +176,18 @@ export const useAppStore = defineStore('app', () => {
       handleError(error);
     }
   };
+
+  const getFilterableGenres = async () => {
+    const genresIdList = await handleGetFilterableGenres();
+
+    genresIdList.forEach((element: string) => {
+      if (!element) return;
+
+      filterableGenres.value.push(genres.value.find((genre: Genre) => genre._id == element));
+    });
+  };
+
+  getGenres();
 
   // paintings interactions
 
@@ -246,6 +257,8 @@ export const useAppStore = defineStore('app', () => {
     currentPaginationView,
     currentPaginationPage,
     loadMore,
+    getFilterableGenres,
+    filterArtists,
     unmountCurrentArtist,
     getCurrentArtist,
     getArtists,
