@@ -2,6 +2,7 @@
 import CardSettings from '@/components/CardSettings';
 import router from '@/router';
 import CardItem from '@/shared/ui/CardItem';
+import CardSkeleton from '@/shared/ui/CardSkeleton';
 import { useAppStore } from '@/stores/baseStore';
 import type { CardInterface } from '@/stores/types';
 
@@ -23,6 +24,7 @@ const cardClick = (event: string) => {
 
 <template>
   <section class="card-list">
+    <card-skeleton />
     <card-item v-for="card in cards" :key="card.id" :card="card" @click="cardClick">
       <card-settings
         v-if="props.variant === 'paintings'"
