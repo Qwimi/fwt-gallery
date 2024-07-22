@@ -9,6 +9,7 @@ defineProps<{
   type: 'password' | 'text' | 'email' | 'number';
   label?: string;
   error?: string;
+  variant?: string;
   modelValue?: string;
   inputAttributes?: InputHTMLAttributes;
 }>();
@@ -21,7 +22,7 @@ const showPassword = () => (isPasswordShow.value = !isPasswordShow.value);
 </script>
 
 <template>
-  <div class="form-element">
+  <div class="form-element" :class="`form-element--${variant}`">
     <p class="form-element__label" v-if="label">{{ label }}</p>
     <label class="form-element__wrapper">
       <slot name="icon"></slot>
@@ -50,6 +51,14 @@ const showPassword = () => (isPasswordShow.value = !isPasswordShow.value);
       </div>
     </transition>
   </div>
+  <transition name="fade">
+    <div class="form-element__error" v-if="error">
+      <icon-error class="icon" />
+      <p>
+        {{ error }}
+      </p>
+    </div>
+  </transition>
 </template>
 
 <style lang="scss" scoped>

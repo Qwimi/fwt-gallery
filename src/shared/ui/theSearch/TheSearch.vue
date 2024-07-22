@@ -17,7 +17,7 @@ defineEmits(['update:modelValue']);
     type="text"
     :error="error"
     :input-attributes="inputAttributes"
-    :class="'form-element--thin'"
+    variant="thin"
     v-bind:model-value="modelValue"
     @update:model-value="$emit('update:modelValue', $event)"
   >

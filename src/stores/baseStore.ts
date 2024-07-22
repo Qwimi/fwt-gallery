@@ -148,6 +148,7 @@ export const useAppStore = defineStore('app', () => {
       await handleDeletArtist(currentArtist.value?._id!);
       getArtists();
       router.push({ name: 'home' });
+      router.push({ name: 'home' });
       modalStore.closeModal();
     } catch (error: unknown) {
       handleError(error);
