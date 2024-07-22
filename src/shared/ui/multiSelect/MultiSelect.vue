@@ -42,7 +42,7 @@ const updateSelected = (event: { value?: boolean; id: string }) => {
           <template v-for="genre in options" :key="genre._id">
             <genre-label
               :genre="genre"
-              :deletable="true"
+              variant="deletable"
               v-if="selectedGenres.includes(genre._id)"
               @click.stop="updateSelected({ id: genre._id })"
             />

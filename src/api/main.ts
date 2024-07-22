@@ -1,5 +1,5 @@
 import { axiosInstance } from '.';
-import type { Artist, ArtistFilters, AuthRequest, Genre } from '@/stores/types';
+import type { Artist, ArtistFilters, AuthRequest } from '@/stores/types';
 
 // список художников для неавторизированного пользователя
 

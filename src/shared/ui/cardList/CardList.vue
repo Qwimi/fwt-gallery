@@ -7,13 +7,13 @@ import type { CardInterface } from '@/stores/types';
 
 const props = defineProps<{
   cards: CardInterface[];
-  isArtists: boolean;
+  variant: 'artists' | 'paintings';
 }>();
 
 const emit = defineEmits(['openSlider', 'makeTheCover', 'editPic', 'deletePic']);
 
 const cardClick = (event: string) => {
-  if (props.isArtists) {
+  if (props.variant === 'artists') {
     router.push({ name: 'artist', params: { id: event } });
   } else {
     emit('openSlider', event);
@@ -25,7 +25,7 @@ const cardClick = (event: string) => {
   <section class="card-list">
     <card-item v-for="card in cards" :key="card.id" :card="card" @click="cardClick">
       <card-settings
-        v-if="!isArtists"
+        v-if="props.variant === 'paintings'"
         :card="card.id"
         :main-painting="useAppStore().currentArtist?.mainPainting?._id"
         @click.stop

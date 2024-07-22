@@ -1,23 +1,40 @@
 <script lang="ts" setup>
+import { ref, type Ref } from 'vue';
 import IconBurger from '@/components/icons/IconBurger.vue';
 import IconLogo from '@/components/icons/IconLogo.vue';
+import IconSearch from '@/components/icons/IconSearch.vue';
+import SearchFilter from '@/components/SearchFilter';
 import ThemeToggler from '@/components/ThemeToggler';
+import router from '@/router';
 import { useAuthStore } from '@/stores/authStore';
 import { useModalStore } from '@/stores/modalStore';
 
 const modalStore = useModalStore();
 const authStore = useAuthStore();
+
+const isSearchOpen: Ref<boolean> = ref(false);
 </script>
 
 <template>
   <header class="header">
     <div class="wrapper">
       <div class="header__content">
-        <router-link :to="{ name: 'home' }" class="link-icon">
+        <router-link :to="{ name: 'home' }" class="icon--link">
           <icon-logo class="icon icon-logo" />
         </router-link>
-        <div class="icon-burger">
-          <icon-burger @click="modalStore.openSidebar('headerSidebar')" class="icon" />
+        <div class="header__column-right">
+          <search-filter
+            class="search"
+            variant="closable"
+            v-show="router.currentRoute.value.name == 'home' && isSearchOpen"
+            @close="isSearchOpen = false"
+          />
+          <button class="search-toggler" @click="isSearchOpen = true" v-show="!isSearchOpen">
+            <icon-search class="icon" />
+          </button>
+          <button class="icon-burger" @click="modalStore.openSidebar('headerSidebar')">
+            <icon-burger class="icon" />
+          </button>
         </div>
         <div class="header__menu">
           <nav class="menu">
@@ -53,9 +70,32 @@ const authStore = useAuthStore();
   }
   &__menu {
     align-items: center;
+    gap: 3.25rem;
+    display: none;
+
+    @media (min-width: $breakpoint-lg) {
+      display: flex;
+    }
+
+    .menu {
+      &__item {
+        @include headingH5;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &__column-right {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
+    min-height: 2rem;
   }
 
   .icon-burger {
+    @include buttonMixin;
     @media (min-width: $breakpoint-lg) {
       display: none;
     }
@@ -68,20 +108,27 @@ const authStore = useAuthStore();
       height: 1.25rem;
     }
   }
-  &__menu {
-    flex-direction: row;
-    gap: 3.25rem;
+}
+
+.icon--link {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.search {
+  flex: 1;
+}
+
+.search-toggler {
+  @include buttonMixin;
+}
+
+.search,
+.search-toggler {
+  display: block;
+  @media (min-width: $breakpoint-md) {
     display: none;
-
-    @media (min-width: $breakpoint-lg) {
-      display: flex;
-    }
-
-    .menu {
-      &__item {
-        @include headingH5;
-      }
-    }
   }
 }
 </style>

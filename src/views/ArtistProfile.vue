@@ -97,7 +97,7 @@ onUnmounted(() => store.unmountCurrentArtist());
 
       <card-list
         :cards="store.currentPaginationView"
-        :is-artists="false"
+        variant="paintings"
         @open-slider="openSlider($event)"
         @edit-pic="openEditPaintingModal($event)"
         @make-the-cover="setMainPainting($event)"

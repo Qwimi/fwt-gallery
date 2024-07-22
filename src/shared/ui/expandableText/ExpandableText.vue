@@ -19,9 +19,11 @@ const toggleExpand = () => (isExpanded.value = !isExpanded.value);
 </script>
 
 <template>
-  <p class="text" :class="biographyClass">
-    {{ biographyText }}
-  </p>
+  <transition name="fade">
+    <p class="text" :class="biographyClass" :key="biographyText">
+      {{ biographyText }}
+    </p>
+  </transition>
   <button-base variant="underline" class="text-toggler" @click="toggleExpand" v-if="isExpandable">
     <template v-if="isExpanded">read less</template>
     <template v-else>read more</template>
@@ -60,5 +62,9 @@ const toggleExpand = () => (isExpanded.value = !isExpanded.value);
       transition: rotate 0.3s;
     }
   }
+}
+
+.fade {
+  @include fade(0.3s);
 }
 </style>

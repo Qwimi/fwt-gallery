@@ -37,6 +37,7 @@ defineEmits(['check']);
   align-items: center;
   gap: 0.75rem;
   color: var(--text-secondary);
+  cursor: pointer;
 
   &--default {
     display: none;

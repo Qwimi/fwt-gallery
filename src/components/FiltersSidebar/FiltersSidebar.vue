@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import FilterItem from '@/shared/ui/FilterItem';
 import { useAppStore } from '@/stores/baseStore';
@@ -11,14 +11,18 @@ const initialState = {
 };
 
 const form = reactive({ ...initialState });
+const formElement = ref<HTMLFormElement | undefined>();
 
 const sortByValues = [
-  { _id: '', name: 'Recently added' },
+  { _id: 'recently', name: 'Recently added' },
   { _id: 'asc', name: 'A-Z' },
   { _id: 'desc', name: 'Z-A' }
 ];
 
-const resetForm = () => Object.assign(form, initialState);
+const resetForm = () => {
+  Object.assign(form, initialState);
+  formElement.value?.reset();
+};
 
 const sentForm = () => {
   store.filterArtists(form);
@@ -31,7 +35,7 @@ onMounted(() => {
 
 <template>
   <div class="sidebar__content">
-    <form class="filters" @submit.prevent="sentForm">
+    <form class="filters" @submit.prevent="sentForm" ref="formElement">
       <div class="filters__list">
         <filter-item
           label="Genres"
@@ -45,7 +49,11 @@ onMounted(() => {
         <button-base variant="underline" :button-props="{ type: 'submit' }">
           Show the results
         </button-base>
-        <button-base variant="underline" :button-props="{ type: 'reset' }" @click="resetForm">
+        <button-base
+          variant="underline"
+          :button-props="{ type: 'reset', disabled: !(form.genres.length || form.orderBy) }"
+          @click="resetForm"
+        >
           reset
         </button-base>
       </div>
@@ -55,15 +63,15 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .sidebar__content {
-  padding: 100px 1.25rem;
+  padding: 6.25em 1.25em;
   height: 100%;
 
   @media (min-width: $breakpoint-md) {
-    padding: 180px 2rem;
+    padding: 11.25em 2em;
   }
 
   @media (min-width: $breakpoint-lg) {
-    padding: 180px 132px 180px 2.5rem;
+    padding: 11.25em 8.25em 11.25em 2.5em;
   }
 }
 
@@ -76,7 +84,7 @@ onMounted(() => {
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2em;
   }
 
   &__buttons {
@@ -88,7 +96,7 @@ onMounted(() => {
 .filter-item {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1em;
 
   .icon--hide {
     display: none;
@@ -120,7 +128,7 @@ onMounted(() => {
     display: grid;
     grid-template-rows: repeat(4, 1fr);
     grid-auto-flow: column;
-    gap: 0.75rem;
+    gap: 0.75em;
   }
 }
 </style>

@@ -4,14 +4,14 @@ import type { Genre } from '@/stores/types';
 
 defineProps<{
   genre: Genre;
-  deletable?: boolean;
+  variant?: string;
 }>();
 </script>
 
 <template>
   <span class="label">
     {{ genre.name }}
-    <icon-close class="icon" v-if="deletable" />
+    <icon-close class="icon" v-if="variant === 'deletable'" />
   </span>
 </template>
 

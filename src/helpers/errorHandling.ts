@@ -13,10 +13,6 @@ export default function handleError(error: unknown) {
   } else {
     message.value = 'An unknown error occurred';
   }
-  if (error instanceof AxiosError) message.value = error.response?.data.message;
-  else if (error instanceof Error) message.value = error.message;
-  else if (typeof error === 'string') message.value = error;
-  else message.value = 'An unknown error occurred';
 
   useModalStore().setToastMessage(message.value!!);
 

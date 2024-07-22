@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import IconFilter from '@/components/icons/IconFilter.vue';
 import IconPlus from '@/components/icons/IconPlus.vue';
+import SearchFilter from '@/components/SearchFilter';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import CardList from '@/shared/ui/CardList';
-import TheSearch from '@/shared/ui/TheSearch/TheSearch.vue';
 import { useAuthStore } from '@/stores/authStore';
 import { useAppStore } from '@/stores/baseStore';
 import { useModalStore } from '@/stores/modalStore';
@@ -18,22 +18,40 @@ const authStore = useAuthStore();
       Add artist
     </button-base>
     <div class="tools-row__right-column">
-      <the-search />
-      <button-base variant="icon" @click="useModalStore().openSidebar('filters')"
-        ><icon-filter class="icon"
-      /></button-base>
+      <search-filter class="search" />
+      <button-base variant="icon" @click="useModalStore().openSidebar('filters')">
+        <icon-filter class="icon" />
+      </button-base>
     </div>
   </div>
   <div class="wrapper">
-    <card-list :cards="store.artistCards" :is-artists="true" />
-    <button-base
-      variant="underline"
-      v-if="store.isArtistListExpandable && authStore.isUserAuth"
-      @click="store.loadMore"
-      class="button--load-more"
-    >
-      Load more
-    </button-base>
+    <template v-if="store.artistCards.length">
+      <card-list :cards="store.artistCards" variant="artists" />
+      <button-base
+        variant="underline"
+        v-if="store.isArtistListExpandable && authStore.isUserAuth"
+        @click="store.loadMore"
+        class="button--load-more"
+      >
+        Load more
+      </button-base>
+    </template>
+
+    <template v-else>
+      <div class="no-matches">
+        <div class="no-matches__title">
+          {{ store.getSearchString() ? `No matches for` : 'No matches for filters' }}
+          <span class="no-matches__title--bold">{{ store.getSearchString() }}</span>
+        </div>
+        <div class="no-matches__description">
+          {{
+            store.getSearchString()
+              ? 'Please try again with a different spelling or keywords.'
+              : 'Please try again with a different filters.'
+          }}
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -63,6 +81,34 @@ const authStore = useAuthStore();
   margin: 2rem auto 0;
   @media (min-width: $breakpoint-md) {
     margin: 2.5rem auto 0;
+  }
+}
+
+.no-matches {
+  &__title {
+    color: var(--text-secondary);
+    margin-bottom: 0.75em;
+    @include paragraphBaseLight;
+    &--bold {
+      @include paragraphBaseMedium;
+    }
+  }
+
+  &__description {
+    color: var(--gray_9c);
+    @include paragraphSmallLight;
+  }
+
+  @media (min-width: $breakpoint-md) {
+    text-align: center;
+    font-size: 1.25em;
+  }
+}
+
+.search {
+  display: none;
+  @media (min-width: $breakpoint-md) {
+    display: block;
   }
 }
 </style>

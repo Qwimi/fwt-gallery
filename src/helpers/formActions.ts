@@ -12,7 +12,7 @@ export const toFormData = (form: Object) => {
       return;
     }
 
-    formData.append(key, value || null);
+    formData.append(key, value.trim() || null);
   });
 
   return formData;

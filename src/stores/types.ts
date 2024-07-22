@@ -84,7 +84,7 @@ export interface ArtistRequest extends Omit<ArtistRequestForm, 'avatar'> {
 export interface ArtistFilters {
   genres?: string[];
   orderBy?: string;
-  search?: string;
+  name?: string;
 }
 
 // cards

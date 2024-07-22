@@ -12,102 +12,102 @@
 @mixin headingH1 {
   // @extend .cormorant;
   font-weight: 500;
-  font-size: 3.75rem;
+  font-size: 3.75em;
 }
 
 @mixin headingH2 {
   // @extend .cormorant;
   font-weight: 500;
-  font-size: 3rem;
+  font-size: 3em;
 }
 
 @mixin headingH3 {
   @extend .cormorant;
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 2em;
 }
 
 @mixin headingH4 {
   @extend .cormorant;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1em;
   text-transform: uppercase;
 }
 
 @mixin headingH5 {
   @extend .cormorant;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1em;
   text-transform: uppercase;
 }
 
 @mixin headingH6 {
   @extend .cormorant;
   font-weight: 500;
-  font-size: 0.75rem;
+  font-size: 0.75em;
   text-transform: uppercase;
 }
 
 @mixin paragraphBaseLight {
   @extend .inter;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 1em;
 }
 
 @mixin paragraphBaseMedium {
   @extend .inter;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1em;
 }
 
 @mixin paragraphSmallLight {
   @extend .inter;
   font-weight: 300;
-  font-size: 0.75rem;
+  font-size: 0.75em;
 }
 
 @mixin paragraphSmallMedium {
   @extend .inter;
   font-weight: 500;
-  font-size: 0.75rem;
+  font-size: 0.75em;
 }
 
 @mixin paragraphTiny {
   @extend .inter;
   font-weight: 500;
-  font-size: 0.5rem;
+  font-size: 0.5em;
 }
 
 @mixin buttonText {
   @extend .inter;
   font-weight: bold;
-  font-size: 0.75rem;
+  font-size: 0.75em;
   text-transform: uppercase;
 }
 
 @mixin inputText {
   @extend .inter;
   font-weight: bold;
-  font-size: 0.75rem;
+  font-size: 0.75em;
 }
 
 @mixin captionMedium16 {
   @extend .cormorant;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1em;
   text-transform: uppercase;
 }
 
 @mixin captionMedium12 {
   @extend .cormorant;
   font-weight: 500;
-  font-size: 0.75rem;
+  font-size: 0.75em;
   text-transform: uppercase;
 }
 
 @mixin captionBold {
   @extend .inter;
   font-weight: bold;
-  font-size: 0.5rem;
+  font-size: 0.5em;
   text-transform: uppercase;
 }

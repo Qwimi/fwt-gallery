@@ -43,6 +43,13 @@ export const useAppStore = defineStore('app', () => {
     modalStore.closeSidebar();
   };
 
+  const getSearchString = () => filter.value?.name;
+
+  const setSearchString = (search?: string) => {
+    filter.value = { name: search };
+    getArtists();
+  };
+
   // main page
 
   const artists: Ref<Artist[]> = ref([]);
@@ -124,6 +131,10 @@ export const useAppStore = defineStore('app', () => {
   const paginationPagesCount = computed(() => Math.ceil(currentArtistCards.value?.length! / 6));
 
   const currentPaginationView = computed(() => {
+    if (currentPaginationPage.value > paginationPagesCount.value) {
+      currentPaginationPage.value = paginationPagesCount.value;
+    }
+
     return currentArtistCards.value!.slice(
       6 * (currentPaginationPage.value - 1),
       6 * currentPaginationPage.value
@@ -256,6 +267,8 @@ export const useAppStore = defineStore('app', () => {
     paginationPagesCount,
     currentPaginationView,
     currentPaginationPage,
+    getSearchString,
+    setSearchString,
     loadMore,
     getFilterableGenres,
     filterArtists,
