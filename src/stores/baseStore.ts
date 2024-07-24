@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed, ref, type ComputedRef, type Ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch, type ComputedRef, type Ref } from 'vue';
 import { useAuthStore } from './authStore';
 import { useModalStore } from './modalStore';
 import type { Artist, ArtistFilters, ArtistPage, CardInterface, Genre, Painting } from './types';
@@ -31,10 +31,12 @@ export const useAppStore = defineStore('app', () => {
   // infinite scroll
 
   const artistCount: Ref<number> = ref(0);
+  const cardsPerMainPage: Ref<number> = ref(6);
   const pageCounter: Ref<number> = ref(1);
   const isArtistListExpandable = computed(() => artistCount.value > artistCards.value.length);
 
   // filters
+
   const filter: Ref<ArtistFilters | null> = ref(null);
 
   const filterArtists = async (form: ArtistFilters) => {
@@ -73,7 +75,11 @@ export const useAppStore = defineStore('app', () => {
     try {
       if (authStore.isUserAuth) {
         pageCounter.value = 1;
-        const response = await handleGetArtists(pageCounter.value, filter.value);
+        const response = await handleGetArtists(
+          pageCounter.value,
+          cardsPerMainPage.value,
+          filter.value
+        );
         artists.value = response.data;
 
         artistCount.value = response.meta.count;
@@ -87,7 +93,11 @@ export const useAppStore = defineStore('app', () => {
 
   const loadMore = async () => {
     pageCounter.value++;
-    const newArtist = await handleGetArtists(pageCounter.value, filter.value);
+    const newArtist = await handleGetArtists(
+      pageCounter.value,
+      cardsPerMainPage.value,
+      filter.value
+    );
     artists.value = artists.value.concat(newArtist.data);
   };
 
@@ -124,11 +134,21 @@ export const useAppStore = defineStore('app', () => {
     currentArtist.value = null;
   };
 
-  // pagination
+  // pagination at profile page
 
+  const checkWidth = (windowWidth: number) => {
+    if (windowWidth < 768) return 4;
+    else if (windowWidth < 1440) return 8;
+    else return 9;
+  };
+  const cardsPerProfilePage: Ref<number> = ref(checkWidth(window.innerWidth));
+  window.addEventListener('resize', () => {
+    cardsPerProfilePage.value = checkWidth(window.innerWidth);
+  });
   const currentPaginationPage: Ref<number> = ref(1);
-
-  const paginationPagesCount = computed(() => Math.ceil(currentArtistCards.value?.length! / 6));
+  const paginationPagesCount = computed(() =>
+    Math.ceil(currentArtistCards.value?.length! / cardsPerProfilePage.value)
+  );
 
   const currentPaginationView = computed(() => {
     if (currentPaginationPage.value > paginationPagesCount.value) {
@@ -136,8 +156,8 @@ export const useAppStore = defineStore('app', () => {
     }
 
     return currentArtistCards.value!.slice(
-      6 * (currentPaginationPage.value - 1),
-      6 * currentPaginationPage.value
+      cardsPerProfilePage.value * (currentPaginationPage.value - 1),
+      cardsPerProfilePage.value * currentPaginationPage.value
     );
   });
 
