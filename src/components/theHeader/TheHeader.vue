@@ -26,10 +26,15 @@ const isSearchOpen: Ref<boolean> = ref(false);
           <search-filter
             class="search"
             variant="closable"
-            v-show="router.currentRoute.value.name == 'home' && isSearchOpen"
+            v-show="isSearchOpen"
             @close="isSearchOpen = false"
           />
-          <button class="search-toggler" @click="isSearchOpen = true" v-show="!isSearchOpen">
+          <button
+            class="search-toggler"
+            @click="isSearchOpen = true"
+            v-if="router.currentRoute.value.name == 'home' && useAuthStore().isUserAuth"
+            v-show="!isSearchOpen"
+          >
             <icon-search class="icon" />
           </button>
           <button class="icon-burger" @click="modalStore.openSidebar('headerSidebar')">

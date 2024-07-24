@@ -10,7 +10,7 @@ defineProps<{
   label?: string;
   error?: string;
   variant?: string;
-  modelValue?: string;
+  modelValue?: string | number;
   inputAttributes?: InputHTMLAttributes;
 }>();
 

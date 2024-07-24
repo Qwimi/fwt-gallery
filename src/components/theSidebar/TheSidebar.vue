@@ -1,15 +1,13 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import FiltersSidebar from '@/components/FiltersSidebar';
-import HeaderSidebar from '@/components/HeaderSidebar';
+import { computed, defineAsyncComponent } from 'vue';
 import IconClose from '@/components/icons/IconClose.vue';
 import { useModalStore } from '@/stores/modalStore';
 
 const modalStore = useModalStore();
 
 const components = {
-  headerSidebar: HeaderSidebar,
-  filters: FiltersSidebar
+  headerSidebar: defineAsyncComponent(() => import('@/components/HeaderSidebar')),
+  filters: defineAsyncComponent(() => import('@/components/FiltersSidebar'))
 };
 
 const currentSidebar = computed(

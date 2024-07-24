@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ArtistProfile from '@/views/ArtistProfile.vue';
 import HomeView from '@/views/HomeView.vue';
 
 const router = createRouter({
@@ -13,7 +12,7 @@ const router = createRouter({
     {
       path: '/artist/:id',
       name: 'artist',
-      component: ArtistProfile
+      component: () => import('@/views/ArtistProfile.vue')
     }
   ],
   scrollBehavior() {

@@ -1,9 +1,9 @@
 <template>
-  <article class="card">
+  <article class="skeleton card">
     <div class="card__info">
       <div class="card__text">
-        <p class="card__title"></p>
-        <p class="card__date"></p>
+        <p class="skeleton card__title"></p>
+        <p class="skeleton card__date"></p>
       </div>
     </div>
   </article>
@@ -12,9 +12,7 @@
 <style lang="scss" scoped>
 $card-background--light: #eeeded;
 $card-background--dark: #0d0d0d;
-
-.card {
-  aspect-ratio: 98/65;
+.skeleton {
   position: relative;
   overflow: hidden;
   background-color: light-dark($card-background--light, $card-background--dark);
@@ -22,7 +20,7 @@ $card-background--dark: #0d0d0d;
   &::before {
     content: '';
     position: absolute;
-    animation: wave 1s ease infinite;
+    animation: wave 2s ease infinite;
     height: 100%;
     width: 16.25rem;
     background: linear-gradient(
@@ -33,6 +31,10 @@ $card-background--dark: #0d0d0d;
       rgba(13, 13, 13, 0) 109.66%
     );
   }
+}
+
+.card {
+  aspect-ratio: 98/65;
 
   @include descriptionMixin;
 
@@ -65,7 +67,7 @@ $card-background--dark: #0d0d0d;
 
   &__title,
   &__date {
-    background-color: light-dark($card-background--light, $card-background--dark);
+    animation-delay: 0.2s;
   }
 
   &__title {
@@ -89,7 +91,7 @@ $card-background--dark: #0d0d0d;
 
 @keyframes wave {
   from {
-    left: -20%;
+    left: -50%;
   }
   to {
     left: 100%;

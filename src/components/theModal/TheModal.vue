@@ -1,21 +1,16 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import ArtistInteraction from '@/components/ArtistInteraction';
-import DeleteModal from '@/components/DeleteModal';
+import { computed, defineAsyncComponent } from 'vue';
 import IconClose from '@/components/icons/IconClose.vue';
-import LoginModal from '@/components/LoginModal';
-import PaintingInteraction from '@/components/PaintingInteraction';
-import SignUpModal from '@/components/SignupModal';
 import { useModalStore } from '@/stores/modalStore';
 
 const modalStore = useModalStore();
 
 const components = {
-  logIn: LoginModal,
-  signUp: SignUpModal,
-  delete: DeleteModal,
-  addArtist: ArtistInteraction,
-  addPicture: PaintingInteraction
+  logIn: defineAsyncComponent(() => import('@/components/LoginModal')),
+  signUp: defineAsyncComponent(() => import('@/components/SignupModal')),
+  delete: defineAsyncComponent(() => import('@/components/DeleteModal')),
+  addArtist: defineAsyncComponent(() => import('@/components/ArtistInteraction')),
+  addPicture: defineAsyncComponent(() => import('@/components/PaintingInteraction'))
 };
 
 const currentModal = computed(() => components[modalStore.currentModal as keyof typeof components]);

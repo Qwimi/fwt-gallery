@@ -55,14 +55,12 @@ const sentData = async () => {
             v-model="form.name"
             type="text"
             label="The name of the picture"
-            class="form-element--long"
             :error="errors.name"
           />
           <the-input
             v-model="form.yearOfCreation"
             type="number"
             label="Year of creation"
-            class="form-element--short"
             :error="errors.yearOfCreation"
           />
         </div>
@@ -109,11 +107,11 @@ const sentData = async () => {
       overflow: hidden;
     }
     &--row {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 2rem;
       @media (min-width: $breakpoint-md) {
-        flex-direction: row;
+        grid-template-columns: 1fr 6.5rem;
         gap: 3rem;
       }
     }
@@ -121,17 +119,6 @@ const sentData = async () => {
 
   @media (min-width: $breakpoint-md) {
     width: 100%;
-  }
-}
-
-.form-element {
-  @media (min-width: $breakpoint-md) {
-    &--short {
-      max-width: 105px;
-    }
-    &--long {
-      flex: 1;
-    }
   }
 }
 
