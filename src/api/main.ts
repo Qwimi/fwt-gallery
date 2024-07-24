@@ -11,10 +11,14 @@ export const handleGetArtistsStatic = async () => {
 
 // список художников для авторизированного пользователя
 
-export const handleGetArtists = async (page: number, filters?: ArtistFilters | null) => {
+export const handleGetArtists = async (
+  page: number,
+  cardsPerPage: number,
+  filters?: ArtistFilters | null
+) => {
   const response = await axiosInstance.get('/artists', {
     params: {
-      perPage: 6,
+      perPage: cardsPerPage,
       pageNumber: page,
       sortBy: 'name',
       ...filters
@@ -83,11 +87,9 @@ export const handleGetGenresStatic = async () => {
 // получение жанров, по которым можно осуществить поиск
 
 export const handleGetFilterableGenres = async () => {
-  const response = await axiosInstance.get(`/artists`);
-  const artists = response.data.data;
-
+  const { data } = (await axiosInstance.get(`/artists`)).data;
   const genresIdList = new Set();
-  artists.map((elem: Artist) => {
+  data.map((elem: Artist) => {
     elem.genres.forEach((genre: string) => genresIdList.add(genre));
   });
 

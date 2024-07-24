@@ -13,7 +13,6 @@ import type { CardInterface, PaintingRequestForm } from '@/stores/types';
 
 interface PaintingProps extends CardInterface {
   target(id: string, form: FormData, paintingId?: string): void;
-  target(id: string, form: FormData, paintingId?: string): void;
 }
 
 const store = useAppStore();
