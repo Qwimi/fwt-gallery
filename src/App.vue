@@ -5,9 +5,11 @@ import TheHeader from '@/components/TheHeader';
 import TheModal from '@/components/TheModal';
 import TheSidebar from '@/components/TheSidebar';
 import TheToast from '@/components/TheToast';
+import SpinnerLoader from '@/shared/ui/SpinnerLoader';
 </script>
 
 <template>
+  <spinner-loader />
   <the-sidebar />
   <the-modal />
   <the-header />

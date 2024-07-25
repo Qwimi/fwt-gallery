@@ -37,7 +37,7 @@ const authStore = useAuthStore();
       </button-base>
     </template>
 
-    <template v-else>
+    <template v-else-if="store.isFiltersUsed">
       <div class="no-matches">
         <div class="no-matches__title">
           {{ store.getSearchString() ? `No matches for` : 'No matches for filters' }}

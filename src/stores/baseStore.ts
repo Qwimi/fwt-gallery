@@ -38,6 +38,7 @@ export const useAppStore = defineStore('app', () => {
   // filters
 
   const filter: Ref<ArtistFilters | null> = ref(null);
+  const isFiltersUsed = computed(() => !!filter.value);
 
   const filterArtists = async (form: ArtistFilters) => {
     filter.value = form;
@@ -288,6 +289,7 @@ export const useAppStore = defineStore('app', () => {
     paginationPagesCount,
     currentPaginationView,
     currentPaginationPage,
+    isFiltersUsed,
     getSearchString,
     setSearchString,
     loadMore,
