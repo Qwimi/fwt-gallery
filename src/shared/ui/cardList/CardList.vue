@@ -26,6 +26,7 @@ const cardClick = (event: string) => {
 
 <template>
   <section class="card-list">
+    <card-skeleton />
     <template v-for="card in cards" :key="card.id">
       <suspense>
         <template #default>

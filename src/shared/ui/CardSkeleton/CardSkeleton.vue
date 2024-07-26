@@ -1,34 +1,32 @@
 <template>
-  <article class="skeleton card">
+  <article class="card card--skeleton">
     <div class="card__info">
       <div class="card__text">
-        <p class="skeleton card__title"></p>
-        <p class="skeleton card__date"></p>
+        <p class="card__title"></p>
+        <p class="card__date"></p>
       </div>
     </div>
   </article>
 </template>
 
 <style lang="scss" scoped>
-$card-background--light: #eeeded;
-$card-background--dark: #0d0d0d;
-.skeleton {
+.card--skeleton {
   position: relative;
   overflow: hidden;
-  background-color: light-dark($card-background--light, $card-background--dark);
+  background-color: var(--background-card);
 
   &::before {
     content: '';
     position: absolute;
+    z-index: 7;
     animation: wave 2s ease infinite;
     height: 100%;
     width: 16.25rem;
-    background: linear-gradient(
+    background-image: linear-gradient(
       90deg,
-      rgba(18, 18, 18, 0) 6.82%,
-      rgba(13, 13, 13, 0) 6.83%,
-      rgba(87, 87, 87, 0.1) 58.56%,
-      rgba(13, 13, 13, 0) 109.66%
+      color-mix(in srgb, var(--background-primary) 0%, transparent) 0%,
+      color-mix(in srgb, var(--background-primary) 50%, transparent) 50%,
+      color-mix(in srgb, var(--background-primary) 0%, transparent) 100%
     );
   }
 }
@@ -67,7 +65,7 @@ $card-background--dark: #0d0d0d;
 
   &__title,
   &__date {
-    animation-delay: 0.2s;
+    background-color: var(--background-card);
   }
 
   &__title {

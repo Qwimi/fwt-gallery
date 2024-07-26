@@ -9,7 +9,7 @@ import SpinnerLoader from '@/shared/ui/SpinnerLoader';
 </script>
 
 <template>
-  <spinner-loader />
+  <!-- <spinner-loader /> -->
   <the-sidebar />
   <the-modal />
   <the-header />

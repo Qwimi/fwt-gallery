@@ -7,7 +7,7 @@ const props = defineProps<{ text?: string }>();
 
 const maxStrLenght = 265;
 const isExpanded: Ref<Boolean> = ref(false);
-const isExpandable = computed(() => props.text && props.text.length > 265);
+const isExpandable = computed(() => props.text && props.text.length > maxStrLenght);
 const biographyClass = computed(() =>
   !isExpandable.value || isExpanded.value ? '' : 'text--short'
 );
