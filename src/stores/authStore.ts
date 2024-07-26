@@ -1,7 +1,8 @@
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { defineStore } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
-import { useAppStore } from './baseStore';
+import { useArtistStore } from './artistStore';
+import { useGenresStore } from './genresStore';
 import { useModalStore } from './modalStore';
 import type { AuthForm, AuthRequest, AuthResponse } from './types';
 import { setupInterceptors } from '@/api';
@@ -12,8 +13,8 @@ export const useAuthStore = defineStore('auth', () => {
   const fingerprint: Ref<string | null> = ref(null);
   const accessToken: Ref<string | null> = ref(null);
   const refreshToken: Ref<string | null> = ref(null);
-  const isUserAuth = computed(() => !!accessToken.value);
-  const store = useAppStore();
+  const isUserAuth = computed(() => Boolean(accessToken.value));
+  const store = useArtistStore();
 
   const initializeFingerprint = async () => {
     try {
@@ -27,7 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const reloadAppData = () => {
     store.getArtists();
-    store.getGenres();
+    useGenresStore().getGenres();
   };
 
   const getAccessToken = () => accessToken.value;

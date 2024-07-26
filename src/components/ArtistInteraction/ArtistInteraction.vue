@@ -2,18 +2,20 @@
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, type ComputedRef } from 'vue';
 import IconProfile from '@/components/icons/IconProfile.vue';
-import { toFormData } from '@/helpers/formSubmit';
+import { toFormData } from '@/helpers/formActions';
 import { artistRules, useValidationErrors } from '@/helpers/validation';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import DragAndDrop from '@/shared/ui/DragAndDrop';
 import MultiSelect from '@/shared/ui/MultiSelect';
 import TheInput from '@/shared/ui/TheInput';
 import TheTextarea from '@/shared/ui/TheTextarea';
-import { useAppStore } from '@/stores/baseStore';
+import { useArtistStore } from '@/stores/artistStore';
+import { useGenresStore } from '@/stores/genresStore';
 import { useModalStore } from '@/stores/modalStore';
 import type { ArtistPage, Genre, ArtistRequestForm } from '@/stores/types';
 
-const store = useAppStore();
+const store = useArtistStore();
+const genresStore = useGenresStore();
 const currentArtist: ArtistPage = reactive(useModalStore().currentModalProps as ArtistPage);
 
 const form: ArtistRequestForm = reactive({
@@ -44,7 +46,12 @@ const sentData = async () => {
 
 <template>
   <div class="modal__content">
-    <form class="form__container" enctype="multipart/form-data" @submit.prevent="sentData">
+    <form
+      class="form__container"
+      enctype="multipart/form-data"
+      @submit.prevent="sentData"
+      @keydown.enter.prevent="sentData"
+    >
       <drag-and-drop
         v-model="form.avatar"
         :placeholder-icon="IconProfile"
@@ -73,7 +80,7 @@ const sentData = async () => {
           />
           <multi-select
             label="Genres*"
-            :options="store.genres"
+            :options="genresStore.genres"
             v-model="form.genres"
             :error="errors.genres"
           />

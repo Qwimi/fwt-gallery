@@ -10,12 +10,15 @@ import router from '@/router';
 import AddMainPicture from '@/shared/ui/AddMainPicture';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import CardList from '@/shared/ui/CardList';
+import ThePagination from '@/shared/ui/ThePagination';
+import { useArtistStore } from '@/stores/artistStore';
 import { useAuthStore } from '@/stores/authStore';
-import { useAppStore } from '@/stores/baseStore';
 import { useModalStore } from '@/stores/modalStore';
+import { usePaintingStore } from '@/stores/paintingStore';
 import type { CardInterface } from '@/stores/types';
 
-const store = useAppStore();
+const store = useArtistStore();
+const paintingStore = usePaintingStore();
 const authStore = useAuthStore();
 const modalStore = useModalStore();
 const artistId = router.currentRoute.value.params.id as string;
@@ -30,13 +33,13 @@ const openSlider = (id: string) => {
 };
 
 const openDeletePaintingModal = (cardId: string) => {
-  modalStore.openModal('delete', { id: cardId, target: store.deletePicture });
+  modalStore.openModal('delete', { id: cardId, target: paintingStore.deletePicture });
 };
 const openEditPaintingModal = (card: CardInterface) => {
-  modalStore.openModal('addPicture', { ...card, target: store.updatePainting });
+  modalStore.openModal('addPicture', { ...card, target: paintingStore.updatePainting });
 };
 const setMainPainting = (cardId: string) => {
-  store.setMainPainting(artistId, cardId);
+  paintingStore.setMainPainting(cardId);
 };
 
 onUnmounted(() => store.unmountCurrentArtist());
@@ -69,43 +72,51 @@ onUnmounted(() => store.unmountCurrentArtist());
     </div>
   </div>
   <painting-slider
-    v-if="isSliderOpen && store.currentArtistCards.length"
+    v-if="isSliderOpen && store.currentArtistCards?.length"
     :slides="store.currentArtistCards"
-    :main-painting="store.currentArtist.mainPainting?._id"
+    :main-painting="store.currentArtist?.mainPainting?._id"
     :open-slide="slideToOpen"
     @close="() => (isSliderOpen = false)"
     @edit-pic="openEditPaintingModal($event)"
     @make-the-cover="setMainPainting($event)"
     @delete-pic="openDeletePaintingModal($event)"
   />
-  <artist-section :artist="store.currentArtist" />
+  <artist-section :artist="store.currentArtist" v-if="store.currentArtist" />
   <section class="wrapper">
     <h3 class="section__title">Artworks</h3>
-    <template v-if="store.currentArtistCards.length">
+    <template v-if="store.currentArtistCards?.length">
       <div class="tools-row" v-if="authStore.isUserAuth">
         <div class="tools-row__right-column">
           <button-base
             variant="underline"
-            @click="modalStore.openModal('addPicture', { target: store.createPainting })"
+            @click="modalStore.openModal('addPicture', { target: paintingStore.createPainting })"
           >
             <template #icon><icon-plus class="icon" /></template>
             Add artist
           </button-base>
         </div>
       </div>
+
       <card-list
-        :cards="store.currentArtistCards"
-        :is-artists="false"
+        :cards="store.currentPaginationView"
+        variant="paintings"
         @open-slider="openSlider($event)"
         @edit-pic="openEditPaintingModal($event)"
         @make-the-cover="setMainPainting($event)"
         @delete-pic="openDeletePaintingModal($event)"
       />
+
+      <the-pagination
+        v-if="store.paginationPagesCount > 1"
+        v-model="store.currentPaginationPage"
+        :pages-count="store.paginationPagesCount"
+        class="pagination"
+      />
     </template>
     <div class="no-cards" v-else>
       <add-main-picture
-        @click="modalStore.openModal('addPicture', { target: store.createMainPainting })"
-        v-if="authStore.isUserAuth"
+        @click="modalStore.openModal('addPicture', { target: paintingStore.createMainPainting })"
+        v-if="authStore.isUserAuth && store.currentArtist"
       />
       <span class="no-cards__decoration"></span>
       <p class="no-cards__title">The paintings of this artist have not been uploaded yet.</p>
@@ -145,6 +156,13 @@ onUnmounted(() => store.unmountCurrentArtist());
       margin-right: 0.75rem;
       rotate: 180deg;
     }
+  }
+}
+
+.pagination {
+  margin: 2rem auto 0;
+  @media (min-width: $breakpoint-md) {
+    margin: 2.5rem auto 0;
   }
 }
 

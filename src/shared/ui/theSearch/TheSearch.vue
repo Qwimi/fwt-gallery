@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-import { ref, type InputHTMLAttributes, type Ref } from 'vue';
+import { type InputHTMLAttributes } from 'vue';
 import IconSearch from '@/components/icons/IconSearch.vue';
 import TheInput from '@/shared/ui/TheInput';
 
 defineProps<{
   error?: string;
   inputAttributes?: InputHTMLAttributes;
+  modelValue?: string;
 }>();
 
-const searchString: Ref<string | null> = ref(null);
+defineEmits(['update:modelValue']);
 </script>
 
 <template>
@@ -16,8 +17,9 @@ const searchString: Ref<string | null> = ref(null);
     type="text"
     :error="error"
     :input-attributes="inputAttributes"
-    v-model="searchString"
-    @update:model-value="$emit('update:searchString', $event)"
+    variant="thin"
+    v-bind:model-value="modelValue"
+    @update:model-value="$emit('update:modelValue', $event)"
   >
     <template #icon><icon-search class="icon" /></template>
   </the-input>

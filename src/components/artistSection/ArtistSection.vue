@@ -5,7 +5,7 @@ import NoImage from '@/shared/ui/NoImage';
 import type { ArtistPage } from '@/stores/types';
 
 defineProps<{
-  artist: ArtistPage;
+  artist?: ArtistPage;
 }>();
 </script>
 
@@ -18,16 +18,16 @@ defineProps<{
     <div class="biography">
       <div class="biography__wrapper">
         <div class="biography__header">
-          <p class="biography__date">{{ artist.yearsOfLife }}</p>
-          <p class="biography__name">{{ artist.name }}</p>
+          <p class="biography__date">{{ artist?.yearsOfLife }}</p>
+          <p class="biography__name">{{ artist?.name }}</p>
         </div>
         <div class="biography__content">
           <div class="biography__main">
-            <expandable-text :text="artist.description" />
+            <expandable-text :text="artist?.description" />
           </div>
           <div class="biography__genres">
             <genre-label
-              v-for="genre in artist.genres"
+              v-for="genre in artist?.genres"
               :key="genre._id"
               :genre="genre"
               :deletable="false"

@@ -42,7 +42,7 @@ export interface Painting {
 
 export interface PaintingRequestForm {
   name: string;
-  yearOfCreation: string | number;
+  yearOfCreation?: string | number;
   image?: File | Image | string;
 }
 
@@ -79,6 +79,12 @@ export interface ArtistRequestForm {
 
 export interface ArtistRequest extends Omit<ArtistRequestForm, 'avatar'> {
   avatar: string | null;
+}
+
+export interface ArtistFilters {
+  genres?: string[];
+  orderBy?: string;
+  name?: string;
 }
 
 // cards

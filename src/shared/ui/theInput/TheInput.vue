@@ -9,7 +9,8 @@ defineProps<{
   type: 'password' | 'text' | 'email' | 'number';
   label?: string;
   error?: string;
-  modelValue?: string;
+  variant?: string;
+  modelValue?: string | number;
   inputAttributes?: InputHTMLAttributes;
 }>();
 
@@ -21,8 +22,8 @@ const showPassword = () => (isPasswordShow.value = !isPasswordShow.value);
 </script>
 
 <template>
-  <div class="form-element">
-    <p class="form-element__label">{{ label }}</p>
+  <div class="form-element" :class="`form-element--${variant}`">
+    <p class="form-element__label" v-if="label">{{ label }}</p>
     <label class="form-element__wrapper">
       <slot name="icon"></slot>
       <input

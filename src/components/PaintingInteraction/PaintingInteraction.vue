@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, ref, type ComputedRef, type Ref } from 'vue';
-import IconNoImage from '../icons/IconNoImage.vue';
-import { toFormData } from '@/helpers/formSubmit';
+import IconNoImage from '@/components/icons/IconNoImage.vue';
+import { toFormData } from '@/helpers/formActions';
 import { paintingRules, useValidationErrors } from '@/helpers/validation';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import DragAndDrop from '@/shared/ui/DragAndDrop/DragAndDrop.vue';
 import TheInput from '@/shared/ui/TheInput';
-import { useAppStore } from '@/stores/baseStore';
 import { useModalStore } from '@/stores/modalStore';
 import type { CardInterface, PaintingRequestForm } from '@/stores/types';
 
 interface PaintingProps extends CardInterface {
-  target(id: string, form: FormData, paintingId?: string): void;
+  target(form: FormData, paintingId?: string): void;
 }
 
-const store = useAppStore();
 const props: Ref<PaintingProps> = ref(useModalStore().currentModalProps as PaintingProps);
 
 const form: PaintingRequestForm = reactive({
@@ -35,29 +33,31 @@ const sentData = async () => {
 
   if (!isValid) return;
 
-  const id = store.currentArtist._id;
   const formData = toFormData(form);
-  props.value.target(id, formData, props.value.id);
+  props.value.target(formData, props.value.id);
 };
 </script>
 
 <template>
   <div class="modal__content">
-    <form class="form" enctype="multipart/form-data" @submit.prevent="sentData">
+    <form
+      class="form"
+      enctype="multipart/form-data"
+      @submit.prevent="sentData"
+      @keydown.enter.prevent="sentData"
+    >
       <div class="form__inputs">
         <div class="form__inputs--row">
           <the-input
             v-model="form.name"
             type="text"
             label="The name of the picture"
-            class="form-element--long"
             :error="errors.name"
           />
           <the-input
             v-model="form.yearOfCreation"
             type="number"
             label="Year of creation"
-            class="form-element--short"
             :error="errors.yearOfCreation"
           />
         </div>
@@ -83,8 +83,11 @@ const sentData = async () => {
     width: 100vw;
 
     @media (min-width: $breakpoint-md) {
-      max-width: 700px;
       padding: 5rem 100px;
+    }
+
+    @media (min-width: $breakpoint-lg) {
+      max-width: 700px;
     }
   }
 }
@@ -101,11 +104,12 @@ const sentData = async () => {
       overflow: hidden;
     }
     &--row {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
       gap: 2rem;
       @media (min-width: $breakpoint-md) {
-        flex-direction: row;
+        grid-template-columns: 1fr 6.5rem;
+        grid-template-rows: 1fr;
         gap: 3rem;
       }
     }
@@ -113,17 +117,6 @@ const sentData = async () => {
 
   @media (min-width: $breakpoint-md) {
     width: 100%;
-  }
-}
-
-.form-element {
-  @media (min-width: $breakpoint-md) {
-    &--short {
-      max-width: 105px;
-    }
-    &--long {
-      flex: 1;
-    }
   }
 }
 

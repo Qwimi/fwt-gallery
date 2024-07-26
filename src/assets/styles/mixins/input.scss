@@ -64,4 +64,9 @@
   &:has(&__error) &__wrapper {
     border-color: var(--error);
   }
+
+  &--thin &__wrapper {
+    max-height: 2rem;
+    padding: 0.25rem 1rem;
+  }
 }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import IconArrow from '@/components/icons/IconArrow.vue';
 import IconChangePic from '@/components/icons/IconChangePic.vue';
 import IconClose from '@/components/icons/IconClose.vue';
@@ -33,15 +33,29 @@ const onSwiper = (swiper: any) => {
   swiperInstanse.value = swiper;
 };
 
-onMounted(() => {
-  const slideTo = props.slides.findIndex((slide: CardInterface) => slide.id === props.openSlide);
+const findIndex = (id: string | null) =>
+  props.slides.findIndex((slide: CardInterface) => slide.id === id);
+
+const onChangeSlide = (slideTo: number) => {
+  if (slideTo === -1 || slideTo > props.slides.length) {
+    swiperInstanse.value.slideTo(props.slides.length);
+
+    return;
+  }
   swiperInstanse.value.slideTo(slideTo);
-});
+};
+
+watch(
+  () => props.slides.length,
+  () => onChangeSlide(currentIndex.value)
+);
+
+onMounted(() => onChangeSlide(findIndex(props.openSlide)));
 </script>
 
 <template>
   <Teleport to="body">
-    <swiper class="swiper" @swiper="onSwiper">
+    <swiper class="swiper" @swiper="onSwiper" :loop="true">
       <div class="tools-row tools-row--top">
         <button-base
           variant="icon-always-light"

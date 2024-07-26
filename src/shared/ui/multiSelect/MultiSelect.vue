@@ -20,7 +20,7 @@ const isSelectOpen: Ref<boolean> = ref(false);
 const selectedGenres: Ref<string[]> = ref(props.modelValue || []);
 
 const deleteSelected = (option: string) => {
-  selectedGenres.value = selectedGenres.value.filter((element: string) => element != option);
+  selectedGenres.value.splice(selectedGenres.value.indexOf(option), 1);
 };
 
 const updateSelected = (event: { value?: boolean; id: string }) => {

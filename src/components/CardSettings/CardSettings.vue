@@ -2,18 +2,20 @@
 import { computed, ref, type Ref } from 'vue';
 import IconSettings from '@/components/icons/IconSettings.vue';
 import ButtonBase from '@/shared/ui/ButtonBase';
+import { useArtistStore } from '@/stores/artistStore';
 import { useAuthStore } from '@/stores/authStore';
 
 const props = defineProps<{
   card: string;
-  mainPainting?: string | null;
 }>();
+
+const mainPainting = computed(() => useArtistStore().currentArtist?.mainPainting?._id);
 
 defineEmits(['makeTheCover', 'editPic', 'deletePic']);
 
 const isModalOpen: Ref<boolean> = ref(false);
 const buttonText = computed(() =>
-  props.mainPainting === props.card ? 'Remove the cover' : 'Make the cover'
+  mainPainting.value === props.card ? 'Remove the cover' : 'Make the cover'
 );
 </script>
 
