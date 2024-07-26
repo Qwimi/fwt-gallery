@@ -11,12 +11,14 @@ import AddMainPicture from '@/shared/ui/AddMainPicture';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import CardList from '@/shared/ui/CardList';
 import ThePagination from '@/shared/ui/ThePagination';
+import { useArtistStore } from '@/stores/artistStore';
 import { useAuthStore } from '@/stores/authStore';
-import { useAppStore } from '@/stores/baseStore';
 import { useModalStore } from '@/stores/modalStore';
+import { usePaintingStore } from '@/stores/paintingStore';
 import type { CardInterface } from '@/stores/types';
 
-const store = useAppStore();
+const store = useArtistStore();
+const paintingStore = usePaintingStore();
 const authStore = useAuthStore();
 const modalStore = useModalStore();
 const artistId = router.currentRoute.value.params.id as string;
@@ -31,13 +33,13 @@ const openSlider = (id: string) => {
 };
 
 const openDeletePaintingModal = (cardId: string) => {
-  modalStore.openModal('delete', { id: cardId, target: store.deletePicture });
+  modalStore.openModal('delete', { id: cardId, target: paintingStore.deletePicture });
 };
 const openEditPaintingModal = (card: CardInterface) => {
-  modalStore.openModal('addPicture', { ...card, target: store.updatePainting });
+  modalStore.openModal('addPicture', { ...card, target: paintingStore.updatePainting });
 };
 const setMainPainting = (cardId: string) => {
-  store.setMainPainting(artistId, cardId);
+  paintingStore.setMainPainting(cardId);
 };
 
 onUnmounted(() => store.unmountCurrentArtist());
@@ -79,7 +81,7 @@ onUnmounted(() => store.unmountCurrentArtist());
     @make-the-cover="setMainPainting($event)"
     @delete-pic="openDeletePaintingModal($event)"
   />
-  <artist-section :artist="store.currentArtist!" />
+  <artist-section :artist="store.currentArtist" v-if="store.currentArtist" />
   <section class="wrapper">
     <h3 class="section__title">Artworks</h3>
     <template v-if="store.currentArtistCards?.length">
@@ -87,7 +89,7 @@ onUnmounted(() => store.unmountCurrentArtist());
         <div class="tools-row__right-column">
           <button-base
             variant="underline"
-            @click="modalStore.openModal('addPicture', { target: store.createPainting })"
+            @click="modalStore.openModal('addPicture', { target: paintingStore.createPainting })"
           >
             <template #icon><icon-plus class="icon" /></template>
             Add artist
@@ -113,8 +115,8 @@ onUnmounted(() => store.unmountCurrentArtist());
     </template>
     <div class="no-cards" v-else>
       <add-main-picture
-        @click="modalStore.openModal('addPicture', { target: store.createMainPainting })"
-        v-if="authStore.isUserAuth"
+        @click="modalStore.openModal('addPicture', { target: paintingStore.createMainPainting })"
+        v-if="authStore.isUserAuth && store.currentArtist"
       />
       <span class="no-cards__decoration"></span>
       <p class="no-cards__title">The paintings of this artist have not been uploaded yet.</p>

@@ -2,7 +2,6 @@
 import CardSettings from '@/components/CardSettings';
 import router from '@/router';
 import CardItem from '@/shared/ui/CardItem';
-import { useAppStore } from '@/stores/baseStore';
 import type { CardInterface } from '@/stores/types';
 
 const props = defineProps<{
@@ -27,7 +26,6 @@ const cardClick = (event: string) => {
       <card-settings
         v-if="props.variant === 'paintings'"
         :card="card.id"
-        :main-painting="useAppStore().currentArtist?.mainPainting?._id"
         @click.stop
         @edit-pic="$emit('editPic', card)"
         @delete-pic="$emit('deletePic', card.id)"

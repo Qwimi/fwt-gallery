@@ -2,12 +2,12 @@
 import { computed } from 'vue';
 import IconClose from '@/components/icons/IconClose.vue';
 import TheSearch from '@/shared/ui/TheSearch/TheSearch.vue';
-import { useAppStore } from '@/stores/baseStore';
+import { useArtistStore } from '@/stores/artistStore';
 
-defineProps<{ variant?: string }>();
+defineProps<{ isClosable?: boolean }>();
 defineEmits(['close']);
 
-const store = useAppStore();
+const store = useArtistStore();
 const searchString = computed(() => store.getSearchString());
 const updateSearch = (search: string) => store.setSearchString(search);
 </script>
@@ -15,11 +15,7 @@ const updateSearch = (search: string) => store.setSearchString(search);
 <template>
   <div class="search-container">
     <the-search v-model="searchString" @update:model-value="updateSearch($event)" />
-    <button
-      class="search-container__button-close"
-      @click="$emit('close')"
-      v-if="variant == 'closable'"
-    >
+    <button class="search-container__button-close" @click="$emit('close')" v-if="isClosable">
       <icon-close class="icon" />
     </button>
   </div>

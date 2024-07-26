@@ -33,27 +33,29 @@ const onSwiper = (swiper: any) => {
   swiperInstanse.value = swiper;
 };
 
-const findIndex = (id: string | null) => {
-  return props.slides.findIndex((slide: CardInterface) => slide.id === id);
+const findIndex = (id: string | null) =>
+  props.slides.findIndex((slide: CardInterface) => slide.id === id);
+
+const onChangeSlide = (slideTo: number) => {
+  if (slideTo === -1 || slideTo > props.slides.length) {
+    swiperInstanse.value.slideTo(props.slides.length);
+
+    return;
+  }
+  swiperInstanse.value.slideTo(slideTo);
 };
 
 watch(
   () => props.slides.length,
-  () => {
-    const newIndex = findIndex(props.openSlide);
-    if (newIndex === -1) swiperInstanse.value.slideTo(props.slides.length - 1);
-  }
+  () => onChangeSlide(currentIndex.value)
 );
 
-onMounted(() => {
-  const slideTo = findIndex(props.openSlide);
-  swiperInstanse.value.slideTo(slideTo);
-});
+onMounted(() => onChangeSlide(findIndex(props.openSlide)));
 </script>
 
 <template>
   <Teleport to="body">
-    <swiper class="swiper" @swiper="onSwiper">
+    <swiper class="swiper" @swiper="onSwiper" :loop="true">
       <div class="tools-row tools-row--top">
         <button-base
           variant="icon-always-light"

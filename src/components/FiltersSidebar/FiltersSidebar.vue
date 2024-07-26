@@ -2,9 +2,11 @@
 import { onMounted, reactive, ref } from 'vue';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import FilterItem from '@/shared/ui/FilterItem';
-import { useAppStore } from '@/stores/baseStore';
+import { useArtistStore } from '@/stores/artistStore';
+import { useGenresStore } from '@/stores/genresStore';
 
-const store = useAppStore();
+const store = useArtistStore();
+const genresStore = useGenresStore();
 const initialState = {
   genres: [],
   orderBy: ''
@@ -24,13 +26,9 @@ const resetForm = () => {
   formElement.value?.reset();
 };
 
-const sentForm = () => {
-  store.filterArtists(form);
-};
+const sentForm = () => store.filterArtists(form);
 
-onMounted(() => {
-  store.getFilterableGenres();
-});
+onMounted(() => genresStore.getFilterableGenres());
 </script>
 
 <template>
@@ -39,19 +37,23 @@ onMounted(() => {
       <div class="filters__list">
         <filter-item
           label="Genres"
-          :options="store.filterableGenres"
-          type="checkbox"
+          :options="genresStore.filterableGenres"
+          :is-radio="false"
           v-model="form.genres"
         />
-        <filter-item label="Sort by" :options="sortByValues" type="radio" v-model="form.orderBy" />
+        <filter-item
+          label="Sort by"
+          :options="sortByValues"
+          :is-radio="true"
+          v-model="form.orderBy"
+        />
       </div>
       <div class="filters__buttons">
-        <button-base variant="underline" :button-props="{ type: 'submit' }">
-          Show the results
-        </button-base>
+        <button-base variant="underline" :type="'submit'"> Show the results </button-base>
         <button-base
           variant="underline"
-          :button-props="{ type: 'reset', disabled: !(form.genres.length || form.orderBy) }"
+          :type="'reset'"
+          :disabled="!(form.genres.length || form.orderBy)"
           @click="resetForm"
         >
           reset
@@ -90,45 +92,6 @@ onMounted(() => {
   &__buttons {
     display: flex;
     justify-content: space-between;
-  }
-}
-
-.filter-item {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-
-  .icon--hide {
-    display: none;
-  }
-
-  &__title {
-    @include headingH6;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  &__toggler {
-    @include buttonMixin;
-  }
-
-  &[open] {
-    .icon--hide {
-      display: block;
-    }
-
-    .icon--show {
-      display: none;
-    }
-  }
-
-  &__body {
-    display: grid;
-    grid-template-rows: repeat(4, 1fr);
-    grid-auto-flow: column;
-    gap: 0.75em;
   }
 }
 </style>

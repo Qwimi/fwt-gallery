@@ -25,7 +25,7 @@ const isSearchOpen: Ref<boolean> = ref(false);
         <div class="header__column-right">
           <search-filter
             class="search"
-            variant="closable"
+            :is-closable="true"
             v-show="router.currentRoute.value.name == 'home' && isSearchOpen"
             @close="isSearchOpen = false"
           />

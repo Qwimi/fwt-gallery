@@ -5,7 +5,7 @@ import NoImage from '@/shared/ui/NoImage';
 import type { ArtistPage } from '@/stores/types';
 
 defineProps<{
-  artist: ArtistPage;
+  artist?: ArtistPage;
 }>();
 </script>
 

@@ -9,11 +9,13 @@ import DragAndDrop from '@/shared/ui/DragAndDrop';
 import MultiSelect from '@/shared/ui/MultiSelect';
 import TheInput from '@/shared/ui/TheInput';
 import TheTextarea from '@/shared/ui/TheTextarea';
-import { useAppStore } from '@/stores/baseStore';
+import { useArtistStore } from '@/stores/artistStore';
+import { useGenresStore } from '@/stores/genresStore';
 import { useModalStore } from '@/stores/modalStore';
 import type { ArtistPage, Genre, ArtistRequestForm } from '@/stores/types';
 
-const store = useAppStore();
+const store = useArtistStore();
+const genresStore = useGenresStore();
 const currentArtist: ArtistPage = reactive(useModalStore().currentModalProps as ArtistPage);
 
 const form: ArtistRequestForm = reactive({
@@ -48,7 +50,7 @@ const sentData = async () => {
       class="form__container"
       enctype="multipart/form-data"
       @submit.prevent="sentData"
-      @keydown.enter.prevent
+      @keydown.enter.prevent="sentData"
     >
       <drag-and-drop
         v-model="form.avatar"
@@ -78,7 +80,7 @@ const sentData = async () => {
           />
           <multi-select
             label="Genres*"
-            :options="store.genres"
+            :options="genresStore.genres"
             v-model="form.genres"
             :error="errors.genres"
           />
