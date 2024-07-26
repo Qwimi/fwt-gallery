@@ -5,7 +5,7 @@ import IconPlus from '@/components/icons/IconPlus.vue';
 
 const props = defineProps<{
   label: string;
-  type: 'checkbox' | 'radio';
+  isRadio: boolean;
   options: Array<{ _id: string; name: string }>;
   modelValue: string | string[];
 }>();
@@ -13,17 +13,19 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelValue']);
 
 const updateValue = (element: HTMLInputElement) => {
-  if (props.type == 'checkbox') {
-    const selectedArray = ref([...props.modelValue]);
-    if (element.checked) {
-      selectedArray.value.push(element.value);
-    } else {
-      selectedArray.value = selectedArray.value.filter((elem: string) => elem !== element.value);
-    }
-    emit('update:modelValue', selectedArray.value);
-  } else {
+  if (props.isRadio) {
     emit('update:modelValue', element.value);
+
+    return;
   }
+
+  const selectedArray = ref([...props.modelValue]);
+  if (element.checked) {
+    selectedArray.value.push(element.value);
+  } else {
+    selectedArray.value.splice(selectedArray.value.indexOf(element.value), 1);
+  }
+  emit('update:modelValue', selectedArray.value);
 };
 </script>
 
@@ -31,7 +33,7 @@ const updateValue = (element: HTMLInputElement) => {
   <details class="filter-item">
     <summary class="filter-item__title">
       <p v-if="label">
-        {{ label }}{{ type == 'checkbox' && modelValue.length ? `(${modelValue.length})` : '' }}
+        {{ label }}{{ !isRadio && modelValue.length ? `(${modelValue.length})` : '' }}
       </p>
       <button class="filter-item__toggler" @click.prevent>
         <icon-plus class="icon icon--show" />
@@ -41,7 +43,7 @@ const updateValue = (element: HTMLInputElement) => {
     <div class="filter-item__body">
       <label v-for="option in options" :key="option._id" class="filter-item__option">
         <input
-          :type="type"
+          :type="isRadio ? 'radio' : 'checkbox'"
           :name="label"
           class="filter-item__input"
           :value="option._id"

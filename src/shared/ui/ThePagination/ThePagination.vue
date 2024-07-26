@@ -8,7 +8,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['update:modelValue']);
 
-const goTo = (page: number) => {
+const changePage = (page: number) => {
   emit('update:modelValue', page);
 };
 
@@ -31,7 +31,7 @@ const checkSymbol = (page: number) => {
   <div class="pagination">
     <button
       class="pagination__button pagination__button--prev"
-      @click="goTo(modelValue == 1 ? pagesCount : modelValue - 1)"
+      @click="changePage(modelValue == 1 ? pagesCount : modelValue - 1)"
     >
       <icon-arrow class="icon" />
     </button>
@@ -49,7 +49,7 @@ const checkSymbol = (page: number) => {
     </div>
     <button
       class="pagination__button pagination__button--next"
-      @click="goTo(modelValue == pagesCount ? 1 : modelValue + 1)"
+      @click="changePage(modelValue == pagesCount ? 1 : modelValue + 1)"
     >
       <icon-arrow class="icon" />
     </button>

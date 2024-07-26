@@ -3,7 +3,6 @@ import { defineAsyncComponent } from 'vue';
 import CardSettings from '@/components/CardSettings';
 import router from '@/router';
 import CardSkeleton from '@/shared/ui/CardSkeleton';
-import { useAppStore } from '@/stores/baseStore';
 import type { CardInterface } from '@/stores/types';
 
 const CardItem = defineAsyncComponent(() => import('@/shared/ui/CardItem'));
@@ -26,25 +25,23 @@ const cardClick = (event: string) => {
 
 <template>
   <section class="card-list">
-    <card-skeleton />
-    <template v-for="card in cards" :key="card.id">
-      <suspense>
-        <template #default>
-          <card-item :card="card" @click="cardClick">
-            <card-settings
-              v-if="props.variant === 'paintings'"
-              :card="card.id"
-              :main-painting="useAppStore().currentArtist?.mainPainting?._id"
-              @click.stop
-              @edit-pic="$emit('editPic', card)"
-              @delete-pic="$emit('deletePic', card.id)"
-              @make-the-cover="$emit('makeTheCover', card.id)"
-            />
-          </card-item>
-        </template>
-        <template #fallback><card-skeleton /></template>
-      </suspense>
-    </template>
+    <suspense>
+      <template #default>
+        <card-item v-for="card in cards" :key="card.id" :card="card" @click="cardClick">
+          <card-settings
+            v-if="props.variant === 'paintings'"
+            :card="card.id"
+            @click.stop
+            @edit-pic="$emit('editPic', card)"
+            @delete-pic="$emit('deletePic', card.id)"
+            @make-the-cover="$emit('makeTheCover', card.id)"
+          />
+        </card-item>
+      </template>
+      <template #fallback>
+        <card-skeleton v-for="i in 6" :key="i" />
+      </template>
+    </suspense>
   </section>
 </template>
 

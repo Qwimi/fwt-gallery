@@ -4,11 +4,11 @@ import IconPlus from '@/components/icons/IconPlus.vue';
 import SearchFilter from '@/components/SearchFilter';
 import ButtonBase from '@/shared/ui/ButtonBase';
 import CardList from '@/shared/ui/CardList';
+import { useArtistStore } from '@/stores/artistStore';
 import { useAuthStore } from '@/stores/authStore';
-import { useAppStore } from '@/stores/baseStore';
 import { useModalStore } from '@/stores/modalStore';
 
-const store = useAppStore();
+const store = useArtistStore();
 const authStore = useAuthStore();
 </script>
 <template>
@@ -37,7 +37,7 @@ const authStore = useAuthStore();
       </button-base>
     </template>
 
-    <template v-else-if="store.isFiltersUsed">
+    <template v-if="store.isFiltersUsed">
       <div class="no-matches">
         <div class="no-matches__title">
           {{ store.getSearchString() ? `No matches for` : 'No matches for filters' }}

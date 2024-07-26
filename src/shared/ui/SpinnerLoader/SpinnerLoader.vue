@@ -1,16 +1,14 @@
 <template>
-  <teleport to="body">
-    <div class="spinner--container">
-      <div class="spinner--wrapper">
-        <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 50 50">
-          <circle class="spinner__path spinner__path--four" cx="25" cy="25" r="20" />
-          <circle class="spinner__path spinner__path--third" cx="25" cy="25" r="20" />
-          <circle class="spinner__path spinner__path--second" cx="25" cy="25" r="20" />
-          <circle class="spinner__path spinner__path--first" cx="25" cy="25" r="20" />
-        </svg>
-      </div>
+  <div class="spinner--container">
+    <div class="spinner--wrapper">
+      <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 50 50">
+        <circle class="spinner__path spinner__path--four" cx="25" cy="25" r="20" />
+        <circle class="spinner__path spinner__path--third" cx="25" cy="25" r="20" />
+        <circle class="spinner__path spinner__path--second" cx="25" cy="25" r="20" />
+        <circle class="spinner__path spinner__path--first" cx="25" cy="25" r="20" />
+      </svg>
     </div>
-  </teleport>
+  </div>
 </template>
 
 <style lang="scss" scoped>

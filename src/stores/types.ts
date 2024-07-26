@@ -42,7 +42,7 @@ export interface Painting {
 
 export interface PaintingRequestForm {
   name: string;
-  yearOfCreation: string | number;
+  yearOfCreation?: string | number;
   image?: File | Image | string;
 }
 
