@@ -38,21 +38,6 @@ const cardClick = (event: string) => {
         @make-the-cover="$emit('makeTheCover', card.id)"
       />
     </card-item>
-    <!-- <suspense>
-      <template #default>
-        <card-item v-for="card in cards" :key="card.id" :card="card" @click="cardClick">
-          <card-settings
-            v-if="props.variant === 'paintings'"
-            :card="card.id"
-            @click.stop
-            @edit-pic="$emit('editPic', card)"
-            @delete-pic="$emit('deletePic', card.id)"
-            @make-the-cover="$emit('makeTheCover', card.id)"
-          />
-        </card-item>
-      </template>
-      <template #fallback> <card-skeleton v-for="i in 6" :key="i" /></template>
-    </suspense> -->
   </section>
 </template>
 

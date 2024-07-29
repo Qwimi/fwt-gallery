@@ -34,11 +34,14 @@ const openSlider = (id: string) => {
 
 const openDeletePaintingModal = (cardId: string) => {
   modalStore.openModal('delete', { id: cardId, target: paintingStore.deletePicture });
+  modalStore.openModal('delete', { id: cardId, target: paintingStore.deletePicture });
 };
 const openEditPaintingModal = (card: CardInterface) => {
   modalStore.openModal('addPicture', { ...card, target: paintingStore.updatePainting });
+  modalStore.openModal('addPicture', { ...card, target: paintingStore.updatePainting });
 };
 const setMainPainting = (cardId: string) => {
+  paintingStore.setMainPainting(cardId);
   paintingStore.setMainPainting(cardId);
 };
 

@@ -55,7 +55,7 @@ onMounted(() => onChangeSlide(findIndex(props.openSlide)));
 
 <template>
   <Teleport to="body">
-    <swiper class="swiper" @swiper="onSwiper">
+    <swiper class="swiper" @swiper="onSwiper" :loop="true">
       <div class="tools-row tools-row--top">
         <button-base
           variant="icon-always-light"
