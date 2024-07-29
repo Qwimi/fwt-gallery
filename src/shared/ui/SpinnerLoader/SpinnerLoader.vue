@@ -12,9 +12,27 @@
 </template>
 
 <style lang="scss" scoped>
-@mixin transparentColor($color, $percent) {
+@mixin transparentStrokeColor($color, $percent) {
   stroke: color-mix(in srgb, $color, transparent $percent);
 }
+@mixin spinMixin($name, $path-length) {
+  // path-length - длина дуги, 12 - полная окружность, 6 - половина окружности и т.д.
+  @keyframes #{$name} {
+    50% {
+      stroke-dasharray: calc(127 * $path-length / 12) calc(127 * (12 - $path-length) / 12);
+      stroke-dashoffset: calc(127 * (12 - $path-length) / 12 * (-1));
+    }
+    to {
+      stroke-dasharray: 0 127;
+      stroke-dashoffset: calc(127 * 5 / 4 * (-1));
+    }
+  }
+}
+
+@include spinMixin(spinFirst, 6);
+@include spinMixin(spinSecond, 7);
+@include spinMixin(spinThird, 8);
+@include spinMixin(spinFour, 9);
 
 .spinner {
   animation: rotate 2s infinite;
@@ -22,14 +40,14 @@
     position: fixed;
     inset: 0;
     background: var(--background-primary);
-    z-index: 7;
+    z-index: 8;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   &--wrapper {
-    height: 600px;
-    width: 600px;
+    height: 5em;
+    width: 5em;
   }
   &__path {
     stroke-dasharray: 0 127; // 127 -длина окружности
@@ -40,10 +58,10 @@
 
     &--first {
       animation: spinFirst 2s infinite linear;
-      @include transparentColor(light-dark(var(--text-primary), var(--text-secondary)), 80%);
+      @include transparentStrokeColor(light-dark(var(--text-primary), var(--text-secondary)), 80%);
     }
     &:not(&--first) {
-      @include transparentColor(light-dark(var(--text-primary), var(--text-secondary)), 35%);
+      @include transparentStrokeColor(light-dark(var(--text-primary), var(--text-secondary)), 35%);
     }
     &--second {
       animation: spinSecond 2s infinite linear;
@@ -54,50 +72,6 @@
     &--four {
       animation: spinFour 2s infinite linear;
     }
-  }
-}
-
-@keyframes spinFirst {
-  50% {
-    stroke-dasharray: calc(127 / 2) calc(127 / 2);
-    stroke-dashoffset: calc(127 / 2 * (-1));
-  }
-  to {
-    stroke-dasharray: 0 127;
-    stroke-dashoffset: calc(127 * 5 / 4 * (-1));
-  }
-}
-
-@keyframes spinSecond {
-  50% {
-    stroke-dasharray: calc(127 * 7 / 12) calc(127 * 5 / 12);
-    stroke-dashoffset: calc(127 * 5 / 12 * (-1));
-  }
-  to {
-    stroke-dasharray: 0 127;
-    stroke-dashoffset: calc(127 * 5 / 4 * (-1));
-  }
-}
-
-@keyframes spinThird {
-  50% {
-    stroke-dasharray: calc(127 * 8 / 12) calc(127 * 4 / 12);
-    stroke-dashoffset: calc(127 / 3 * (-1));
-  }
-  to {
-    stroke-dasharray: 0 127;
-    stroke-dashoffset: calc(127 * 5 / 4 * (-1));
-  }
-}
-
-@keyframes spinFour {
-  50% {
-    stroke-dasharray: calc(127 * 9 / 12) calc(127 * 3 / 12);
-    stroke-dashoffset: calc(127 / 4 * (-1));
-  }
-  to {
-    stroke-dasharray: 0 127;
-    stroke-dashoffset: calc(127 * 5 / 4 * (-1));
   }
 }
 

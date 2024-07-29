@@ -1,15 +1,14 @@
 <script lang="ts" setup>
-import { defineAsyncComponent } from 'vue';
 import CardSettings from '@/components/CardSettings';
 import router from '@/router';
+import CardItem from '@/shared/ui/CardItem';
 import CardSkeleton from '@/shared/ui/CardSkeleton';
 import type { CardInterface } from '@/stores/types';
-
-const CardItem = defineAsyncComponent(() => import('@/shared/ui/CardItem'));
 
 const props = defineProps<{
   cards: CardInterface[];
   variant: 'artists' | 'paintings';
+  isLoading: boolean;
 }>();
 
 const emit = defineEmits(['openSlider', 'makeTheCover', 'editPic', 'deletePic']);
@@ -25,7 +24,21 @@ const cardClick = (event: string) => {
 
 <template>
   <section class="card-list">
-    <suspense>
+    <template v-if="isLoading">
+      <card-skeleton v-for="i in 6" :key="i" />
+    </template>
+
+    <card-item v-for="card in cards" :key="card.id" :card="card" @click="cardClick" v-else>
+      <card-settings
+        v-if="props.variant === 'paintings'"
+        :card="card.id"
+        @click.stop
+        @edit-pic="$emit('editPic', card)"
+        @delete-pic="$emit('deletePic', card.id)"
+        @make-the-cover="$emit('makeTheCover', card.id)"
+      />
+    </card-item>
+    <!-- <suspense>
       <template #default>
         <card-item v-for="card in cards" :key="card.id" :card="card" @click="cardClick">
           <card-settings
@@ -38,10 +51,8 @@ const cardClick = (event: string) => {
           />
         </card-item>
       </template>
-      <template #fallback>
-        <card-skeleton v-for="i in 6" :key="i" />
-      </template>
-    </suspense>
+      <template #fallback> <card-skeleton v-for="i in 6" :key="i" /></template>
+    </suspense> -->
   </section>
 </template>
 

@@ -26,7 +26,7 @@ const authStore = useAuthStore();
   </div>
   <div class="wrapper">
     <template v-if="store.artistCards.length">
-      <card-list :cards="store.artistCards" variant="artists" />
+      <card-list :cards="store.artistCards" variant="artists" :is-loading="store.isLoading" />
       <button-base
         variant="underline"
         v-if="store.isArtistListExpandable && authStore.isUserAuth"

@@ -71,6 +71,7 @@ onUnmounted(() => store.unmountCurrentArtist());
       </button-base>
     </div>
   </div>
+
   <painting-slider
     v-if="isSliderOpen && store.currentArtistCards?.length"
     :slides="store.currentArtistCards"
@@ -81,7 +82,7 @@ onUnmounted(() => store.unmountCurrentArtist());
     @make-the-cover="setMainPainting($event)"
     @delete-pic="openDeletePaintingModal($event)"
   />
-  <artist-section :artist="store.currentArtist" v-if="store.currentArtist" />
+  <artist-section :artist="store.currentArtist" v-if="store.currentArtist && !store.isLoading" />
   <section class="wrapper">
     <h3 class="section__title">Artworks</h3>
     <template v-if="store.currentArtistCards?.length">
@@ -99,6 +100,7 @@ onUnmounted(() => store.unmountCurrentArtist());
 
       <card-list
         :cards="store.currentPaginationView"
+        :is-loading="store.isLoading"
         variant="paintings"
         @open-slider="openSlider($event)"
         @edit-pic="openEditPaintingModal($event)"
@@ -113,7 +115,7 @@ onUnmounted(() => store.unmountCurrentArtist());
         class="pagination"
       />
     </template>
-    <div class="no-cards" v-else>
+    <div class="no-cards" v-else-if="!store.isLoading">
       <add-main-picture
         @click="modalStore.openModal('addPicture', { target: paintingStore.createMainPainting })"
         v-if="authStore.isUserAuth && store.currentArtist"
