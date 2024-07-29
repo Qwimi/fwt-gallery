@@ -16,7 +16,8 @@ import handleError from '@/helpers/errorHandling';
 import router from '@/router';
 
 export const useArtistStore = defineStore('artist', () => {
-  const isLoading: Ref<boolean> = ref(false);
+  const isCardsLoading: Ref<boolean> = ref(false);
+  const isPageLoading: Ref<boolean> = ref(true);
   // stores
 
   const authStore = useAuthStore();
@@ -68,7 +69,7 @@ export const useArtistStore = defineStore('artist', () => {
 
   const getArtists = async () => {
     try {
-      isLoading.value = true;
+      isCardsLoading.value = true;
 
       if (!authStore.isUserAuth) {
         artists.value = await handleGetArtistsStatic();
@@ -87,13 +88,13 @@ export const useArtistStore = defineStore('artist', () => {
     } catch (error: unknown) {
       handleError(error);
     } finally {
-      setTimeout(() => (isLoading.value = false), 1000);
+      setTimeout(() => (isCardsLoading.value = false), 1000);
     }
   };
 
   const loadMore = async () => {
     try {
-      isLoading.value = true;
+      isCardsLoading.value = true;
       pageCounter.value++;
       const newArtist = await handleGetArtists();
       pageCounter.value, cardsPerMainPage.value, filter.value;
@@ -101,7 +102,7 @@ export const useArtistStore = defineStore('artist', () => {
     } catch (error: unknown) {
       handleError(error);
     } finally {
-      setTimeout(() => (isLoading.value = false), 1000);
+      setTimeout(() => (isCardsLoading.value = false), 1000);
     }
   };
 
@@ -123,7 +124,7 @@ export const useArtistStore = defineStore('artist', () => {
 
   const getCurrentArtist = async (id: string) => {
     try {
-      isLoading.value = true;
+      isCardsLoading.value = true;
       currentArtist.value = authStore.isUserAuth
         ? await handleGetCurrentArtist(id)
         : await handleGetCurrentArtistStatic(id);
@@ -133,7 +134,7 @@ export const useArtistStore = defineStore('artist', () => {
     } catch (error: unknown) {
       handleError(error);
     } finally {
-      setTimeout(() => (isLoading.value = false), 1000);
+      setTimeout(() => (isCardsLoading.value = false), 1000);
     }
   };
 
@@ -209,7 +210,8 @@ export const useArtistStore = defineStore('artist', () => {
     currentPaginationView,
     currentPaginationPage,
     isFiltersUsed,
-    isLoading,
+    isCardsLoading,
+    isPageLoading,
     getSearchString,
     setSearchString,
     loadMore,

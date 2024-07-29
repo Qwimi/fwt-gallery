@@ -34,14 +34,11 @@ const openSlider = (id: string) => {
 
 const openDeletePaintingModal = (cardId: string) => {
   modalStore.openModal('delete', { id: cardId, target: paintingStore.deletePicture });
-  modalStore.openModal('delete', { id: cardId, target: paintingStore.deletePicture });
 };
 const openEditPaintingModal = (card: CardInterface) => {
   modalStore.openModal('addPicture', { ...card, target: paintingStore.updatePainting });
-  modalStore.openModal('addPicture', { ...card, target: paintingStore.updatePainting });
 };
 const setMainPainting = (cardId: string) => {
-  paintingStore.setMainPainting(cardId);
   paintingStore.setMainPainting(cardId);
 };
 
@@ -85,7 +82,10 @@ onUnmounted(() => store.unmountCurrentArtist());
     @make-the-cover="setMainPainting($event)"
     @delete-pic="openDeletePaintingModal($event)"
   />
-  <artist-section :artist="store.currentArtist" v-if="store.currentArtist && !store.isLoading" />
+  <artist-section
+    :artist="store.currentArtist"
+    v-if="store.currentArtist && !store.isCardsLoading"
+  />
   <section class="wrapper">
     <h3 class="section__title">Artworks</h3>
     <template v-if="store.currentArtistCards?.length">
@@ -103,7 +103,7 @@ onUnmounted(() => store.unmountCurrentArtist());
 
       <card-list
         :cards="store.currentPaginationView"
-        :is-loading="store.isLoading"
+        :is-loading="store.isCardsLoading"
         variant="paintings"
         @open-slider="openSlider($event)"
         @edit-pic="openEditPaintingModal($event)"
@@ -118,7 +118,7 @@ onUnmounted(() => store.unmountCurrentArtist());
         class="pagination"
       />
     </template>
-    <div class="no-cards" v-else-if="!store.isLoading">
+    <div class="no-cards" v-else-if="!store.isCardsLoading">
       <add-main-picture
         @click="modalStore.openModal('addPicture', { target: paintingStore.createMainPainting })"
         v-if="authStore.isUserAuth && store.currentArtist"

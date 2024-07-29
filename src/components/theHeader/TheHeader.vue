@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue';
+import { computed, ref, type Ref } from 'vue';
 import IconBurger from '@/components/icons/IconBurger.vue';
 import IconLogo from '@/components/icons/IconLogo.vue';
 import IconSearch from '@/components/icons/IconSearch.vue';
@@ -11,8 +11,11 @@ import { useModalStore } from '@/stores/modalStore';
 
 const modalStore = useModalStore();
 const authStore = useAuthStore();
-
 const isSearchOpen: Ref<boolean> = ref(false);
+
+const searchRenderCheck = computed(
+  () => router.currentRoute.value.name == 'home' && useAuthStore().isUserAuth
+);
 </script>
 
 <template>
@@ -26,14 +29,13 @@ const isSearchOpen: Ref<boolean> = ref(false);
           <search-filter
             class="search"
             :is-closable="true"
-            v-show="router.currentRoute.value.name == 'home' && isSearchOpen"
+            v-if="searchRenderCheck && isSearchOpen"
             @close="isSearchOpen = false"
           />
           <button
             class="search-toggler"
             @click="isSearchOpen = true"
-            v-if="router.currentRoute.value.name == 'home' && useAuthStore().isUserAuth"
-            v-show="!isSearchOpen"
+            v-if="searchRenderCheck && !isSearchOpen"
           >
             <icon-search class="icon" />
           </button>

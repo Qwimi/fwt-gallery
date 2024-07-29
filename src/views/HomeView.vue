@@ -26,7 +26,7 @@ const authStore = useAuthStore();
   </div>
   <div class="wrapper">
     <template v-if="store.artistCards.length">
-      <card-list :cards="store.artistCards" variant="artists" :is-loading="store.isLoading" />
+      <card-list :cards="store.artistCards" variant="artists" :is-loading="store.isCardsLoading" />
       <button-base
         variant="underline"
         v-if="store.isArtistListExpandable && authStore.isUserAuth"
@@ -37,7 +37,7 @@ const authStore = useAuthStore();
       </button-base>
     </template>
 
-    <template v-if="store.isFiltersUsed">
+    <template v-else-if="store.isFiltersUsed">
       <div class="no-matches">
         <div class="no-matches__title">
           {{ store.getSearchString() ? `No matches for` : 'No matches for filters' }}

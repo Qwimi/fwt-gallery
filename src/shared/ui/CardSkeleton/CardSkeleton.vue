@@ -18,7 +18,7 @@
   &::before {
     content: '';
     position: absolute;
-    z-index: 7;
+    z-index: 1;
     animation: wave 2s ease infinite;
     height: 100%;
     width: 16.25rem;

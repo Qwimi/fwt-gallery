@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia';
 import { defineAsyncComponent } from 'vue';
 import { RouterView } from 'vue-router';
-import { usePageStore } from './stores/pageLoadingStore';
+import { useArtistStore } from './stores/artistStore';
 import TheFooter from '@/components/TheFooter';
 import TheHeader from '@/components/TheHeader';
 import SpinnerLoader from '@/shared/ui/SpinnerLoader';
@@ -11,12 +11,12 @@ const TheModal = defineAsyncComponent(() => import('@/components/TheModal'));
 const TheSidebar = defineAsyncComponent(() => import('@/components/TheSidebar'));
 const TheToast = defineAsyncComponent(() => import('@/components/TheToast'));
 
-const uiStore = usePageStore();
-const { isLoading } = storeToRefs(uiStore);
+const uiStore = useArtistStore();
+const { isPageLoading } = storeToRefs(uiStore);
 </script>
 
 <template>
-  <spinner-loader v-if="isLoading" />
+  <spinner-loader v-if="isPageLoading" />
   <the-sidebar />
   <the-modal />
   <the-header />

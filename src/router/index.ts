@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { usePageStore } from '@/stores/pageLoadingStore';
+import { useArtistStore } from '@/stores/artistStore';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,16 +21,13 @@ const router = createRouter({
 });
 
 router.beforeEach(() => {
-  console.log('page is loading...');
-
-  const uiStore = usePageStore();
-  uiStore.isLoading = true;
+  const store = useArtistStore();
+  store.isPageLoading = true;
 });
 
 router.afterEach(() => {
-  console.log('page loaded');
-  const uiStore = usePageStore();
-  uiStore.isLoading = false;
+  const store = useArtistStore();
+  store.isPageLoading = false;
 });
 
 export default router;

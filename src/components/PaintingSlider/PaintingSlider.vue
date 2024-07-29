@@ -122,7 +122,7 @@ onMounted(() => onChangeSlide(findIndex(props.openSlide)));
   position: fixed;
   inset: 0;
   background-color: var(--background-primary);
-  z-index: 2;
+  z-index: 3;
 
   &__img {
     height: 100%;
