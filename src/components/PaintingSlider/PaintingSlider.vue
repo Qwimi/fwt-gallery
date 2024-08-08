@@ -37,8 +37,8 @@ const findIndex = (id: string | null) =>
   props.slides.findIndex((slide: CardInterface) => slide.id === id);
 
 const onChangeSlide = (slideTo: number) => {
-  if (slideTo === -1 || slideTo > props.slides.length) {
-    swiperInstanse.value.slideTo(props.slides.length);
+  if (slideTo === -1 || slideTo >= props.slides.length) {
+    swiperInstanse.value.slideTo(props.slides.length - 1);
 
     return;
   }
@@ -122,7 +122,7 @@ onMounted(() => onChangeSlide(findIndex(props.openSlide)));
   position: fixed;
   inset: 0;
   background-color: var(--background-primary);
-  z-index: 2;
+  z-index: 3;
 
   &__img {
     height: 100%;

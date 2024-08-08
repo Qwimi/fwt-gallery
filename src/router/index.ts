@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ArtistProfile from '@/views/ArtistProfile.vue';
-import HomeView from '@/views/HomeView.vue';
+import { useArtistStore } from '@/stores/artistStore';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,17 +7,27 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('@/views/HomeView.vue')
     },
     {
       path: '/artist/:id',
       name: 'artist',
-      component: ArtistProfile
+      component: () => import('@/views/ArtistProfileView.vue')
     }
   ],
   scrollBehavior() {
     return { top: 0, behavior: 'smooth' };
   }
+});
+
+router.beforeEach(() => {
+  const store = useArtistStore();
+  store.isPageLoading = true;
+});
+
+router.afterEach(() => {
+  const store = useArtistStore();
+  store.isPageLoading = false;
 });
 
 export default router;

@@ -71,6 +71,7 @@ onUnmounted(() => store.unmountCurrentArtist());
       </button-base>
     </div>
   </div>
+
   <painting-slider
     v-if="isSliderOpen && store.currentArtistCards?.length"
     :slides="store.currentArtistCards"
@@ -81,42 +82,53 @@ onUnmounted(() => store.unmountCurrentArtist());
     @make-the-cover="setMainPainting($event)"
     @delete-pic="openDeletePaintingModal($event)"
   />
-  <artist-section :artist="store.currentArtist" v-if="store.currentArtist" />
+
+  <artist-section
+    :artist="store.currentArtist"
+    v-if="store.currentArtist && !store.isCardsLoading"
+  />
   <section class="wrapper">
     <h3 class="section__title">Artworks</h3>
-    <template v-if="store.currentArtistCards?.length">
-      <div class="tools-row" v-if="authStore.isUserAuth">
-        <div class="tools-row__right-column">
-          <button-base
-            variant="underline"
-            @click="modalStore.openModal('addPicture', { target: paintingStore.createPainting })"
-          >
-            <template #icon><icon-plus class="icon" /></template>
-            Add artist
-          </button-base>
-        </div>
+
+    <div
+      class="tools-row"
+      v-if="authStore.isUserAuth && store.currentArtistCards?.length && !store.isCardsLoading"
+    >
+      <div class="tools-row__right-column">
+        <button-base
+          variant="underline"
+          @click="modalStore.openModal('addPicture', { target: paintingStore.createPainting })"
+        >
+          <template #icon><icon-plus class="icon" /></template>
+          Add picture
+        </button-base>
       </div>
+    </div>
 
-      <card-list
-        :cards="store.currentPaginationView"
-        variant="paintings"
-        @open-slider="openSlider($event)"
-        @edit-pic="openEditPaintingModal($event)"
-        @make-the-cover="setMainPainting($event)"
-        @delete-pic="openDeletePaintingModal($event)"
-      />
+    <card-list
+      :cards="store.currentPaginationView"
+      :is-loading="store.isCardsLoading"
+      variant="paintings"
+      @open-slider="openSlider($event)"
+      @edit-pic="openEditPaintingModal($event)"
+      @make-the-cover="setMainPainting($event)"
+      @delete-pic="openDeletePaintingModal($event)"
+    />
 
-      <the-pagination
-        v-if="store.paginationPagesCount > 1"
-        v-model="store.currentPaginationPage"
-        :pages-count="store.paginationPagesCount"
-        class="pagination"
-      />
-    </template>
-    <div class="no-cards" v-else>
+    <the-pagination
+      v-if="store.paginationPagesCount > 1"
+      v-model="store.currentPaginationPage"
+      :pages-count="store.paginationPagesCount"
+      class="pagination"
+    />
+
+    <div
+      class="no-cards"
+      v-if="!store.currentArtistCards?.length && !store.isCardsLoading && store.currentArtist"
+    >
       <add-main-picture
         @click="modalStore.openModal('addPicture', { target: paintingStore.createMainPainting })"
-        v-if="authStore.isUserAuth && store.currentArtist"
+        v-if="authStore.isUserAuth"
       />
       <span class="no-cards__decoration"></span>
       <p class="no-cards__title">The paintings of this artist have not been uploaded yet.</p>

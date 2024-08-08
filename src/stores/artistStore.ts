@@ -16,6 +16,8 @@ import handleError from '@/helpers/errorHandling';
 import router from '@/router';
 
 export const useArtistStore = defineStore('artist', () => {
+  const isCardsLoading: Ref<boolean> = ref(false);
+  const isPageLoading: Ref<boolean> = ref(true);
   // stores
 
   const authStore = useAuthStore();
@@ -31,6 +33,7 @@ export const useArtistStore = defineStore('artist', () => {
   // filters
 
   const filter: Ref<ArtistFilters | null> = ref(null);
+  const isFiltersUsed = computed(() => !!filter.value);
 
   const filterArtists = async (form: ArtistFilters) => {
     filter.value = form;
@@ -66,6 +69,8 @@ export const useArtistStore = defineStore('artist', () => {
 
   const getArtists = async () => {
     try {
+      isCardsLoading.value = true;
+
       if (!authStore.isUserAuth) {
         artists.value = await handleGetArtistsStatic();
 
@@ -82,17 +87,26 @@ export const useArtistStore = defineStore('artist', () => {
       artistCount.value = response.meta.count;
     } catch (error: unknown) {
       handleError(error);
+    } finally {
+      isCardsLoading.value = false;
     }
   };
 
   const loadMore = async () => {
-    pageCounter.value++;
-    const newArtist = await handleGetArtists(
-      pageCounter.value,
-      cardsPerMainPage.value,
-      filter.value
-    );
-    artists.value = artists.value.concat(newArtist.data);
+    try {
+      isCardsLoading.value = true;
+      pageCounter.value++;
+      const newArtist = await handleGetArtists(
+        pageCounter.value,
+        cardsPerMainPage.value,
+        filter.value
+      );
+      artists.value = artists.value.concat(newArtist.data);
+    } catch (error: unknown) {
+      handleError(error);
+    } finally {
+      isCardsLoading.value = false;
+    }
   };
 
   // artist profile
@@ -113,6 +127,7 @@ export const useArtistStore = defineStore('artist', () => {
 
   const getCurrentArtist = async (id: string) => {
     try {
+      isCardsLoading.value = true;
       currentArtist.value = authStore.isUserAuth
         ? await handleGetCurrentArtist(id)
         : await handleGetCurrentArtistStatic(id);
@@ -121,6 +136,8 @@ export const useArtistStore = defineStore('artist', () => {
       }
     } catch (error: unknown) {
       handleError(error);
+    } finally {
+      isCardsLoading.value = false;
     }
   };
 
@@ -160,7 +177,6 @@ export const useArtistStore = defineStore('artist', () => {
       await handleDeletArtist(currentArtist.value?._id!);
       getArtists();
       router.push({ name: 'home' });
-      router.push({ name: 'home' });
       modalStore.closeModal();
     } catch (error: unknown) {
       handleError(error);
@@ -196,6 +212,9 @@ export const useArtistStore = defineStore('artist', () => {
     paginationPagesCount,
     currentPaginationView,
     currentPaginationPage,
+    isFiltersUsed,
+    isCardsLoading,
+    isPageLoading,
     getSearchString,
     setSearchString,
     loadMore,

@@ -105,11 +105,10 @@ const sentData = async () => {
     }
     &--row {
       display: grid;
-      grid-template-rows: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 2rem;
       @media (min-width: $breakpoint-md) {
         grid-template-columns: 1fr 6.5rem;
-        grid-template-rows: 1fr;
         gap: 3rem;
       }
     }

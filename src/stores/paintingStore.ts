@@ -46,11 +46,9 @@ export const usePaintingStore = defineStore('paintings', () => {
 
   const deletePicture = async (id: string) => {
     try {
-      const isSuccess = await handleDeletePainting(currentArtistId.value, id);
+      await handleDeletePainting(currentArtistId.value, id);
       appStore.getCurrentArtist(currentArtistId.value);
       modalStore.closeModal();
-
-      return Boolean(isSuccess);
     } catch (error: unknown) {
       handleError(error);
     }
