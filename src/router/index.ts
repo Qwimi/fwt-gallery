@@ -12,7 +12,7 @@ const router = createRouter({
     {
       path: '/artist/:id',
       name: 'artist',
-      component: () => import('@/views/ArtistProfile.vue')
+      component: () => import('@/views/ArtistProfileView.vue')
     }
   ],
   scrollBehavior() {

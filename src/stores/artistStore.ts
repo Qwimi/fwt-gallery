@@ -88,7 +88,7 @@ export const useArtistStore = defineStore('artist', () => {
     } catch (error: unknown) {
       handleError(error);
     } finally {
-      setTimeout(() => (isCardsLoading.value = false), 1000);
+      isCardsLoading.value = false;
     }
   };
 
@@ -96,13 +96,16 @@ export const useArtistStore = defineStore('artist', () => {
     try {
       isCardsLoading.value = true;
       pageCounter.value++;
-      const newArtist = await handleGetArtists();
-      pageCounter.value, cardsPerMainPage.value, filter.value;
+      const newArtist = await handleGetArtists(
+        pageCounter.value,
+        cardsPerMainPage.value,
+        filter.value
+      );
       artists.value = artists.value.concat(newArtist.data);
     } catch (error: unknown) {
       handleError(error);
     } finally {
-      setTimeout(() => (isCardsLoading.value = false), 1000);
+      isCardsLoading.value = false;
     }
   };
 
@@ -134,7 +137,7 @@ export const useArtistStore = defineStore('artist', () => {
     } catch (error: unknown) {
       handleError(error);
     } finally {
-      setTimeout(() => (isCardsLoading.value = false), 1000);
+      isCardsLoading.value = false;
     }
   };
 

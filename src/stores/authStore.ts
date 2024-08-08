@@ -65,12 +65,12 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const getLocalTokens = async () => {
-    if (localStorage.getItem('refreshToken')) {
-      await setRefreshToken(localStorage.getItem('refreshToken')!!);
+    const localToken = localStorage.getItem('refreshToken');
+    if (localToken) {
+      setRefreshToken(localToken);
       refreshTokens();
     } else {
       console.log('no local refresh token');
-      reloadAppData();
     }
   };
 

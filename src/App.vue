@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { defineAsyncComponent } from 'vue';
+import { defineAsyncComponent, onMounted } from 'vue';
 import { RouterView } from 'vue-router';
 import { useArtistStore } from './stores/artistStore';
 import TheFooter from '@/components/TheFooter';
@@ -11,8 +11,10 @@ const TheModal = defineAsyncComponent(() => import('@/components/TheModal'));
 const TheSidebar = defineAsyncComponent(() => import('@/components/TheSidebar'));
 const TheToast = defineAsyncComponent(() => import('@/components/TheToast'));
 
-const uiStore = useArtistStore();
-const { isPageLoading } = storeToRefs(uiStore);
+const store = useArtistStore();
+const { isPageLoading } = storeToRefs(store);
+
+onMounted(() => store.getArtists());
 </script>
 
 <template>
