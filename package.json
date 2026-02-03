@@ -15,7 +15,10 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky install",
-    "test": "vitest"
+    "test": "vitest",
+    "predeploy": "npm run build-only",
+    "deploy": "gh-pages -d dist",
+    "deploy:all": "npm run predeploy && npm run deploy"
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^4.4.1",
@@ -56,6 +59,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-storybook": "^0.8.0",
     "eslint-plugin-vue": "^9.26.0",
+    "gh-pages": "^6.3.0",
     "husky": "^8.0.0",
     "jsdom": "^24.0.0",
     "npm-run-all2": "^6.1.2",

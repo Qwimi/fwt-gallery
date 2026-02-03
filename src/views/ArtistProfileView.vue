@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onUnmounted, ref, type Ref } from 'vue';
-import ArtistSection from '@/components/ArtistSection';
+import ArtistSection from '@/components/ArtistSection/ArtistSection.vue';
 import IconArrowDecoration from '@/components/icons/IconArrowDecoration.vue';
 import IconDelete from '@/components/icons/IconDelete.vue';
 import IconEdit from '@/components/icons/IconEdit.vue';

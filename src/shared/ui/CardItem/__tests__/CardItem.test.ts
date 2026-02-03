@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import { RouterLink } from 'vue-router'
 
-import CardItem from '@/shared/ui/card'
+import CardItem from '@/shared/ui/CardItem'
 import type { CardInterface } from '@/stores/types'
 
 describe('Card item tests', () => {
